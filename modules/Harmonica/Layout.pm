@@ -60,25 +60,6 @@ sub set_hole {
 
 
 sub positionInterval {
-	my $self = shift;
-	my $note = shift;
-	my $interval = shift;
-
-	# I have:
-	# Interval relative to harp key
-	# Key of note
-	# Key of position
-
-	if ($self->position == 1) {
-		return $interval;
-	}
-
-	my @chrom = get_scale_notes ($self->position_key, 12);
-	my $note = getNoteFromPosition($note, $self->position);
-
-	
-	
-	return 'dunno';
 }
 
 
@@ -118,7 +99,8 @@ sub mapIntervalToChromIdx {
 sub intervalFromScale {
 	my $self = shift;
 	my $key = $self->position_key;
-	my $note
+	my $note;
+}
 
 		
 

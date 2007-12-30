@@ -52,8 +52,6 @@ sub noteFromPosition {
 		F	C
 	/);
 
-	my @circle = qw/C G D A E B F# Db Ab Eb Bb F/;
-
 	my %anti_clockwise = reverse %clockwise;
 
 	if ($offset > 0) {
