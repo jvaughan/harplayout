@@ -83,8 +83,6 @@ sub mapIntervalToChromIdx {
 	my $self = shift;
 	my $interval = shift;
 
-	print "interval is $interval\n";
-
 	my %int_to_chrom = (
 		1	=> 0,
 		b2	=> 1,
@@ -100,8 +98,6 @@ sub mapIntervalToChromIdx {
 		7	=> 11,
 	);
 
-
-	print "i_t_c is . " . $int_to_chrom{$interval}. "\n";
 	return $int_to_chrom{$interval};
 }
 	
