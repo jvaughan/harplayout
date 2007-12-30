@@ -18,7 +18,6 @@
 
 etc, unnecessary because bends can be calculated	
 
-http://resgraphics.com/music/Music-Audio.html
 
 
 %holes_intervals = (
@@ -52,14 +51,42 @@ http://resgraphics.com/music/Music-Audio.html
 %harplayout_object = (
 	tuning => $tuning,
 	position => $position,
-	blow => {
-		1 => {
-			0 => {
-				note => 'C',
-				int => '1',
-				cent_offset => '+0',
-			}
-		}
-	}
+	blow => 
+		[ # holes
+			[ # notes in blow hole 1
+				{
+					note => 'C',
+					int => '1',
+					cent_offset => '+0',
+					type => 'natural',
+				},
+				{
+					note => 'Eb',
+					int => 'b3',
+					cent_offset => '+0',
+					type => 'overblow',
+				},
+
+			],
+			[ # notes in blow hole 2
+				{
+					note => 'E',
+					int => '3',
+					cent_offset => '+0',
+					type => 'natural',
+				},
+				{
+					note => 'Ab',
+					int => 'b3',
+					cent_offset => '+0',
+					type => 'overblow',
+				},
+
+			],
+
+		],
+	],
 )	
+
+$blow_2_note = $self->{blow}->[1]->{note};
 			
