@@ -40,7 +40,7 @@ sub init {
 			$attrs->{position_interval} = intervalFromPosition ($interval, $self->position);
 			$attrs->{note} = $self->noteFromInterval($self->position_key, $interval);
 			
-			$self->set_hole ($plate, $i + 1, 0, $attrs);
+			$self->set_reed ($plate, $i + 1, 0, $attrs);
 		}
 	}
 
@@ -49,12 +49,12 @@ sub init {
 }
 
 
-sub set_hole {
+sub set_reed {
 	my $self = shift;
-	my ($plate, $hole, $bendstep, $attrs) = @_;
+	my ($plate, $reed, $bendstep, $attrs) = @_;
 
 	foreach (keys %$attrs) {
-		$self->{ $plate }->[ $hole - 1 ]->[ $bendstep ]->{ $_ } = $attrs->{ $_ };
+		$self->{ $plate }->[ $reed - 1 ]->[ $bendstep ]->{ $_ } = $attrs->{ $_ };
 	}
 }
 
@@ -62,10 +62,10 @@ sub set_hole {
 sub addBendNotes {
 	my $self = shift;
 
-	my @holes = @{$self->{draw}};
+	my @reeds = @{$self->{draw}};
 	
-	for (my $i = 0; $i < $#holes+1 ; $i++) {
-		my $hole = $holes[$i];
+	for (my $i = 0; $i < $#reeds+1 ; $i++) {
+		my $reed = $reeds[$i];
 		my $natural = blah;
 	}
 }
