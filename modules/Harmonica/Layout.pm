@@ -22,7 +22,6 @@ my $HOLES_INTERVALS = {
 sub init {
 	my $self = shift;
 
-	$self->plates = {};
 	$self->{blow} = [];
 	$self->{draw} = [];
 
@@ -30,7 +29,7 @@ sub init {
 
 	# Poupulate with data for natural notes
 	PLATE: foreach my $plate (qw /blow draw/) {
-		my @reeds = @{ $HOLES_INTERVALS->{ $self->tuning }->{plates}->{ $plate } };
+		my @reeds = @{ $HOLES_INTERVALS->{ $self->tuning }->{ $plate } };
 
 		REED: for (my $i = 0; $i < $#reeds + 1; $i++) {
 			my $interval = $reeds[$i];
@@ -41,87 +40,24 @@ sub init {
 			$attrs->{position_interval} = intervalFromPosition ($interval, $self->position);
 			$attrs->{note} = $self->noteFromInterval($self->position_key, $interval);
 			
-			$self->set_note ($plate, $i + 1, 0, $attrs);
+			$self->set_hole ($plate, $i + 1, 0, $attrs);
 		}
 	}
-
-	$self->set_bent_notes;
 
 	print Dumper ($self);
 
 }
 
 
-sub setBentNotes {
-	my $self = shift;
-
-	my @
-}
-
-
-sub set_note {
+sub set_hole {
 	my $self = shift;
 	my ($plate, $hole, $bendstep, $attrs) = @_;
 
-	my $hole = $self->hole($plate, $hole)
-
 	foreach (keys %$attrs) {
-		$hole->{ $bendstep }->{ $_ } = $attrs-> { $_ }; 
+		$self->{ $plate }->[ $hole - 1 ]->[ $bendstep ]->{ $_ } = $attrs->{ $_ };
 	}
 }
 
-
-sub get_note {
-	my $self = shift;
-	my ($plate, $hole, $bendstep, $field) = @_;
-
-	my $hole = $self->hole($plate, $hole);
-
-	if (defined $field) {
-		return $self->{ $plate }->[ $hole - 1 ]->[ $bendstep ]->{ $field };
-	}
-	else {
-		return $self->{ $plate }->[ $hole - 1]->[ $bendstep ];
-	}
-}
-
-
-sub bendsteps {
-	my $self = shift;
-	my $bend_step = shift;
-	my ($plate, $hole);
-	my $hole = $self->holes($plate, $hole);
-	return $hole->[bendsteps];
-}
-
-
-sub holes {
-	my $self = shift;
-	my $plate = shift;
-	my @holes = @_;
-
-	if (@holes) {
-		HOLE: foreach (@hole) {
-			return $self->{plates}->{ $plate }->[ $_ - 1 ];
-		}
-	} 
-	else {
-		return $self->{plates}->{$plate};
-	}
-}
-
-sub plates {
-	my $self = shift;
-	my $plate = shift || 0;
-
-	if ($plate) {
-		return $self->{ plates }->{ $plate };
-	} 
-	else {
-		return $self->{ plates };
-	}
-}
-		
 
 sub positionInterval {
 }
