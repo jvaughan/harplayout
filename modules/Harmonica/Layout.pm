@@ -3,10 +3,11 @@ use strict;
 
 use Data::Dumper;
 use Music::Scales;
+use Harmonica::CircleOfFifths;
 
 use Class::MethodMaker
 	new_hash_with_init	=> 'new',
-	get_set			=> [ qw/tuning position key/ ]
+	get_set			=> [ qw/tuning position key position_key/ ]
 ;
 
 
@@ -24,6 +25,8 @@ sub init {
 	$self->{blow} = [];
 	$self->{draw} = [];
 
+	$self->position_key( noteFromPosition($self->key, $self->position) );
+
 	# Poupulate with data for natural notes
 	PLATE: foreach my $plate (qw /blow draw/) {
 		my @reeds = @{ $HOLES_INTERVALS->{ $self->tuning }->{ $plate } };
@@ -31,7 +34,7 @@ sub init {
 		REED: for (my $i = 0; $i < $#reeds + 1; $i++) {
 			$self->set_hole ($plate, $i + 1, 0, 
 				{
-				position_interval => $self->positionInterval ($reeds[$i]),
+				position_interval => $self->positionInterval ($self->noteFromInterval($reeds[$i])),
 				type => 'natural',
 				tuning_offset => '+0',
 				note => $self->noteFromInterval($reeds[$i]),
@@ -47,10 +50,7 @@ sub init {
 
 sub set_hole {
 	my $self = shift;
-
 	my ($plate, $hole, $bendstep, $attrs) = @_;
-
-	print Dumper ($attrs->{fuck});
 
 	foreach (keys %$attrs) {
 		$self->{ $plate }->[ $hole - 1 ]->[ $bendstep ]->{ $_ } = $attrs->{ $_ };
@@ -60,11 +60,14 @@ sub set_hole {
 
 sub positionInterval {
 	my $self = shift;
-	my $interval = shift;
+	my $note = shift;
 
 	if ($self->position == 1) {
 		return $interval;
 	}
+
+	
+	
 	return 'dunno';
 }
 
@@ -101,6 +104,12 @@ sub mapIntervalToChromIdx {
 	return $int_to_chrom{$interval};
 }
 	
-	
+
+sub intervalFromScale {
+	my $self = shift;
+	my $key = $self->position_key;
+	my $note
+
+		
 
 1;
