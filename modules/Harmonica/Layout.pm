@@ -32,14 +32,13 @@ sub init {
 		my @reeds = @{ $HOLES_INTERVALS->{ $self->tuning }->{ $plate } };
 
 		REED: for (my $i = 0; $i < $#reeds + 1; $i++) {
-			$self->set_hole ($plate, $i + 1, 0, 
-				{
-				position_interval => $self->positionInterval ($self->noteFromInterval($reeds[$i])),
-				type => 'natural',
-				tuning_offset => '+0',
-				note => $self->noteFromInterval($reeds[$i]),
-				}
-			);
+			my $attrs = {};
+			$attrs->{note} = $self->noteFromInterval($reeds[$i]);
+			$attrs->{type} = 'natural';
+			$attrs->{tuning_offset} = '+0';
+			$attrs->{position_interval} = $self->positionInterval( $attrs->{note} );
+			
+			$self->set_hole ($plate, $i + 1, 0, $attrs);
 		}
 	}
 
@@ -61,10 +60,19 @@ sub set_hole {
 sub positionInterval {
 	my $self = shift;
 	my $note = shift;
+	my $interval = shift;
+
+	# I have:
+	# Interval relative to harp key
+	# Key of note
+	# Key of position
 
 	if ($self->position == 1) {
 		return $interval;
 	}
+
+	my @chrom = get_scale_notes ($self->position_key, 12);
+	my $note = getNoteFromPosition($note, $self->position);
 
 	
 	
