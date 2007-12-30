@@ -1,9 +1,8 @@
-#!/usr/bin/perl -w
-use strict;
+package Harmonica::CircleOfFifths;
 
 use Music::Scales;
 
-sub get_note {
+sub noteFromPosition {
 	#my $self = shift;
 	my $note = shift;
 	my $position = shift;
@@ -31,3 +30,7 @@ sub get_note {
 }
 
 print get_note("C", 12);
+print "\n";
+
+
+1;
