@@ -2,6 +2,7 @@ package Harmonica::Layout;
 use strict;
 
 use Data::Dumper;
+use Music::Scales;
 
 use Class::MethodMaker
 	new_hash_with_init	=> 'new',
@@ -72,7 +73,7 @@ sub noteFromInterval {
 	my $self = shift;
 	my $interval = shift;
 
-	my @chrom = get_scale_notes ($self->key);
+	my @chrom = get_scale_notes ($self->key, 12);
 	my $note = $chrom[ $self->mapIntervalToChromIdx($interval) ];
 	return $note;
 }			 
@@ -81,6 +82,8 @@ sub noteFromInterval {
 sub mapIntervalToChromIdx {
 	my $self = shift;
 	my $interval = shift;
+
+	print "interval is $interval\n";
 
 	my %int_to_chrom = (
 		1	=> 0,
@@ -97,6 +100,8 @@ sub mapIntervalToChromIdx {
 		7	=> 11,
 	);
 
+
+	print "i_t_c is . " . $int_to_chrom{$interval}. "\n";
 	return $int_to_chrom{$interval};
 }
 	
