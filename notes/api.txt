@@ -1,0 +1,4 @@
+$self->set_hole('blow', 1, {note => $note, type => $type});
+
+$self->get_hole('blow', 1, 'note'); #Returns 'C'
+$self->get_hole('blow', 1); # Returns hashref as set above.
