@@ -59,6 +59,18 @@ sub set_hole {
 }
 
 
+sub addBendNotes {
+	my $self = shift;
+
+	my @holes = @{$self->{draw}};
+	
+	for (my $i = 0; $i < $#holes+1 ; $i++) {
+		my $hole = $holes[$i];
+		my $natural = blah;
+	}
+}
+
+
 sub positionInterval {
 }
 
