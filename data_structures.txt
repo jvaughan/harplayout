@@ -1,0 +1,65 @@
+%holes_intervals = (
+	richter => {
+		b => { 
+		1 => [1],
+		2 => [3],
+		3 => [5],
+		4 => [1],
+		5 => [3],
+		6 => [5],
+		7 => [1, 7],
+		8 => [3, 3b],
+		9 => [5, 5b],
+		10 => [1, 7b],
+		},
+		d => {
+		1 => [2],
+		2 => [
+
+etc, unnecessary because bends can be calculated	
+
+http://resgraphics.com/music/Music-Audio.html
+
+
+%holes_intervals = (
+	richter => {
+		blow => { 
+		1 => 1,
+		2 => 3,
+		3 => 5,
+		4 => 1,
+		5 => 3,
+		6 => 5,
+		7 => 1
+		8 => 3,
+		9 => 5,
+		10 => 1,
+		},
+		draw => {
+		1 => 2,
+		2 => 5,
+		3 => 7,
+		4 => 2,
+		5 => 4, 
+		6 => 6,
+		7 => 7,
+		8 => 2,
+		9 => 4,
+		10 => 6,
+		}
+		
+
+%harplayout_object = (
+	tuning => $tuning,
+	position => $position,
+	blow => {
+		1 => {
+			0 => {
+				note => 'C',
+				int => '1',
+				cent_offset => '+0',
+			}
+		}
+	}
+)	
+			
