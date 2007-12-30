@@ -6,7 +6,9 @@ use Music::Scales;
 sub get_note {
 	#my $self = shift;
 	my $note = shift;
-	my $offset = shift;
+	my $position = shift;
+
+	my $offset = $position - 1;
 
 	if ($offset > 0) {
 		while ($offset-- > 0) {
@@ -28,4 +30,4 @@ sub get_note {
 	}
 }
 
-print get_note("C", 11);
+print get_note("C", 12);
