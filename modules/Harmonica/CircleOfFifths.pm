@@ -3,7 +3,7 @@ use strict;
 
 use Music::Scales;
 
-sub noteFromPosition {
+sub oldnoteFromPosition {
 	#my $self = shift;
 	my $note = shift;
 	my $position = shift;
@@ -30,8 +30,44 @@ sub noteFromPosition {
 	}
 }
 
+
+sub noteFromPosition {
+	my $note     = shift;
+	my $position = shift;
+
+	my $offset = $position -1;
+
+	my %clockwise = ( qw/
+		C	G
+		G	D
+		D	A
+		A	E
+		E	B
+		B	F#
+		F#	Db
+		Db	Ab
+		Ab	Eb
+		Eb	Bb
+		Bb	F
+		F	C
+	/);
+
+	my @circle = qw/C G D A E B F# Db Ab Eb Bb F/;
+
+	my %anti_clockwise = reverse %clockwise;
+
+	if ($offset > 0) {
+                while ($offset-- > 0) {
+			$note = $clockwise{$note};
+                }
+                return $note;
+
+        }
+}
+
+
 sub intervalFromPosition {
-	my $interval = shift;;
+	my $interval = shift;
 	my $position = shift;
 
 	my $offset = $position -1;
@@ -64,6 +100,7 @@ sub intervalFromPosition {
 
 print "hello\n";
 print intervalFromPosition(1, 3);
+print noteFromPosition('A', 3);
 		
 print "\n";
 
