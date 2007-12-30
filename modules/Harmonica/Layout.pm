@@ -32,11 +32,13 @@ sub init {
 		my @reeds = @{ $HOLES_INTERVALS->{ $self->tuning }->{ $plate } };
 
 		REED: for (my $i = 0; $i < $#reeds + 1; $i++) {
+			my $interval = $reeds[$i];
 			my $attrs = {};
-			$attrs->{note} = $self->noteFromInterval($reeds[$i]);
 			$attrs->{type} = 'natural';
 			$attrs->{tuning_offset} = '+0';
-			$attrs->{position_interval} = $self->positionInterval( $attrs->{note} );
+
+			$attrs->{position_interval} = intervalFromPosition ($interval, $self->position);
+			$attrs->{note} = $self->noteFromInterval($interval);
 			
 			$self->set_hole ($plate, $i + 1, 0, $attrs);
 		}
