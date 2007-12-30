@@ -38,7 +38,7 @@ sub init {
 			$attrs->{tuning_offset} = '+0';
 
 			$attrs->{position_interval} = intervalFromPosition ($interval, $self->position);
-			$attrs->{note} = $self->noteFromInterval($interval);
+			$attrs->{note} = $self->noteFromInterval($self->position_key, $interval);
 			
 			$self->set_hole ($plate, $i + 1, 0, $attrs);
 		}
@@ -65,9 +65,10 @@ sub positionInterval {
 
 sub noteFromInterval {
 	my $self = shift;
+	my $key = shift;
 	my $interval = shift;
 
-	my @chrom = get_scale_notes ($self->key, 12);
+	my @chrom = get_scale_notes ($key, 12);
 	my $note = $chrom[ $self->mapIntervalToChromIdx($interval) ];
 	return $note;
 }			 

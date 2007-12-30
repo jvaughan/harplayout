@@ -1,6 +1,10 @@
 package Harmonica::CircleOfFifths;
 use strict;
 
+require Exporter;
+our @ISA = qw(Exporter);
+our @EXPORT = qw(noteFromPosition intervalFromPosition);
+
 use Music::Scales;
 
 sub oldnoteFromPosition {
@@ -87,7 +91,7 @@ sub intervalFromPosition {
 
 	my %anti_clockwise = reverse %clockwise;
 
-	if ($offset > 0) {
+	if ($offset >= 0) {
                 while ($offset-- > 0) {
 			$interval = $clockwise{$interval};
                 }
@@ -95,12 +99,5 @@ sub intervalFromPosition {
 
         }
 }
-
-print "hello\n";
-print intervalFromPosition(1, 3);
-print noteFromPosition('A', 3);
-		
-print "\n";
-
 
 1;

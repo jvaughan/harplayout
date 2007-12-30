@@ -4,6 +4,6 @@ use strict;
 use Harmonica::Layout;
 use Data::Dumper;
 
-my $harp = Harmonica::Layout->new (position => '1', tuning => 'richter', key => 'A');
+my $harp = Harmonica::Layout->new (position => '2', tuning => 'richter', key => 'C');
 print Dumper;
 
