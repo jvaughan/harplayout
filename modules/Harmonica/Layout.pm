@@ -25,7 +25,7 @@ sub init {
 
 	# Poupulate with data for natural notes
 	PLATE: foreach my $plate (qw /blow draw/) {
-		my @reeds = @{ $HOLES_INTERVALS->{richter}->{blow} };
+		my @reeds = @{ $HOLES_INTERVALS->{ $self->tuning }->{ $plate } };
 
 		REED: for (my $i = 0; $i < $#reeds + 1; $i++) {
 			$self->set_hole ($plate, $i + 1, 0, 
@@ -57,18 +57,49 @@ sub set_hole {
 }
 
 
-
-		
-
 sub positionInterval {
 	my $self = shift;
-	return '3';
+	my $interval = shift;
+
+	if ($self->position == 1) {
+		return $interval;
+	}
+	return 'dunno';
 }
+
 
 sub noteFromInterval {
 	my $self = shift;
-	return 'Ab';
+	my $interval = shift;
+
+	my @chrom = get_scale_notes ($self->key);
+	my $note = $chrom[ $self->mapIntervalToChromIdx($interval) ];
+	return $note;
 }			 
+
+
+sub mapIntervalToChromIdx {
+	my $self = shift;
+	my $interval = shift;
+
+	my %int_to_chrom = (
+		1	=> 0,
+		b2	=> 1,
+		2	=> 2,
+		b3	=> 3,
+		3	=> 4,
+		4	=> 5,
+		b5	=> 6,
+		5	=> 7,
+		b6	=> 8,
+		6	=> 9,
+		b7	=> 10,
+		7	=> 11,
+	);
+
+	return $int_to_chrom{$interval};
+}
+	
 	
 
 1;
