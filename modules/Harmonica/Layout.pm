@@ -105,6 +105,12 @@ sub addBentNotes {
 			BEND: while ( --$closest > $opp_natural ) {
 				$closest = $self->set_reed ($plate, $hole, ++$bendstep, $closest->first_pos_interval);
 			} 
+
+			if ($natural < $opp_natural) {
+				# Can be overblown / drawn
+				my $overbend = $opp_natural + 1;
+				$self->set_reed ($plate, $hole, 1, $overbend->first_pos_interval);
+			}
 		}
 	}
 }

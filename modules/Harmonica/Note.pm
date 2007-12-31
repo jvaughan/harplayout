@@ -36,7 +36,10 @@ sub subtract {
 
 
 sub add {
-	return add_interval( $_[0]->first_pos_interval, $_[1]);
+
+	return __PACKAGE__->new (
+				first_pos_interval => add_interval( $_[0]->first_pos_interval, $_[1]),
+				);
 }
 
 1;
