@@ -26,23 +26,32 @@ sub init {
 	$self->{draw} = [];
 
 	$self->position_key( noteFromPosition($self->key, $self->position) );
+	$self->addNaturalNotes;
+}
+
+sub addNaturalNotes {
+	my $self = shift;
 
 	# Poupulate with data for natural notes
 	PLATE: foreach my $plate (qw /blow draw/) {
-		my @reeds = @{ $HOLES_INTERVALS->{ $self->tuning }->{ $plate } };
+                my @reeds = @{ $HOLES_INTERVALS->{ $self->tuning }->{ $plate } };
 
-		REED: for (my $i = 0; $i < $#reeds + 1; $i++) {
-			my $interval = $reeds[$i];
-			$self->set_reed ($plate, $i + 1, 0, $interval);
-		}
-	}
+                REED: for (my $i = 0; $i < $#reeds + 1; $i++) {
+                        my $interval = $reeds[$i];
+                        $self->set_reed ($plate, $i + 1, 0, $interval);
+                }
+        }
 
 	print Dumper ($self);
-
 }
 
 
 sub set_reed {
+	# Takes: 
+	# Plate (blow or draw)
+	# Reed number 
+	# Bend step - 0 for natural, 1 for first semitone bend, 2 for wholetone bend, etc
+	# The first position interval
 	my $self = shift;
 	my ($plate, $reed, $bendstep, $firstposint) = @_;
 
