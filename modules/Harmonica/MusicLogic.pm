@@ -53,7 +53,7 @@ sub interval_gt {
 
 	print Dumper ($diff);
 
-	if ( $diff < (0 - $BOUNDARY)) {
+	if ( $diff < (0 - $BOUNDARY + 2)) {
 		return 1;
 	}
 	elsif ( $diff > 0 && $diff < $BOUNDARY ) {
