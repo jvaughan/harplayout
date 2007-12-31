@@ -31,9 +31,7 @@ sub interval_cmp {
 		$int1_loc = $i if $int1 eq $intervals[$i];
 		$int2_loc = $i if $int2 eq $intervals[$i];
 	}
-	print Dumper ($int1_loc, $int2_loc);
 	my $diff = $int1_loc - $int2_loc;
-	print Dumper ($diff);
 	
 	if ($op eq 'eq') {
 		return 1 if $diff == 0;
@@ -126,7 +124,6 @@ sub add_subtract_interval {
 	
 	$new_loc = $orig_loc-12 if $new_loc > 12;
 
-	print Dumper(@intervals, $orig_loc, $new_loc);
 	return num_to_interval( $intervals[$new_loc] );
 }
 	
