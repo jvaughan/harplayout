@@ -6,7 +6,7 @@ use Data::Dumper;
 
 require Exporter;
 our @ISA = qw(Exporter);
-our @EXPORT = qw( interval_cmp subtract_interval );
+our @EXPORT = qw( interval_cmp subtract_interval add_interval);
 
 my $BOUNDARY = 7;
 
@@ -34,9 +34,18 @@ sub interval_cmp {
 	print Dumper ($int1_loc, $int2_loc);
 	my $diff = $int1_loc - $int2_loc;
 	print Dumper ($diff);
+	
+	if ($op eq 'eq') {
+		return 1 if $diff == 0;
+	}
+
+	return 0 if $diff == 0;
 
 	if ($op eq 'gt') {
 		return interval_gt($diff);
+	} 
+	elsif ($op eq 'lt') {
+		return interval_gt($diff) ? 0 : 1;
 	}
 }
 
@@ -77,7 +86,19 @@ sub num_to_interval {
 }
 
 
+
 sub subtract_interval {
+	return add_subtract_interval('sub', $_[0], $_[1]);
+}
+
+
+sub add_interval {
+	return add_subtract_interval('add', $_[0], $_[1]);
+}
+
+
+sub add_subtract_interval {
+	my $op = shift;
 	my ($orig, $amt) = @_;
 
 	$orig = interval_to_num($orig);
@@ -94,7 +115,15 @@ sub subtract_interval {
 		$i++;
 	}
 
-	my $new_loc = $orig_loc - $amt;
+	my $new_loc;
+	if ($op eq 'add') {
+		$new_loc = $orig_loc + $amt;
+	} 
+	elsif ($op eq 'sub') {
+		$new_loc = $orig_loc - $amt;
+	}
+	
+	
 	$new_loc = $orig_loc-12 if $new_loc > 12;
 
 	print Dumper(@intervals, $orig_loc, $new_loc);
