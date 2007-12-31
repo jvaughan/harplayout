@@ -8,6 +8,8 @@ require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT = qw( interval_cmp );
 
+my $BOUNDARY = 7;
+
 
 sub interval_cmp {
 	my $op = shift;
@@ -19,12 +21,13 @@ sub interval_cmp {
 	foreach (@intervals) { 
 		$_ = interval_to_num($_);
 	}
+	@intervals = sort @intervals;
 
 	$int1 = interval_to_num($int1);
 	$int2 = interval_to_num($int2);
 
 	if ($op eq 'gt') {
-		return interval_gt($int1, $int2);
+		return interval_gt($int1, $int2, \@intervals);
 	}
 	
 	return 1 if $int1 gt $int2;
@@ -33,13 +36,26 @@ sub interval_cmp {
 
 
 sub interval_gt {
-	my ($int1, $int2) = @_;
+	my ($int1, $int2, $i) = @_;
+	my @ints = @$i;
+
+	return 0 if $int1 eq $int2;
 	
-	if ( ($int1 > $int2) && ($int1 - $int2 < 6)) {
-		return 1;
+	# Get location in intervals array for both intervals
+	my ($int1_loc, $int2_loc);
+	for (my $i = 0; $i < $#ints+1; $i++) {
+		$int1_loc = $i if $int1 eq $ints[$i];
+		$int2_loc = $i if $int2 eq $ints[$i];
 	}
 
-	return 0;
+	print Dumper ($int1_loc, $int2_loc);
+
+	if ( ($int1_loc > $int2_loc) && ($int1_loc - $int2_loc < $BOUNDARY) ) {
+		return 1;
+	}
+	else {
+		return 0;
+	}
 }
 	
 
