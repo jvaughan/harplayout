@@ -8,6 +8,7 @@ use Harmonica::MusicLogic;
 
 use overload
 	'>'	=> \&gt,
+	'-'	=> \&subtract,
 ;
 
 use Class::MethodMaker
@@ -20,6 +21,10 @@ sub init {}
 sub gt {
 	print Dumper (@_);
 	return interval_cmp('gt', $_[0]->first_pos_interval, $_[1]->first_pos_interval);
+}
+
+sub subtract {
+	return subtract_interval( $_[0]->first_pos_interval, $_[1]);
 }
 
 1;
