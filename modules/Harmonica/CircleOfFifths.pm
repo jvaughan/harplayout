@@ -3,7 +3,7 @@ use strict;
 
 require Exporter;
 our @ISA = qw(Exporter);
-our @EXPORT = qw(noteFromPosition intervalFromPosition);
+our @EXPORT = qw(noteFromPosition intervalFromPosition co5_intervals co5_notes);
 
 use Music::Scales;
 
@@ -94,6 +94,16 @@ sub intervalFromPosition {
                 return $interval;
 
         }
+}
+
+
+sub co5_intervals {
+	return %co5_intervals;
+}
+
+
+sub co5_notes {
+	return %co5_notes;
 }
 
 1;
