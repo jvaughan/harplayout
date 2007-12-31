@@ -4,6 +4,7 @@ use strict;
 use Data::Dumper;
 use Music::Scales;
 use Harmonica::CircleOfFifths;
+use Harmonica::Note;
 
 use Class::MethodMaker
 	new_hash_with_init	=> 'new',
@@ -55,6 +56,7 @@ sub set_reed {
 	my $self = shift;
 	my ($plate, $reed, $bendstep, $firstposint) = @_;
 
+
 	my %attrs;
 	$attrs{first_pos_interval} = $firstposint;
 	$attrs{position_interval} = intervalFromPosition ($firstposint, $self->position);	
@@ -65,10 +67,10 @@ sub set_reed {
 	}
 
 	$attrs{description} = "$reed hole $plate $attrs{type}";
+	
+	my $note = Harmonica::Note->new( %$attrs );
 
-	foreach (keys %attrs) {
-		$self->{ $plate }->[ $reed - 1 ]->[ $bendstep ]->{ $_ } = $attrs{ $_ };
-	}
+	$self->{ $plate }->[ $reed - 1 ]->[ $bendstep ] = $note;
 }
 
 
