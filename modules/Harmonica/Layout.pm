@@ -33,14 +33,7 @@ sub init {
 
 		REED: for (my $i = 0; $i < $#reeds + 1; $i++) {
 			my $interval = $reeds[$i];
-			my $attrs = {};
-			$attrs->{type} = 'natural';
-			$attrs->{tuning_offset} = '+0';
-
-			$attrs->{position_interval} = intervalFromPosition ($interval, $self->position);
-			$attrs->{note} = $self->noteFromInterval($self->position_key, $interval);
-			
-			$self->set_reed ($plate, $i + 1, 0, $attrs);
+			$self->set_reed ($plate, $i + 1, 0, $interval);
 		}
 	}
 
@@ -51,9 +44,20 @@ sub init {
 
 sub set_reed {
 	my $self = shift;
-	my ($plate, $reed, $bendstep, $attrs) = @_;
+	my ($plate, $reed, $bendstep, $firstposint) = @_;
 
-	foreach (keys %$attrs) {
+	my %attrs;
+	$attrs{first_pos_interval} = $firstposint;
+	$attrs{position_interval} = intervalFromPosition ($firstposint, $self->position);	
+	$attrs{note} = $self->noteFromInterval($self->position_key, $firstposint);
+
+	if ($bendstep == 0) {
+		$attrs{type} = 'natural';
+	}
+
+	$attrs{description} = "$reed hole $plate $attrs{$type}";
+
+	foreach (keys %attrs) {
 		$self->{ $plate }->[ $reed - 1 ]->[ $bendstep ]->{ $_ } = $attrs->{ $_ };
 	}
 }
