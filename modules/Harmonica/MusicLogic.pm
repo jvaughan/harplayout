@@ -49,8 +49,14 @@ sub interval_gt {
 	}
 
 	print Dumper ($int1_loc, $int2_loc);
+	my $diff = $int1_loc - $int2_loc;
 
-	if ( ($int1_loc > $int2_loc) && ($int1_loc - $int2_loc < $BOUNDARY) ) {
+	print Dumper ($diff);
+
+	if ( $diff < (0 - $BOUNDARY)) {
+		return 1;
+	}
+	elsif ( $diff > 0 && $diff < $BOUNDARY ) {
 		return 1;
 	}
 	else {
