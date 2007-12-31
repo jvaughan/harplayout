@@ -29,6 +29,7 @@ sub init {
 	$self->position_key( noteFromPosition($self->key, $self->position) );
 	$self->addNaturalNotes;
 	$self->addBentNotes;
+	print Dumper ($self);
 }
 
 sub addNaturalNotes {
@@ -44,7 +45,6 @@ sub addNaturalNotes {
                 }
         }
 
-	print Dumper ($self);
 }
 
 
@@ -100,11 +100,12 @@ sub addBentNotes {
 		
 		my $closest = $natural;
 		my $bendstep = 0;
-		BEND: while ( $closest > $opp_natural ) {
+		BEND: while ( 1 ) {
 			my $newint = $closest - 1;
+			last unless $closest > $opp_natural;
 			$bendstep++;
 			print "newint: $newint, bendstep: $bendstep, hole: $hole\n";
-			$closest = $self->set_reed ('draw', $hole, 0, $newint);
+			$closest = $self->set_reed ('draw', $hole, $bendstep, $newint);
 		} 
 	}
 }
