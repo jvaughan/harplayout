@@ -63,15 +63,15 @@ sub addBentNotes {
 	my $self = shift;
 
 	my @draw = @{$self->{draw}};
-	my @blow = @{$self->{draw}};
+	my @blow = @{$self->{blow}};
 	
 	for (my $i = 0; $i < $#draw+1 ; $i++) {
 		my $reed = $draw[$i];
 		my $natural = $reed->[0];
-		my $opp_natural = $blow->[$i]->[0];
+		my $opp_natural = $blow[$i]->[0];
 		
-		my $closest = $natural
-		if  
+#		my $closest = $natural
+#		if  
 	}
 }
 
