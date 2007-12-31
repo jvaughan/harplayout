@@ -68,7 +68,7 @@ sub set_reed {
 
 	$attrs{description} = "$reed hole $plate $attrs{type}";
 	
-	my $note = Harmonica::Note->new( %$attrs );
+	my $note = Harmonica::Note->new( %attrs );
 
 	$self->{ $plate }->[ $reed - 1 ]->[ $bendstep ] = $note;
 }
