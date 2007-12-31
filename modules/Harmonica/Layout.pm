@@ -74,6 +74,13 @@ sub set_reed {
 }
 
 
+sub get_note {
+	my $self = shift;
+        my ($plate, $reed, $bendstep) = @_;
+
+	return $self->{ $plate }->[ $reed - 1 ]->[ $bendstep ];
+}
+
 sub addBentNotes {
 	my $self = shift;
 
