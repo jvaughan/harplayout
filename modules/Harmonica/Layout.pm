@@ -89,20 +89,23 @@ sub get_note {
 sub addBentNotes {
 	my $self = shift;
 
-	my @draw = @{$self->{draw}};
-	my @blow = @{$self->{blow}};
-	
-	REED: for (my $i = 0; $i < $#draw+1 ; $i++) {
-		my $reed = $draw[$i];
-		my $hole = $i + 1;
-		my $natural = $self->get_note('draw', $hole, 0);
-		my $opp_natural = $self->get_note('blow', $hole, 0);
+	PLATE: foreach my $plate (qw /blow draw/) {
+		my @plate = @{ $self->{$plate} };
+		my $opp_plate = $plate eq 'blow' ? 'draw' : 'blow';
+		my @opp_plate = @{ $self->{$opp_plate} };
 		
-		my $closest = $natural;
-		my $bendstep = 0;
-		BEND: while ( --$closest > $opp_natural ) {
-			$closest = $self->set_reed ('draw', $hole, ++$bendstep, $closest->first_pos_interval);
-		} 
+		REED: for (my $i = 0; $i < $#plate+1 ; $i++) {
+			my $hole = $i + 1;
+			my $natural = $self->get_note($plate, $hole, 0);
+			my $opp_natural = $self->get_note($opp_plate, $hole, 0);
+		
+			# Natural bends.
+			my $closest = $natural;
+			my $bendstep = 0;
+			BEND: while ( --$closest > $opp_natural ) {
+				$closest = $self->set_reed ($plate, $hole, ++$bendstep, $closest->first_pos_interval);
+			} 
+		}
 	}
 }
 
