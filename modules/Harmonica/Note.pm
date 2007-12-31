@@ -10,3 +10,6 @@ use Class::MethodMaker
         get_set                 => [ qw/first_pos_interval position_interval note bendstep description type/ ]
 ;
 
+sub init {} 
+
+1;
