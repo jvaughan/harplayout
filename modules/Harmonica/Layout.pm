@@ -28,6 +28,7 @@ sub init {
 
 	$self->position_key( noteFromPosition($self->key, $self->position) );
 	$self->addNaturalNotes;
+	$self->addBentNotes;
 }
 
 sub addNaturalNotes {
@@ -61,9 +62,13 @@ sub set_reed {
 	$attrs{first_pos_interval} = $firstposint;
 	$attrs{position_interval} = intervalFromPosition ($firstposint, $self->position);	
 	$attrs{note} = $self->noteFromInterval($self->key, $firstposint);
+	$attrs{bendstep} = $bendstep;
 
 	if ($bendstep == 0) {
 		$attrs{type} = 'natural';
+	}
+	else {
+		$attrs{type} = 'bend';
 	}
 
 	$attrs{description} = "$reed hole $plate $attrs{type}";
@@ -89,14 +94,15 @@ sub addBentNotes {
 	
 	REED: for (my $i = 0; $i < $#draw+1 ; $i++) {
 		my $reed = $draw[$i];
-		my $holenum = $i + 1
+		my $hole = $i + 1;
 		my $natural = $self->get_note('draw', $hole, 0);
 		my $opp_natural = $self->get_note('blow', $hole, 0);
 		
 		my $closest = $natural;
 		my $bendstep = 0;
 		BEND: while ( $closest > $opp_natural ) {
-			my $newint = $closest - 0.5;
+			my $newint = $closest - 1;
+			print "newint: $newint\n";
 			$closest = $self->set_reed ('draw', $hole, ++$bendstep, $newint);
 		} 
 	}
