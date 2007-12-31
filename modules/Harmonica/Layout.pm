@@ -67,10 +67,10 @@ sub set_reed {
 	}
 
 	$attrs{description} = "$reed hole $plate $attrs{type}";
-	
 	my $note = Harmonica::Note->new( %attrs );
 
 	$self->{ $plate }->[ $reed - 1 ]->[ $bendstep ] = $note;
+	return $note;
 }
 
 
@@ -87,13 +87,18 @@ sub addBentNotes {
 	my @draw = @{$self->{draw}};
 	my @blow = @{$self->{blow}};
 	
-	for (my $i = 0; $i < $#draw+1 ; $i++) {
+	REED: for (my $i = 0; $i < $#draw+1 ; $i++) {
 		my $reed = $draw[$i];
-		my $natural = $reed->[0];
-		my $opp_natural = $blow[$i]->[0];
+		my $holenum = $i + 1
+		my $natural = $self->get_note('draw', $hole, 0);
+		my $opp_natural = $self->get_note('blow', $hole, 0);
 		
-#		my $closest = $natural
-#		if  
+		my $closest = $natural;
+		my $bendstep = 0;
+		BEND: while ( $closest > $opp_natural ) {
+			my $newint = $closest - 0.5;
+			$closest = $self->set_reed ('draw', $hole, ++$bendstep, $newint);
+		} 
 	}
 }
 
