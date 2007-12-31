@@ -29,7 +29,9 @@ sub lt {
 }
 
 sub subtract {
-	return subtract_interval( $_[0]->first_pos_interval, $_[1]);
+	return __PACKAGE__->new (
+				first_pos_interval => subtract_interval( $_[0]->first_pos_interval, $_[1]),
+				);
 }
 
 

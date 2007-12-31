@@ -101,11 +101,11 @@ sub addBentNotes {
 		my $closest = $natural;
 		my $bendstep = 0;
 		BEND: while ( 1 ) {
-			my $newint = $closest - 1;
+			$closest = $closest -1;
 			last unless $closest > $opp_natural;
 			$bendstep++;
-			print "newint: $newint, bendstep: $bendstep, hole: $hole\n";
-			$closest = $self->set_reed ('draw', $hole, $bendstep, $newint);
+			# print "newint: $newint, bendstep: $bendstep, hole: $hole\n";
+			$closest = $self->set_reed ('draw', $hole, $bendstep, $closest->first_pos_interval);
 		} 
 	}
 }
