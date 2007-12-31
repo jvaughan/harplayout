@@ -49,16 +49,16 @@ sub set_reed {
 	my %attrs;
 	$attrs{first_pos_interval} = $firstposint;
 	$attrs{position_interval} = intervalFromPosition ($firstposint, $self->position);	
-	$attrs{note} = $self->noteFromInterval($self->position_key, $firstposint);
+	$attrs{note} = $self->noteFromInterval($self->key, $firstposint);
 
 	if ($bendstep == 0) {
 		$attrs{type} = 'natural';
 	}
 
-	$attrs{description} = "$reed hole $plate $attrs{$type}";
+	$attrs{description} = "$reed hole $plate $attrs{type}";
 
 	foreach (keys %attrs) {
-		$self->{ $plate }->[ $reed - 1 ]->[ $bendstep ]->{ $_ } = $attrs->{ $_ };
+		$self->{ $plate }->[ $reed - 1 ]->[ $bendstep ]->{ $_ } = $attrs{ $_ };
 	}
 }
 
