@@ -4,6 +4,11 @@ use strict;
 use Data::Dumper;
 use Music::Scales;
 use Harmonica::CircleOfFifths;
+use Harmonica::MusicLogic;
+
+use overload
+	'>'	=> \&gt,
+;
 
 use Class::MethodMaker
         new_hash_with_init      => 'new',
@@ -11,5 +16,10 @@ use Class::MethodMaker
 ;
 
 sub init {} 
+
+sub gt {
+	print Dumper (@_);
+	return interval_cmp('gt', $_[0]->first_pos_interval, $_[1]->first_pos_interval);
+}
 
 1;
