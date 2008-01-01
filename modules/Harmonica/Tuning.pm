@@ -26,7 +26,7 @@ sub init {
 	
 	$self->available (keys %tunings);
 		
-	unless (grep { self->tuning eq $_} @$self->available ) {
+	unless (grep { $self->tuning eq $_ } $self->available ) {
 		die "No such tuning '" . $self->tuning . "': $!" ;
 	}
 	
@@ -37,7 +37,7 @@ sub init {
 
 sub plate {
 	my $self = shift;
-	$_ = $plate
+	$_ = shift;
 	
 	return $self->blow if $_ eq 'blow';
 	return $self->draw if $_ eq 'draw';

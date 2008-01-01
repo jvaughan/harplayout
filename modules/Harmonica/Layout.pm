@@ -5,6 +5,7 @@ use Data::Dumper;
 use Music::Scales;
 use Harmonica::CircleOfFifths;
 use Harmonica::Note;
+use Harmonica::Tuning;
 
 use Class::MethodMaker
 	new_hash_with_init	=> 'new',
@@ -27,7 +28,7 @@ sub init {
 sub addNaturalNotes {
 	my $self = shift;
 
-	my $t = Harmonica::Tuning->new( $tuning => $self->tuning );
+	my $t = Harmonica::Tuning->new( tuning => $self->tuning );
 	
 	# Poupulate with data for natural notes
 
