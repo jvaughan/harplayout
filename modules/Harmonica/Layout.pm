@@ -124,10 +124,6 @@ sub addBentNotes {
 }
 
 
-sub positionInterval {
-}
-
-
 sub noteFromInterval {
 	my $self = shift;
 	my $key = shift;
