@@ -57,22 +57,30 @@ sub set_reed {
 	my $self = shift;
 	my ($plate, $reed, $bendstep, $firstposint) = @_;
 
+	my $note = Harmonica::Note->new;
+	$note->first_pos_interval($firstposint);
 
-	my %attrs;
-	$attrs{first_pos_interval} = $firstposint;
-	$attrs{position_interval} = intervalFromPosition ($firstposint, $self->position);	
-	$attrs{note} = $self->noteFromInterval($self->key, $firstposint);
-	$attrs{bendstep} = $bendstep;
+	$note->position_interval ( intervalFromPosition ($firstposint, $self->position) );
+	$note->note ( $self->noteFromInterval($self->key, $firstposint) );
+	$note->bendstep($bendstep);
 
 	if ($bendstep == 0) {
-		$attrs{type} = 'natural';
+		$note->type('natural');
+		$note->description("$reed hole $plate natural")
 	}
 	else {
-		$attrs{type} = 'bend';
+		my $opp_plate = $plate eq 'blow' ? 'draw' : 'blow';
+		my $opp_natural = $self->get_note($opp_plate, $reed, 0);
+		my $natural = $self->get_note($plate, $reed, 0);
+		if ($note < $natural) { # standard bend
+			$note->type('bend');
+			$note->description("$reed hole $plate bend step $bendstep")
+		} else { # overbend
+			$note->type("over${plate}");
+			$note->description("$reed hole $plate over${plate}");
+			
+		}
 	}
-
-	$attrs{description} = "$reed hole $plate $attrs{type}";
-	my $note = Harmonica::Note->new( %attrs );
 
 	$self->{ $plate }->[ $reed - 1 ]->[ $bendstep ] = $note;
 	return $note;
