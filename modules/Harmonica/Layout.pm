@@ -12,14 +12,6 @@ use Class::MethodMaker
 ;
 
 
-my $HOLES_INTERVALS = {
-        richter => {
-                blow => [qw /1 3 5 1 3 5 1 3 5 1/],
-                draw => [qw /2 5 7 2 4 6 7 2 4 6/],
-        }
-};
-
-
 sub init {
 	my $self = shift;
 
@@ -35,9 +27,12 @@ sub init {
 sub addNaturalNotes {
 	my $self = shift;
 
+	my $t = Harmonica::Tuning->new( $tuning => $self->tuning );
+	
 	# Poupulate with data for natural notes
+
 	PLATE: foreach my $plate (qw /blow draw/) {
-                my @reeds = @{ $HOLES_INTERVALS->{ $self->tuning }->{ $plate } };
+                my @reeds = $t->plate($plate);
 
                 REED: for (my $i = 0; $i < $#reeds + 1; $i++) {
                         my $interval = $reeds[$i];
