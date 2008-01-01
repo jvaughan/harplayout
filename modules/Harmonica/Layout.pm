@@ -7,10 +7,15 @@ use Harmonica::CircleOfFifths;
 use Harmonica::Note;
 use Harmonica::Tuning;
 
-use Class::MethodMaker
-	new_hash_with_init	=> 'new',
-	get_set			=> [ qw/tuning position key position_key/ ]
-;
+use Class::MethodMaker [
+	new 			=> [ -hash => -init => 'new' ],
+	scalar			=> [ qw/ position_key / ],
+	scalar			=> [	
+					{-default => 'richter'}		=> 'tuning',
+					{-default => '1'}		=> 'position',
+					{-default => 'C'}		=> 'key',
+				   ],					
+];
 
 
 sub init {
