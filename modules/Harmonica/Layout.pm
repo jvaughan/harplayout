@@ -171,14 +171,10 @@ sub holeHasNote {
 	my $hole = shift;
 	my $note = shift;
 	
-	PLATE: foreach my $plate (qw /draw blow/) {
+	PLATE: foreach my $plate ($self->plates) {
 		my $bs = 0;
-		my $nn;
-		while ( 1 ) {
-			$nn = $self->get_note($plate, $hole, $bs);
-			last unless defined $nn;
-			return 1 if $note == $nn;
-			$bs++;
+		NOTE: while ( $_ = $self->get_note($plate, $hole, $bs++) ) {
+			return 1 if $note == $_;
 		}
 	}	
 	return 0;

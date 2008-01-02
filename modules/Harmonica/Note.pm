@@ -14,6 +14,7 @@ use overload
 	'>='	=> \&gte,
 	'<'	=> \&lt,
 	'<='	=> \&lte,
+	'fallback' => 1,
 
 ;
 
