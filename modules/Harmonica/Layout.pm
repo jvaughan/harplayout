@@ -27,8 +27,8 @@ sub init {
 	$self->position_key( noteFromPosition($self->key, $self->position) );
 	$self->addNaturalNotes;
 	$self->addBentNotes;
-	print Dumper ($self);
 }
+
 
 sub addNaturalNotes {
 	my $self = shift;
@@ -38,14 +38,11 @@ sub addNaturalNotes {
 	# Poupulate with data for natural notes
 
 	PLATE: foreach my $plate (qw /blow draw/) {
-                my @reeds = $t->plate($plate);
-
-                REED: for (my $i = 0; $i < $#reeds + 1; $i++) {
-                        my $interval = $reeds[$i];
-                        $self->set_reed ($plate, $i + 1, 0, $interval);
-                }
+		my $reed = 0;
+		REED: foreach my $interval ( $t->plate($plate) ) {
+			$self->set_reed ($plate, ++$reed, 0, $interval);
+		}
         }
-
 }
 
 
@@ -65,21 +62,18 @@ sub set_reed {
 	$note->note ( $self->noteFromInterval($self->key, $firstposint) );
 	$note->bendstep($bendstep);
 
-	if ($bendstep == 0) {
+	if ($bendstep == 0) { # Is unbent?
 		$note->type('natural');
 		$note->description("$reed hole $plate natural")
 	}
 	else {
-		my $opp_plate = $plate eq 'blow' ? 'draw' : 'blow';
-		my $opp_natural = $self->get_note($opp_plate, $reed, 0);
 		my $natural = $self->get_note($plate, $reed, 0);
 		if ($note < $natural) { # standard bend
 			$note->type('bend');
 			$note->description("$reed hole $plate bend step $bendstep")
 		} else { # overbend
 			$note->type("over${plate}");
-			$note->description("$reed hole $plate over${plate}");
-			
+			$note->description("$reed hole $plate over${plate}");			
 		}
 	}
 
@@ -102,6 +96,8 @@ sub addBentNotes {
 		my @plate = @{ $self->{$plate} };
 		my $opp_plate = $plate eq 'blow' ? 'draw' : 'blow';
 		my @opp_plate = @{ $self->{$opp_plate} };
+		
+		# Do this in reverse, so pointless overblows can be avoided
 		
 		REED: for (my $i = 0; $i < $#plate+1 ; $i++) {
 			my $hole = $i + 1;

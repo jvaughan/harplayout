@@ -8,8 +8,8 @@ my %tunings = (
         },
 
 	paddy_richter => {
-		blow => [qw / 1  3  5  1  3  5  1  3  5  1 /],
-                draw => [qw / 2  5  b7 2  4  6  7  2  4  6 /],
+		blow => [qw / 1  3 b6  1  3  5  1  3  5  1 /],
+                draw => [qw / 2  5  7  2  4  6  7  2  4  6 /],
 	},
 );
 
@@ -24,7 +24,7 @@ use Class::MethodMaker [
 sub init {
 	my $self = shift;
 	
-	$self->available (keys %tunings);
+	$self->available (sort keys %tunings);
 		
 	unless (grep { $self->tuning eq $_ } $self->available ) {
 		die "No such tuning '" . $self->tuning . "': $!" ;
