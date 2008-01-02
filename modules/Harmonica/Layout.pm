@@ -59,7 +59,7 @@ sub set_reed {
 	$note->first_pos_interval($firstposint);
 
 	$note->position_interval ( intervalFromPosition ($firstposint, $self->position) );
-	$note->note ( $self->noteFromInterval($self->key, $firstposint) );
+	$note->note ( $self->noteFromInterval($self->position_key, $note->position_interval) );
 	$note->bendstep($bendstep);
 
 	if ($bendstep == 0) { # Is unbent?
@@ -97,9 +97,9 @@ sub addBentNotes {
 		my $opp_plate = $plate eq 'blow' ? 'draw' : 'blow';
 		my @opp_plate = @{ $self->{$opp_plate} };
 		
-		# Do this in reverse, so pointless overblows can be avoided
+		# Do this in reverse, so pointless overbends can be avoided
 		
-		REED: for (my $i = 0; $i < $#plate+1 ; $i++) {
+		REED: for (my $i = $#plate; $i >=0; $i--) {
 			my $hole = $i + 1;
 			my $natural = $self->get_note($plate, $hole, 0);
 			my $opp_natural = $self->get_note($opp_plate, $hole, 0);
