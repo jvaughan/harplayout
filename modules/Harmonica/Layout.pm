@@ -118,6 +118,21 @@ sub get_note {
 	return $self->{ $plate }->[ $reed - 1 ]->[ $bendstep ];
 }
 
+sub hole {
+	my $self = shift;
+	
+	my %data = (blow => [], draw =>[])
+	
+	foreach my $p ($self->plates) {
+		my $bs = 0;
+		while ( $_ = $self->get_note($p, $hole, $bs++) ) {
+			push (@ {$data{$p}, $_);
+		}
+	}
+	
+	return Harmonica::Hole->new (%data);		
+}
+
 sub addBends {
 	my $self = shift;
 
