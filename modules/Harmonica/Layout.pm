@@ -104,28 +104,28 @@ sub addBentNotes {
 		
 		REED: for (my $i = $#plate; $i >=0; $i--) {
 			my $hole = $i + 1;
-			my $natural = $self->get_note($plate, $hole, 0);
-			my $opp_natural = $self->get_note($opp_plate, $hole, 0);
+			my $natural = $self->get_note( $plate, $hole, 0 );
+			my $opp_natural = $self->get_note( $opp_plate, $hole, 0 );
 		
 			# Natural bends.
 			if ($self->include_bends) {
 				my $closest = $natural;
 				my $bendstep = 0;
 				BEND: while ( --$closest > $opp_natural ) {
-					$closest = $self->set_reed ($plate, $hole, ++$bendstep, $closest->first_pos_interval);
+					$closest = $self->set_reed( $plate, $hole, ++$bendstep, $closest->first_pos_interval );
 				} 
 			}
 			
 			$self->include_overblows(1);
 			$self->include_unnecessary_overblows(0);
-			if ($self->include_overblows) {
-				if ($natural < $opp_natural) {
-					# Can be overblown / drawn
+			
+			if ( $self->include_overblows ) {
+				if ( $natural < $opp_natural ) { # Can be overblown / drawn				
 					my $overbend = $opp_natural + 1;
-					unless ($self->include_unnecessary_overblows) {
-						next if $self->holeHasNote($hole +1, $overbend);
+					unless ( $self->include_unnecessary_overblows ) {
+						next if $self->holeHasNote( $hole +1, $overbend );
 					}
-					$self->set_reed ($plate, $hole, 1, $overbend->first_pos_interval);
+					$self->set_reed ( $plate, $hole, 1, $overbend->first_pos_interval );
 				}
 			} # include_overblows?
 		} # REED
@@ -138,11 +138,15 @@ sub holeHasNote {
 	my $hole = shift;
 	my $note = shift;
 	
-	PLATE: foreach my $plate (qw /blow draw/) {
-		NOTE: foreach ( @{ $self->{$plate}->[$hole -1] }  ) {
-			return 0 unless defined $_;
-			return 0 unless ref($_) eq 'Harmonica::Note'; 
-			return 1 if $note == $_;
+	PLATE: foreach my $plate (qw /draw blow/) {
+		my $bs = 0;
+		my $nn;
+		while ( 1 ) {
+			$nn = $self->get_note($plate, $hole, $bs);
+			last unless defined $nn;
+			return 1 if $note == $nn;
+			$bs++;
+			print Dumper($nn);
 		}
 	}	
 	return 0;
