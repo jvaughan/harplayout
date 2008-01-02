@@ -15,8 +15,8 @@ use Class::MethodMaker [
 					{-default => '1'}		=> 'position',
 					{-default => 'C'}		=> 'key',	
 					{-default => 1}			=> 'include_bends',
-					{-default => 1}			=> 'include_overblows',
-					{-default => 0}			=> 'include_unnecessary_overblows',
+					{-default => 1}			=> 'include_overbends',
+					{-default => 0}			=> 'include_unnecessary_overbends',
 				   ],					
 ];
 
@@ -28,8 +28,10 @@ sub init {
 	$self->{draw} = [];
 
 	$self->position_key( noteFromPosition($self->key, $self->position) );
+	
 	$self->addNaturalNotes;
-	$self->addBentNotes;
+	$self->addBends if $self->include_bends;
+	$self->addOverbends if $self->include_overbends;	
 }
 
 
@@ -70,7 +72,7 @@ sub set_reed {
 		$note->type('natural');
 		$note->description("$reed hole $plate natural")
 	}
-	else {
+	else { # It's a bend
 		my $natural = $self->get_note($plate, $reed, 0);
 		if ($note < $natural) { # standard bend
 			$note->type('bend');
@@ -84,7 +86,6 @@ sub set_reed {
 	$self->{ $plate }->[ $reed - 1 ]->[ $bendstep ] = $note;
 	return $note;
 }
-
 
 
 sub plates {
@@ -119,9 +120,33 @@ sub get_note {
 	return $self->{ $plate }->[ $reed - 1 ]->[ $bendstep ];
 }
 
-sub addBentNotes {
+sub addBends {
 	my $self = shift;
 
+	PLATE: foreach my $plate ( $self->plates)  {
+		my $opp_plate = $self->oppPlate($plate);	
+		my $hole = 0;
+		
+		# REED: for (my $i = $#plate; $i >=0; $i--) {
+		REED: foreach ( $self->reeds($plate) ) {
+			$hole++;			
+			my $natural = $self->get_note( $plate, $hole, 0 );
+			my $opp_natural = $self->get_note( $opp_plate, $hole, 0 );
+		
+			my $closest = $natural;
+			my $bendstep = 0;
+			BEND: while ( --$closest > $opp_natural ) {
+				$closest = $self->set_reed( $plate, $hole, ++$bendstep, $closest->first_pos_interval );
+			} 	
+		} # REED
+	} # PLATE
+}
+
+sub addOverbends {
+	my $self = shift;
+	
+	$self->include_unnecessary_overbends(0);
+	
 	PLATE: foreach my $plate ( $self->plates)  {
 		my $opp_plate = $self->oppPlate($plate);	
 		my $hole = 0;
@@ -131,28 +156,13 @@ sub addBentNotes {
 			$hole++;
 			my $natural = $self->get_note( $plate, $hole, 0 );
 			my $opp_natural = $self->get_note( $opp_plate, $hole, 0 );
-		
-			# Natural bends.
-			if ($self->include_bends) {
-				my $closest = $natural;
-				my $bendstep = 0;
-				BEND: while ( --$closest > $opp_natural ) {
-					$closest = $self->set_reed( $plate, $hole, ++$bendstep, $closest->first_pos_interval );
-				} 
+	
+			next REED unless ( $natural < $opp_natural ); # Can be overblown / drawn				
+			my $overbend = $opp_natural + 1;
+			unless ( $self->include_unnecessary_overbends ) {
+				next if $self->holeHasNote( $hole +1, $overbend );
 			}
-			
-			$self->include_overblows(1);
-			$self->include_unnecessary_overblows(0);
-			
-			if ( $self->include_overblows ) {
-				if ( $natural < $opp_natural ) { # Can be overblown / drawn				
-					my $overbend = $opp_natural + 1;
-					unless ( $self->include_unnecessary_overblows ) {
-						next if $self->holeHasNote( $hole +1, $overbend );
-					}
-					$self->set_reed ( $plate, $hole, 1, $overbend->first_pos_interval );
-				}
-			} # include_overblows?
+			$self->set_reed ( $plate, $hole, 1, $overbend->first_pos_interval );
 		} # REED
 	} # PLATE
 }
@@ -171,7 +181,6 @@ sub holeHasNote {
 			last unless defined $nn;
 			return 1 if $note == $nn;
 			$bs++;
-			print Dumper($nn);
 		}
 	}	
 	return 0;
