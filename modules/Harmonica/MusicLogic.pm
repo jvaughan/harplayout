@@ -121,9 +121,7 @@ sub add_subtract_interval {
 		$new_loc = $orig_loc - $amt;
 	}
 	
-	
-	$new_loc = $orig_loc-12 if $new_loc > 12;
-
+	$new_loc -= 12 if $new_loc > 11;
 	return num_to_interval( $intervals[$new_loc] );
 }
 	
