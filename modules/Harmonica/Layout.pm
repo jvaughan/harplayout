@@ -30,8 +30,8 @@ sub init {
 	$self->position_key( noteFromPosition($self->key, $self->position) );
 	
 	$self->addNaturalNotes;
-	$self->addBends if $self->include_bends;
-	$self->addOverbends if $self->include_overbends;	
+	$self->addBends 	if $self->include_bends;
+	$self->addOverbends 	if $self->include_overbends;	
 }
 
 
@@ -41,7 +41,6 @@ sub addNaturalNotes {
 	my $t = Harmonica::Tuning->new( tuning => $self->tuning );
 	
 	# Poupulate with data for natural notes
-
 	PLATE: foreach my $plate ($self->plates) {
 		my $reed = 0;
 		REED: foreach my $interval ( $t->plate($plate) ) {
@@ -60,13 +59,12 @@ sub set_reed {
 	my $self = shift;
 	my ($plate, $reed, $bendstep, $firstposint) = @_;
 
-
 	my $note = Harmonica::Note->new;
 	$note->first_pos_interval($firstposint);
 
 	$note->position_interval ( intervalFromPosition ($firstposint, $self->position) );
 	$note->note ( $self->noteFromInterval($self->position_key, $note->position_interval) );
-	$note->bendstep($bendstep);
+	$note->bendstep( $bendstep );
 
 	if ($bendstep == 0) { # Is unbent?
 		$note->type('natural');
@@ -220,7 +218,5 @@ sub intervalFromScale {
 	my $key = $self->position_key;
 	my $note;
 }
-
-		
 
 1;
