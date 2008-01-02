@@ -42,7 +42,7 @@ sub addNaturalNotes {
 	
 	# Poupulate with data for natural notes
 
-	PLATE: foreach my $plate (qw /blow draw/) {
+	PLATE: foreach my $plate ($self->plates) {
 		my $reed = 0;
 		REED: foreach my $interval ( $t->plate($plate) ) {
 			$self->set_reed ($plate, ++$reed, 0, $interval);
@@ -127,7 +127,6 @@ sub addBends {
 		my $opp_plate = $self->oppPlate($plate);	
 		my $hole = 0;
 		
-		# REED: for (my $i = $#plate; $i >=0; $i--) {
 		REED: foreach ( $self->reeds($plate) ) {
 			$hole++;			
 			my $natural = $self->get_note( $plate, $hole, 0 );
@@ -145,8 +144,6 @@ sub addBends {
 sub addOverbends {
 	my $self = shift;
 	
-	$self->include_unnecessary_overbends(0);
-	
 	PLATE: foreach my $plate ( $self->plates)  {
 		my $opp_plate = $self->oppPlate($plate);	
 		my $hole = 0;
@@ -158,6 +155,7 @@ sub addOverbends {
 			my $opp_natural = $self->get_note( $opp_plate, $hole, 0 );
 	
 			next REED unless ( $natural < $opp_natural ); # Can be overblown / drawn				
+			
 			my $overbend = $opp_natural + 1;
 			unless ( $self->include_unnecessary_overbends ) {
 				next if $self->holeHasNote( $hole +1, $overbend );
