@@ -29,7 +29,6 @@ sub init {
 
 	$self->position_key( noteFromPosition($self->key, $self->position) );
 	$self->addNaturalNotes;
-	print Dumper($self);
 	$self->addBentNotes;
 }
 
@@ -58,8 +57,7 @@ sub set_reed {
 	# The first position interval
 	my $self = shift;
 	my ($plate, $reed, $bendstep, $firstposint) = @_;
-	
-	print "	set_reed: " . Dumper(@_);
+
 
 	my $note = Harmonica::Note->new;
 	$note->first_pos_interval($firstposint);
@@ -91,10 +89,6 @@ sub set_reed {
 sub get_note {
 	my $self = shift;
         my ($plate, $reed, $bendstep) = @_;
-	print "get_note_args: " .  Dumper(@_);
-	
-	print "get_note_note: ".  Dumper( $self->{ $plate }->[ $reed - 1 ]->[ $bendstep ] );
-
 	return $self->{ $plate }->[ $reed - 1 ]->[ $bendstep ];
 }
 
@@ -114,13 +108,10 @@ sub addBentNotes {
 			my $opp_natural = $self->get_note($opp_plate, $hole, 0);
 		
 			# Natural bends.
-			print "new reed, hole $hole, $plate plate\n";
 			if ($self->include_bends) {
 				my $closest = $natural;
 				my $bendstep = 0;
-				print "closest out loop: " . Dumper($closest); 
 				BEND: while ( --$closest > $opp_natural ) {
-					print "closest: " . Dumper($closest);
 					$closest = $self->set_reed ($plate, $hole, ++$bendstep, $closest->first_pos_interval);
 				} 
 			}
@@ -130,7 +121,6 @@ sub addBentNotes {
 			if ($self->include_overblows) {
 				if ($natural < $opp_natural) {
 					# Can be overblown / drawn
-					print "hole: $hole\n";
 					my $overbend = $opp_natural + 1;
 					unless ($self->include_unnecessary_overblows) {
 						next if $self->holeHasNote($hole +1, $overbend);
@@ -148,13 +138,9 @@ sub holeHasNote {
 	my $hole = shift;
 	my $note = shift;
 	
-	print "this note: " . Dumper($note);
-	print "checking overbend against notes in hole $hole.  first p overbend is " . $note->first_pos_interval . "\n";
-	
 	PLATE: foreach my $plate (qw /blow draw/) {
 		NOTE: foreach ( @{ $self->{$plate}->[$hole -1] }  ) {
 			return 0 unless defined $_;
-			print Dumper($_);
 			return 0 unless ref($_) eq 'Harmonica::Note'; 
 			return 1 if $note == $_;
 		}
