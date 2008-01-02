@@ -7,20 +7,20 @@ our @EXPORT = qw(noteFromPosition intervalFromPosition co5_intervals co5_notes);
 
 use Music::Scales;
 
-my %co5_notes = ( qw/
-	C       G
-	G       D
-	D       A
-	A       E
-	E       B
-	B       F#
-	F#      Db
-	Db      Ab
-	Ab      Eb
-	Eb      Bb
-	Bb      F
-	F       C
-/);
+my %co5_notes = (
+	C	=> 'G',
+	G       => 'D',
+	D       => 'A',
+	A       => 'E',
+	E       => 'B',
+	B       => 'F#',
+	"F#"    => 'Db',
+	Db      => 'Ab',
+	Ab      => 'Eb',
+	Eb      => 'Bb',
+	Bb      => 'F',
+	F       => 'C',
+);
 
 my %co5_intervals = ( qw/
 	1	4
