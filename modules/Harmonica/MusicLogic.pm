@@ -33,11 +33,7 @@ sub interval_cmp {
 	}
 	my $diff = $int1_loc - $int2_loc;
 	
-	if ($op eq 'eq') {
-		return 1 if $diff == 0;
-	}
-
-	return 0 if $diff == 0;
+	return 0 if $diff == 0; # Equal
 
 	if ($op eq 'gt') {
 		return interval_gt($diff);
