@@ -86,6 +86,33 @@ sub set_reed {
 }
 
 
+
+sub plates {
+	my $self = shift;
+	
+	return qw/blow draw/;
+}
+
+sub oppPlate {
+	my $self = shift;
+	my $plate = shift;
+	
+	return $plate eq 'blow' ? 'draw' : 'blow';
+}
+
+sub reeds {
+	my $self = shift;
+	
+	return @{ $self->{$_[0]} };
+}
+
+sub reed {
+	my $self = shift;
+	my $hole = shift;
+	
+	return $self->reeds->[$hole +1];
+}
+
 sub get_note {
 	my $self = shift;
         my ($plate, $reed, $bendstep) = @_;
@@ -95,15 +122,13 @@ sub get_note {
 sub addBentNotes {
 	my $self = shift;
 
-	PLATE: foreach my $plate (qw /blow draw/) {
-		my @plate = @{ $self->{$plate} };
-		my $opp_plate = $plate eq 'blow' ? 'draw' : 'blow';
-		my @opp_plate = @{ $self->{$opp_plate} };
+	PLATE: foreach my $plate ( $self->plates)  {
+		my $opp_plate = $self->oppPlate($plate);	
+		my $hole = 0;
 		
-		# Do this in reverse, so pointless overbends can be avoided
-		
-		REED: for (my $i = $#plate; $i >=0; $i--) {
-			my $hole = $i + 1;
+		# REED: for (my $i = $#plate; $i >=0; $i--) {
+		REED: foreach ( $self->reeds($plate) ) {
+			$hole++;
 			my $natural = $self->get_note( $plate, $hole, 0 );
 			my $opp_natural = $self->get_note( $opp_plate, $hole, 0 );
 		
