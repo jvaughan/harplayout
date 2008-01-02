@@ -73,7 +73,7 @@ sub set_reed {
 			$note->description("$reed hole $plate bend step $bendstep")
 		} else { # overbend
 			$note->type("over${plate}");
-			$note->description("$reed hole $plate over${plate}");			
+			$note->description("$reed hole over${plate}");			
 		}
 	}
 
