@@ -37,33 +37,6 @@ my %co5_intervals = ( qw/
 	7	3
 /);
 
-sub oldnoteFromPosition {
-	#my $self = shift;
-	my $note = shift;
-	my $position = shift;
-
-	my $offset = $position - 1;
-
-	if ($offset > 0) {
-		while ($offset-- > 0) {
-			my @maj = get_scale_notes ($note, 1);
-			$note = $maj[4];
-		}
-		return $note;
-
-	}
-	elsif ($offset < 0) {
-		while ($offset++ < 0) {
-			my @maj = get_scale_notes ($note, 1);
-			$note = $maj[3];
-		}
-		return $note;
-	} 
-	else {
-		return $note;
-	}
-}
-
 
 sub note_from_position {
 	my $note     = shift;
