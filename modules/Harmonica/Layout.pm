@@ -7,14 +7,13 @@ use Harmonica::Tuning;
 use Harmonica::MusicLogic qw/ interval_from_position note_from_key_interval note_from_position category_from_interval /;
 use Harmonica::Note;
 
-
 use Class::MethodMaker [
 	new 	=> [ -hash => -init => 'new' ],
 	scalar	=> [ qw/ position_key / ],
 	scalar	=> [	
 		{-default => 'richter'}	=> 'tuning',
-		{-default => '1'}	=> 'position',
-		{-default => 'C'}	=> 'key',	
+		{-default => 'C'}	=> 'key',
+		{-default => 1}		=> 'position',
 		{-default => 1}		=> 'include_bends',
 		{-default => 1}		=> 'include_overbends',
 		{-default => 0}		=> 'include_unnecessary_overbends',
