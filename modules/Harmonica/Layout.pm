@@ -4,7 +4,7 @@ use strict;
 use Data::Dumper;
 
 use Harmonica::Tuning;
-use Harmonica::MusicLogic qw/ interval_from_position note_from_key_interval note_from_position/;
+use Harmonica::MusicLogic qw/ interval_from_position note_from_key_interval note_from_position category_from_interval /;
 use Harmonica::Note;
 
 
@@ -18,6 +18,7 @@ use Class::MethodMaker [
 					{-default => 1}			=> 'include_bends',
 					{-default => 1}			=> 'include_overbends',
 					{-default => 0}			=> 'include_unnecessary_overbends',
+					{-default => 1}			=> 'include_interval_category',
 				   ],					
 ];
 
@@ -62,10 +63,12 @@ sub set_reed {
 
 	my $note = Harmonica::Note->new;
 	$note->first_pos_interval($firstposint);
+	$note->bendstep( $bendstep );
 
 	$note->position_interval ( interval_from_position ($firstposint, $self->position) );
+	$note->interval_category ( category_from_interval ($note->position_interval)) if $self->include_interval_category;
 	$note->note ( note_from_key_interval($self->position_key, $note->position_interval) );
-	$note->bendstep( $bendstep );
+	
 
 	if ($bendstep == 0) { # Is unbent?
 		$note->type('natural');

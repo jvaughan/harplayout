@@ -7,7 +7,7 @@ use Data::Dumper;
 
 require Exporter;
 our @ISA = qw(Exporter);
-our @EXPORT = qw( interval_cmp subtract_interval add_interval note_from_key_interval note_from_position interval_from_position);
+our @EXPORT = qw( interval_cmp subtract_interval add_interval note_from_key_interval note_from_position interval_from_position category_from_interval);
 
 my $BOUNDARY = 7;
 
@@ -131,6 +131,24 @@ sub note_from_key_interval {
 	return $note;
 }			 
 
+sub category_from_interval {
+	my %int_to_cat = (
+		1	=> 'chord',
+		b2	=> 'danger',
+		2	=> 'passing',
+		b3	=> 'blues',
+		3	=> 'chord',
+		4	=> 'passing',
+		b5	=> 'blues',
+		5	=> 'chord',
+		b6	=> 'danger',
+		6	=> 'passing',
+		b7	=> 'blues',
+		7	=> 'danger',
+	);
+	
+	return $int_to_cat{ $_[0] };
+}
 
 sub map_interval_to_chrom_idx {
 	my $interval = shift;
