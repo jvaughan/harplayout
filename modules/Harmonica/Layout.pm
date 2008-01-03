@@ -52,6 +52,60 @@ sub addNaturalNotes {
 }
 
 
+sub addBends {
+	my $self = shift;
+
+	PLATE: foreach my $plate ( $self->plates)  {
+		my $opp_plate = $self->oppPlate($plate);	
+		my $hole = 0;
+		
+		REED: foreach ( $self->reeds($plate) ) {
+			$hole++;			
+			my $natural = $self->get_note( $plate, $hole, 0 );
+			my $opp_natural = $self->get_note( $opp_plate, $hole, 0 );
+		
+			my $closest = $natural;
+			my $bendstep = 0;
+			BEND: while ( --$closest > $opp_natural ) {
+				$closest = $self->set_reed( $plate, $hole, ++$bendstep, $closest->first_pos_interval );
+			} 	
+		} # REED
+	} # PLATE
+}
+
+
+sub addOverbends {
+	my $self = shift;
+	
+	PLATE: foreach my $plate ( $self->plates)  {
+		my $opp_plate = $self->oppPlate($plate);	
+		my $hole = 0;
+		
+		# REED: for (my $i = $#plate; $i >=0; $i--) {
+		REED: foreach ( $self->reeds($plate) ) {
+			$hole++;
+			my $natural = $self->get_note( $plate, $hole, 0 );
+			my $opp_natural = $self->get_note( $opp_plate, $hole, 0 );
+	
+			next REED unless ( $natural < $opp_natural ); # Can be overblown / drawn				
+			
+			my $overbend = $opp_natural + 1;
+			unless ( $self->include_unnecessary_overbends ) {
+				next if $self->holeHasNote( $hole +1, $overbend );
+			}
+			$self->set_reed ( $plate, $hole, 1, $overbend->first_pos_interval );
+		} # REED
+	} # PLATE
+}
+
+
+sub get_note {
+	my $self = shift;
+        my ($plate, $reed, $bendstep) = @_;
+	return $self->{ $plate }->[ $reed - 1 ]->[ $bendstep ];
+}
+
+
 sub set_reed {
 	# Takes: 
 	# Plate (blow or draw)
@@ -90,11 +144,27 @@ sub set_reed {
 }
 
 
+sub holeHasNote {
+	my $self = shift;
+	my $hole = shift;
+	my $note = shift;
+	
+	PLATE: foreach my $plate ($self->plates) {
+		my $bs = 0;
+		NOTE: while ( $_ = $self->get_note($plate, $hole, $bs++) ) {
+			return 1 if $note == $_;
+		}
+	}	
+	return 0;
+}
+
+
 sub plates {
 	my $self = shift;
 	
 	return qw/blow draw/;
 }
+
 
 sub oppPlate {
 	my $self = shift;
@@ -114,72 +184,6 @@ sub reed {
 	my $hole = shift;
 	
 	return $self->reeds->[$hole +1];
-}
-
-sub get_note {
-	my $self = shift;
-        my ($plate, $reed, $bendstep) = @_;
-	return $self->{ $plate }->[ $reed - 1 ]->[ $bendstep ];
-}
-
-sub addBends {
-	my $self = shift;
-
-	PLATE: foreach my $plate ( $self->plates)  {
-		my $opp_plate = $self->oppPlate($plate);	
-		my $hole = 0;
-		
-		REED: foreach ( $self->reeds($plate) ) {
-			$hole++;			
-			my $natural = $self->get_note( $plate, $hole, 0 );
-			my $opp_natural = $self->get_note( $opp_plate, $hole, 0 );
-		
-			my $closest = $natural;
-			my $bendstep = 0;
-			BEND: while ( --$closest > $opp_natural ) {
-				$closest = $self->set_reed( $plate, $hole, ++$bendstep, $closest->first_pos_interval );
-			} 	
-		} # REED
-	} # PLATE
-}
-
-sub addOverbends {
-	my $self = shift;
-	
-	PLATE: foreach my $plate ( $self->plates)  {
-		my $opp_plate = $self->oppPlate($plate);	
-		my $hole = 0;
-		
-		# REED: for (my $i = $#plate; $i >=0; $i--) {
-		REED: foreach ( $self->reeds($plate) ) {
-			$hole++;
-			my $natural = $self->get_note( $plate, $hole, 0 );
-			my $opp_natural = $self->get_note( $opp_plate, $hole, 0 );
-	
-			next REED unless ( $natural < $opp_natural ); # Can be overblown / drawn				
-			
-			my $overbend = $opp_natural + 1;
-			unless ( $self->include_unnecessary_overbends ) {
-				next if $self->holeHasNote( $hole +1, $overbend );
-			}
-			$self->set_reed ( $plate, $hole, 1, $overbend->first_pos_interval );
-		} # REED
-	} # PLATE
-}
-
-
-sub holeHasNote {
-	my $self = shift;
-	my $hole = shift;
-	my $note = shift;
-	
-	PLATE: foreach my $plate ($self->plates) {
-		my $bs = 0;
-		NOTE: while ( $_ = $self->get_note($plate, $hole, $bs++) ) {
-			return 1 if $note == $_;
-		}
-	}	
-	return 0;
 }
 
 1;
