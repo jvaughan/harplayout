@@ -63,12 +63,12 @@ sub interval_gt {
 	
 
 sub add_interval {
-	return add_subtract_interval('add', $_[0], $_[1]);
+	return add_subtract_interval('add', @_);
 }
 
 	
 sub subtract_interval {
-	return add_subtract_interval('sub', $_[0], $_[1]);
+	return add_subtract_interval('sub', @_);
 }
 
 
