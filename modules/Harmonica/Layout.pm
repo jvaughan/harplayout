@@ -211,12 +211,6 @@ sub mapIntervalToChromIdx {
 
 	return $int_to_chrom{$interval};
 }
-	
 
-sub intervalFromScale {
-	my $self = shift;
-	my $key = $self->position_key;
-	my $note;
-}
 
 1;
