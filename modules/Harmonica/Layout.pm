@@ -2,10 +2,11 @@ package Harmonica::Layout;
 use strict;
 
 use Data::Dumper;
-use Music::Scales;
-use Harmonica::CircleOfFifths;
-use Harmonica::Note;
+
 use Harmonica::Tuning;
+use Harmonica::MusicLogic qw/ interval_from_position note_from_key_interval note_from_position/;
+use Harmonica::Note;
+
 
 use Class::MethodMaker [
 	new 			=> [ -hash => -init => 'new' ],
@@ -27,7 +28,7 @@ sub init {
 	$self->{blow} = [];
 	$self->{draw} = [];
 
-	$self->position_key( noteFromPosition($self->key, $self->position) );
+	$self->position_key( note_from_position($self->key, $self->position) );
 	
 	$self->addNaturalNotes;
 	$self->addBends 	if $self->include_bends;
@@ -62,8 +63,8 @@ sub set_reed {
 	my $note = Harmonica::Note->new;
 	$note->first_pos_interval($firstposint);
 
-	$note->position_interval ( intervalFromPosition ($firstposint, $self->position) );
-	$note->note ( $self->noteFromInterval($self->position_key, $note->position_interval) );
+	$note->position_interval ( interval_from_position ($firstposint, $self->position) );
+	$note->note ( note_from_key_interval($self->position_key, $note->position_interval) );
 	$note->bendstep( $bendstep );
 
 	if ($bendstep == 0) { # Is unbent?
@@ -177,40 +178,5 @@ sub holeHasNote {
 	}	
 	return 0;
 }
-
-
-sub noteFromInterval {
-	my $self = shift;
-	my $key = shift;
-	my $interval = shift;
-
-	my @chrom = get_scale_notes ($key, 12);
-	my $note = $chrom[ $self->mapIntervalToChromIdx($interval) ];
-	return $note;
-}			 
-
-
-sub mapIntervalToChromIdx {
-	my $self = shift;
-	my $interval = shift;
-
-	my %int_to_chrom = (
-		1	=> 0,
-		b2	=> 1,
-		2	=> 2,
-		b3	=> 3,
-		3	=> 4,
-		4	=> 5,
-		b5	=> 6,
-		5	=> 7,
-		b6	=> 8,
-		6	=> 9,
-		b7	=> 10,
-		7	=> 11,
-	);
-
-	return $int_to_chrom{$interval};
-}
-
 
 1;
