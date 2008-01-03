@@ -60,35 +60,13 @@ sub interval_gt {
 }
 	
 
-sub interval_to_num {
-	$_ = shift;
-
-	if (m/^b(\d)/) {
-		my $n = $1 - 1;
-		$_ = "${n}.5";
-	}
-	return $_;
-}
-
-sub num_to_interval {
-	$_ = shift;
-
-	if (m/\.5/) {
-		$_ += 0.5;
-		$_ = "b$_";
-	}
-	return $_;
-}
-
-
-
-sub subtract_interval {
-	return add_subtract_interval('sub', $_[0], $_[1]);
-}
-
-
 sub add_interval {
 	return add_subtract_interval('add', $_[0], $_[1]);
+}
+
+	
+sub subtract_interval {
+	return add_subtract_interval('sub', $_[0], $_[1]);
 }
 
 
@@ -122,6 +100,7 @@ sub add_subtract_interval {
 	return num_to_interval( $intervals[$new_loc] );
 }
 
+
 sub note_from_key_interval {
 	my $key = shift;
 	my $interval = shift;
@@ -148,6 +127,26 @@ sub category_from_interval {
 	);
 	
 	return $int_to_cat{ $_[0] };
+}
+
+sub interval_to_num {
+	$_ = shift;
+
+	if (m/^b(\d)/) {
+		my $n = $1 - 1;
+		$_ = "${n}.5";
+	}
+	return $_;
+}
+
+sub num_to_interval {
+	$_ = shift;
+
+	if (m/\.5/) {
+		$_ += 0.5;
+		$_ = "b$_";
+	}
+	return $_;
 }
 
 sub map_interval_to_chrom_idx {
