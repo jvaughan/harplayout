@@ -3,6 +3,11 @@ use strict;
 
 use Harmonica::MusicLogic qw/ add_interval subtract_interval interval_cmp /;
 
+use Class::MethodMaker [
+        new	=> [ -hash => -init => 'new' ],
+        scalar	=> [ qw/first_pos_interval position_interval interval_category note bendstep description type/ ]
+];
+
 use overload
 	'+'	=> \&add,
 	'-'	=> \&subtract,
@@ -12,13 +17,8 @@ use overload
 	'<'	=> \&lt,
 	'<='	=> \&lte,
 	'fallback' => 1,
-
 ;
 
-use Class::MethodMaker [
-        new	=> [ -hash => -init => 'new' ],
-        scalar	=> [ qw/first_pos_interval position_interval interval_category note bendstep description type/ ]
-];
 
 sub init {} 
 
@@ -55,7 +55,6 @@ sub lte {
 	return 1 if $_[0] == $_[1];
 	return $_[0] < $_[1]; 
 }
-
 
 
 1;
