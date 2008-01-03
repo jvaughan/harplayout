@@ -1,9 +1,6 @@
 package Harmonica::Note;
 use strict;
 
-use Data::Dumper;
-use Music::Scales;
-use Harmonica::CircleOfFifths;
 use Harmonica::MusicLogic;
 
 use overload
