@@ -1,7 +1,7 @@
 package Harmonica::Note;
 use strict;
 
-use Harmonica::MusicLogic;
+use Harmonica::MusicLogic qw/ add_interval subtract_interval interval_cmp /;
 
 use overload
 	'+'	=> \&add,
@@ -15,10 +15,10 @@ use overload
 
 ;
 
-use Class::MethodMaker
+use Class::MethodMaker [
         new	=> [ -hash => -init => 'new' ],
         scalar	=> [ qw/first_pos_interval position_interval interval_category note bendstep description type/ ]
-;
+];
 
 sub init {} 
 
