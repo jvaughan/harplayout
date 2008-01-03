@@ -16,8 +16,8 @@ use overload
 ;
 
 use Class::MethodMaker
-        new_hash_with_init      => 'new',
-        get_set                 => [ qw/first_pos_interval position_interval interval_category note bendstep description type/ ]
+        new	=> [ -hash => -init => 'new' ],
+        scalar	=> [ qw/first_pos_interval position_interval interval_category note bendstep description type/ ]
 ;
 
 sub init {} 
