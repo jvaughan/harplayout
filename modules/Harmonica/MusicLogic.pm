@@ -6,8 +6,10 @@ use Music::Scales;
 use Data::Dumper;
 
 require Exporter;
-our @ISA = qw(Exporter);
-our @EXPORT = qw( interval_cmp subtract_interval add_interval note_from_key_interval note_from_position interval_from_position category_from_interval);
+our @ISA	= qw/ Exporter /;
+our @EXPORT_OK	= qw/ interval_cmp subtract_interval add_interval note_from_key_interval note_from_position 
+		  interval_from_position category_from_interval 
+		  /;
 
 my $BOUNDARY = 7;
 
