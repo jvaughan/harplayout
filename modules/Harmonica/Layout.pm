@@ -45,7 +45,7 @@ sub addNaturalNotes {
 	PLATE: foreach my $plate ($self->plates) {
 		my $reed = 0;
 		REED: foreach my $interval ( $t->plate($plate) ) {
-			$self->set_reed ($plate, ++$reed, 0, $interval);
+			$self->set_note ($plate, ++$reed, 0, $interval);
 		}
         }
 }
@@ -66,7 +66,7 @@ sub addBends {
 			my $closest = $natural;
 			my $bendstep = 0;
 			BEND: while ( --$closest > $opp_natural ) {
-				$closest = $self->set_reed( $plate, $hole, ++$bendstep, $closest->first_pos_interval );
+				$closest = $self->set_note( $plate, $hole, ++$bendstep, $closest->first_pos_interval );
 			} 	
 		} # REED
 	} # PLATE
@@ -92,7 +92,7 @@ sub addOverbends {
 			unless ( $self->include_unnecessary_overbends ) {
 				next if $self->holeHasNote( $hole +1, $overbend );
 			}
-			$self->set_reed ( $plate, $hole, 1, $overbend->first_pos_interval );
+			$self->set_note ( $plate, $hole, 1, $overbend->first_pos_interval );
 		} # REED
 	} # PLATE
 }
@@ -105,7 +105,7 @@ sub get_note {
 }
 
 
-sub set_reed {
+sub set_note {
 	# Takes: 
 	# Plate (blow or draw)
 	# Reed number 
