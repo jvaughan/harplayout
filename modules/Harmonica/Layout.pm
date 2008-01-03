@@ -14,6 +14,7 @@ use Class::MethodMaker [
 		{-default => 'richter'}	=> 'tuning',
 		{-default => 'C'}	=> 'key',
 		{-default => 1}		=> 'position',
+		
 		{-default => 1}		=> 'include_bends',
 		{-default => 1}		=> 'include_overbends',
 		{-default => 0}		=> 'include_unnecessary_overbends',
@@ -39,12 +40,12 @@ sub init {
 sub addNaturalNotes {
 	my $self = shift;
 
-	my $t = Harmonica::Tuning->new( tuning => $self->tuning );
+	my $tuning = Harmonica::Tuning->new( tuning => $self->tuning );
 	
-	# Poupulate with data for natural notes
+	# Poupulate each plate and reed with natural notes.
 	PLATE: foreach my $plate ($self->plates) {
 		my $reed = 0;
-		REED: foreach my $interval ( $t->plate($plate) ) {
+		REED: foreach my $interval ( $tuning->plate($plate) ) {
 			$self->set_note ($plate, ++$reed, 0, $interval);
 		}
         }
@@ -64,12 +65,15 @@ sub addBends {
 			my $opp_natural = $self->get_note( $opp_plate, $hole, 0 );
 		
 			my $closest = $natural;
+
+			# Add bent notes, each one being one semitone closer to the opposing natural note,
+			# stopping one semitone away.
 			my $bendstep = 0;
 			BEND: while ( --$closest > $opp_natural ) {
 				$closest = $self->set_note( $plate, $hole, ++$bendstep, $closest->first_pos_interval );
 			} 	
-		} # REED
-	} # PLATE
+		} # REED loop
+	} # PLATE loop
 }
 
 
@@ -80,16 +84,18 @@ sub addOverbends {
 		my $opp_plate = $self->oppPlate($plate);	
 		my $hole = 0;
 		
-		# REED: for (my $i = $#plate; $i >=0; $i--) {
 		REED: foreach ( $self->reeds($plate) ) {
 			$hole++;
 			my $natural = $self->get_note( $plate, $hole, 0 );
 			my $opp_natural = $self->get_note( $opp_plate, $hole, 0 );
 	
-			next REED unless ( $natural < $opp_natural ); # Can be overblown / drawn				
+			next REED unless ( $natural < $opp_natural ); # Skip if can't be overbent				
 			
+			# Overbent note is one semitone higher than the natural note of the opposing reed.
 			my $overbend = $opp_natural + 1;
+			
 			unless ( $self->include_unnecessary_overbends ) {
+				# Don't add the overblow if the note is available in the next hole up
 				next if $self->holeHasNote( $hole +1, $overbend );
 			}
 			$self->set_note ( $plate, $hole, 1, $overbend->first_pos_interval );
@@ -122,7 +128,6 @@ sub set_note {
 	$note->interval_category ( category_from_interval ($note->position_interval)) if $self->include_interval_category;
 	$note->note ( note_from_key_interval($self->position_key, $note->position_interval) );
 	
-
 	if ($bendstep == 0) { # Is unbent?
 		$note->type('natural');
 		$note->description("$reed hole $plate natural")
