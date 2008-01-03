@@ -9,17 +9,17 @@ use Harmonica::Note;
 
 
 use Class::MethodMaker [
-	new 			=> [ -hash => -init => 'new' ],
-	scalar			=> [ qw/ position_key / ],
-	scalar			=> [	
-					{-default => 'richter'}		=> 'tuning',
-					{-default => '1'}		=> 'position',
-					{-default => 'C'}		=> 'key',	
-					{-default => 1}			=> 'include_bends',
-					{-default => 1}			=> 'include_overbends',
-					{-default => 0}			=> 'include_unnecessary_overbends',
-					{-default => 1}			=> 'include_interval_category',
-				   ],					
+	new 	=> [ -hash => -init => 'new' ],
+	scalar	=> [ qw/ position_key / ],
+	scalar	=> [	
+		{-default => 'richter'}	=> 'tuning',
+		{-default => '1'}	=> 'position',
+		{-default => 'C'}	=> 'key',	
+		{-default => 1}		=> 'include_bends',
+		{-default => 1}		=> 'include_overbends',
+		{-default => 0}		=> 'include_unnecessary_overbends',
+		{-default => 1}		=> 'include_interval_category',
+	],					
 ];
 
 
