@@ -7,5 +7,7 @@ use Data::Dumper;
 my $harp = Harmonica::Layout::Table->new (position => '2', tuning => 'richter', key => 'F');
 #warn Dumper ($harp);
 
-$harp->printTable;
+print join (", ", $harp->holeNums);
+
+print"\n";
 
