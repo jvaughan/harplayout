@@ -12,9 +12,7 @@ sub cgiapp_init	{
 	# Set template options
 	$self->template->config(
 		default_type 	=> 'TemplateToolkit',
-		TemplateToolkit	=> {
-			INCLUDE_PATH	=> '/Users/jvaughan/svn/jvaughan/trunk/dev/harplayout/templates',
-		}
+		include_paths	=> ['/Users/jvaughan/svn/jvaughan/trunk/dev/harplayout/templates',] ,
 	);
 }
 
