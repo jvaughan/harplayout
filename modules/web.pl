@@ -1,6 +1,8 @@
 #!/usr/bin/perl -w 
 use strict;
 
+use CGI::Carp qw(fatalsToBrowser);
+
 use Harmonica::Web;
 use Data::Dumper;
 
