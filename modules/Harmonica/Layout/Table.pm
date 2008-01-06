@@ -39,6 +39,28 @@ sub _makeTable {
 }
 
 
+sub blowHoles {
+	my $self = shift;
+	
+	return reverse ( @{ $self->{table}->{blow} } );
+}
+
+
+sub drawHoles {
+	my $self = shift;
+	
+	return @{ $self->{table}->{draw} }
+}
+
+
+sub holeNums {
+	my $self = shift;
+	
+	my $num_holes = $self->reeds('blow');
+	return ( 1 .. $num_holes);
+}
+
+
 sub printTable {
 	my $self = shift;
 	
