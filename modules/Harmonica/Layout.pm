@@ -19,8 +19,8 @@ use Class::MethodMaker [
 		{-default => 1}		=> 'include_overbends',
 		{-default => 0}		=> 'include_unnecessary_overbends',
 		{-default => 1}		=> 'include_interval_category',
-	],					
-];
+	],
+);
 
 
 sub init {
@@ -190,6 +190,10 @@ sub reed {
 	my $hole = shift;
 	
 	return $self->reeds->[$hole +1];
+}
+
+sub positions_available {
+	return ( 1 .. 12 );
 }
 
 1;
