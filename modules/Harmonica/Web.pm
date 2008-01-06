@@ -4,6 +4,8 @@ use base qw/ CGI::Application /;
 use CGI::Application::Plugin::AnyTemplate;
 use CGI::Application::Plugin::AutoRunmode;
 
+use Harmonica::Layout::Table;
+
 sub cgiapp_init	{
 	my $self = shift;
 
