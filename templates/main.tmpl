@@ -4,11 +4,6 @@ Hello World!
 Key is [% harp.key %],god i wish it wasn't
 bn: [% harp.blowNotes %]
 
-<table>
-[% FOREACH bend IN harp.blowNotes %]<tr>
-    [% FOREACH note IN bend %]
-        <td>[% note.position_interval %]<td>
-    [% END %]
-[% END %]
+
 
 
