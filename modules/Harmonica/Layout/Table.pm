@@ -39,14 +39,14 @@ sub _makeTable {
 }
 
 
-sub blowHoles {
+sub blowNotes {
 	my $self = shift;
 	
 	return reverse ( @{ $self->{table}->{blow} } );
 }
 
 
-sub drawHoles {
+sub drawNotes {
 	my $self = shift;
 	
 	return @{ $self->{table}->{draw} }
