@@ -1,8 +1,12 @@
 [% title = "Harmonica Layout" %]
 [% PROCESS 'inc/header.tmpl' %]
-Hello World!
 
-Key is [% harp.key %],god i wish it wasn't
+<body>
+<h1>Harp Layout</h1>
+
+<p>Welcome to Harp Layout.</p>
+
+<p>Key is [% harp.key %]. Position is [% harp.position %].  Position key is [% harp.position_key %].
 
 [% PROCESS 'inc/harptable.tmpl' %]
 
