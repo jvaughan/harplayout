@@ -20,7 +20,7 @@ use Class::MethodMaker [
 		{-default => 0}		=> 'include_unnecessary_overbends',
 		{-default => 1}		=> 'include_interval_category',
 	],
-);
+];
 
 
 sub init {
