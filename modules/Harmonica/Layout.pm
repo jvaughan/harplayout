@@ -26,12 +26,12 @@ use Class::MethodMaker [
 sub init {
 	my $self = shift;
 
-	$self->{blow} = [];
-	$self->{draw} = [];
+	#$self->{blow} = [];
+	#$self->{draw} = [];
 
 	$self->position_key( note_from_position($self->key, $self->position) );
 	
-	$self->addNaturalNotes;
+	$self->addNaturalNotes;	
 	$self->addBends 	if $self->include_bends;
 	$self->addOverbends 	if $self->include_overbends;	
 }
@@ -107,6 +107,8 @@ sub addOverbends {
 sub get_note {
 	my $self = shift;
         my ($plate, $reed, $bendstep) = @_;
+
+	return undef unless defined $self->{ $plate }->[ $reed -1 ];
 	return $self->{ $plate }->[ $reed - 1 ]->[ $bendstep ];
 }
 
