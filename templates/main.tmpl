@@ -1,8 +1,10 @@
+[% title = "Harmonica Layout" %]
 [% PROCESS 'inc/header.tmpl' %]
 Hello World!
 
 Key is [% harp.key %],god i wish it wasn't
-bn: [% harp.blowNotes %]
+
+[% PROCESS 'inc/harptable.tmpl' %]
 
 
 

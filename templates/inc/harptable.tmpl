@@ -1,6 +1,21 @@
 <table>
-[% FOREACH bend IN harp.blowNotes %]<tr>
+[% FOREACH bend IN harp.blowNotes %]
+    <tr>
     [% FOREACH note IN bend %]
-        <td>[% note.position_interval %]<td>
+        <td>[% PROCESS 'inc/notecell.tmpl' %]</td>
     [% END %]
+    </tr>
 [% END %]
+<tr>
+[% FOREACH num IN harp.holeNums %]
+  <td>[% num %]</td>
+[% END %]
+</tr>
+[% FOREACH bend IN harp.drawNotes %]
+    <tr>
+    [% FOREACH note IN bend %]
+        <td>[% PROCESS 'inc/notecell.tmpl' %]</td>
+    [% END %]
+    </tr>
+[% END %]
+</table>
