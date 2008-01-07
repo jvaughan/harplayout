@@ -1,6 +1,7 @@
 <table class="harmonica">
 [% FOREACH bend IN harp.blowNotes %]
     <tr>
+    <td>[% IF loop.last %]Blow[% END %]</td>
     [% FOREACH note IN bend %]
         [% PROCESS 'inc/notecell.tmpl' %]
     [% END %]
@@ -13,6 +14,7 @@
 </tr>
 [% FOREACH bend IN harp.drawNotes %]
     <tr>
+    <td>[% IF loop.first %]Draw[% END %]</td>
     [% FOREACH note IN bend %]
         [% PROCESS 'inc/notecell.tmpl' %]
     [% END %]
