@@ -4,7 +4,7 @@ use strict;
 use Data::Dumper;
 
 use Harmonica::Tuning;
-use Harmonica::MusicLogic qw/ interval_from_position note_from_key_interval note_from_position category_from_interval /;
+use Harmonica::MusicLogic qw/ interval_from_position note_from_key_interval note_from_position category_from_interval keys /;
 use Harmonica::Note;
 
 use Class::MethodMaker [
@@ -26,8 +26,8 @@ use Class::MethodMaker [
 sub init {
 	my $self = shift;
 
-	#$self->{blow} = [];
-	#$self->{draw} = [];
+	$self->{blow} = [];
+	$self->{draw} = [];
 
 	$self->position_key( note_from_position($self->key, $self->position) );
 	
@@ -193,7 +193,11 @@ sub reed {
 }
 
 sub positions_available {
-	return ( 1 .. 12 );
+	return 1 .. 12;
+}
+
+sub keys_available {
+	return keys();
 }
 
 1;

@@ -1,5 +1,18 @@
 [% USE CGI %]
-[% CGI.popup_menu ( Name    => 'position',
-                    Values  => [ harp.positions_available ],
+      
+[% CGI.popup_menu ( 
+                    '-name'    => 'position',
+                    '-values'  => harp.positions_available,
+                    '-default' => harp.position,
+                    '-class'  => 'dropdown',
+   )
+%]
+
+[% CGI.popup_menu ( 
+                    '-name'    => 'keys',
+                    '-values'  => harp.keys_available,
+                    '-default' => harp.key,
+                    '-class'  => 'dropdown',
+                    '-id'       => 'keys_dropdown',
    )
 %]
