@@ -9,3 +9,5 @@ print "yes!\n" if $harp->can('sdkey');
 warn Dumper (harp => $harp);
 print join (", ", $harp->positions_available);
 
+print "pk: " . $harp->positionkey;
+print "\n";
