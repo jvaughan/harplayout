@@ -1,4 +1,5 @@
 package Harmonica::Web;
+use strict;
 
 use base qw/ CGI::Application /;
 use CGI::Application::Plugin::AnyTemplate;
@@ -28,10 +29,16 @@ sub showHarp : StartRunmode {
 	my $self = shift;
 	my $q = $self->query;
 	
+	my @form_fields = 
+		qw/ position key song_key include_overbends include_unnecessary_overbends /;
 				
 	my %harp_params;
-	foreach my $p ($q->param) {
-		$harp_params{$p} = $q->param($p) if Harmonica::Layout::Table->can($p) && $q->param($p);
+	
+	if ($q->param('submit')) {
+		foreach my $f (@form_fields) {
+			next unless Harmonica::Layout::Table->can($f);
+			$harp_params{$f} = $q->param($f) || 0;
+		}
 	}
 		
 	my %template_params = (
