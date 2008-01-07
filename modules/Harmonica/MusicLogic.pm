@@ -8,12 +8,12 @@ use Data::Dumper;
 require Exporter;
 our @ISA	= qw/ Exporter /;
 our @EXPORT_OK	= qw/ interval_cmp subtract_interval add_interval note_from_key_interval note_from_position 
-		  interval_from_position category_from_interval keys
+		  interval_from_position category_from_interval all_keys
 		  /;
 
 my $BOUNDARY = 7;
 
-sub keys {
+sub all_keys {
 	my %co5 = co5_notes();
 	
 	return sort keys %co5;

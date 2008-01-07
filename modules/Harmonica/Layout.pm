@@ -4,12 +4,12 @@ use strict;
 use Data::Dumper;
 
 use Harmonica::Tuning;
-use Harmonica::MusicLogic qw/ interval_from_position note_from_key_interval note_from_position category_from_interval keys /;
+use Harmonica::MusicLogic qw/ interval_from_position note_from_key_interval note_from_position category_from_interval all_keys /;
 use Harmonica::Note;
 
 use Class::MethodMaker [
 	new 	=> [ -hash => -init => 'new' ],
-	scalar	=> [ qw/ position_key / ],
+	# scalar	=> [ qw/ positionkey / ],
 	scalar	=> [	
 		{-default => 'richter'}	=> 'tuning',
 		{-default => 'C'}	=> 'key',
@@ -29,11 +29,19 @@ sub init {
 	$self->{blow} = [];
 	$self->{draw} = [];
 
-	$self->position_key( note_from_position($self->key, $self->position) );
+	# $self->positionkey( note_from_position($self->key, $self->position) );
 	
 	$self->addNaturalNotes;	
 	$self->addBends 	if $self->include_bends;
 	$self->addOverbends 	if $self->include_overbends;	
+}
+
+sub positionKey {
+	my $self = shift;
+	
+	# return "C";
+	
+	return note_from_position($self->key, $self->position);
 }
 
 
@@ -128,7 +136,7 @@ sub set_note {
 
 	$note->position_interval ( interval_from_position ($firstposint, $self->position) );
 	$note->interval_category ( category_from_interval ($note->position_interval)) if $self->include_interval_category;
-	$note->note ( note_from_key_interval($self->position_key, $note->position_interval) );
+	$note->note ( note_from_key_interval($self->positionKey, $note->position_interval) );
 	
 	if ($bendstep == 0) { # Is unbent?
 		$note->type('natural');
@@ -197,7 +205,7 @@ sub positions_available {
 }
 
 sub keys_available {
-	return keys();
+	return all_keys();
 }
 
 1;

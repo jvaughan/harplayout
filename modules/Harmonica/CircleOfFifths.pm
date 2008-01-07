@@ -49,8 +49,10 @@ sub note_from_position {
 			$note = $co5_notes{$note};
                 }
                 return $note;
-
         }
+	else {
+		return $note;
+	}
 }
 
 
