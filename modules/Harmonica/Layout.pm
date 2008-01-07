@@ -145,7 +145,7 @@ sub set_note {
 	else { # It's a bend
 		my $natural = $self->get_note($plate, $reed, 0);
 		if ($note < $natural) { # standard bend
-			$note->type('bend');
+			$note->type("${plate}bend");
 			$note->description("$reed hole $plate bend step $bendstep")
 		} else { # overbend
 			$note->type("over${plate}");
