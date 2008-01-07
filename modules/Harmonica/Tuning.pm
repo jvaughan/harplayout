@@ -2,12 +2,12 @@ package Harmonica::Tuning;
 use strict;
 
 my %tunings = (
-        richter => {
+        'Richter' => {
                 blow => [qw / 1  3  5  1  3  5  1  3  5  1 /],
                 draw => [qw / 2  5  7  2  4  6  7  2  4  6 /],
         },
 
-	paddy_richter => {
+	'Paddy Richter' => {
 		blow => [qw / 1  3 b6  1  3  5  1  3  5  1 /],
                 draw => [qw / 2  5  7  2  4  6  7  2  4  6 /],
 	},
@@ -16,7 +16,7 @@ my %tunings = (
 use Class::MethodMaker [
 #	new_hash_with_init	=> 'new',
 	new 			=> [ -hash => -init => 'new' ],
-	scalar			=> [ {-default => 'richter'}, 'tuning' ],
+	scalar			=> [ {-default => 'Richter'}, 'tuning' ],
 	array			=> [ qw/ available blow draw /],
 ]	;
 
@@ -44,5 +44,6 @@ sub plate {
 	
 	die "no such plate $_: $!";
 }
+
 
 1;

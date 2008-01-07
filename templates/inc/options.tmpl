@@ -5,7 +5,7 @@
 <td>Key: </td>
 <td>
 [% CGI.popup_menu ( 
-                    '-name'    => 'keys',
+                    '-name'    => 'key',
                     '-values'  => harp.keys_available,
                     '-default' => harp.key,
                     '-class'  => 'dropdown',
@@ -29,13 +29,35 @@
 <tr>
 <td>
 [% CGI.checkbox (
+        '-name'     => 'include_bends',
+        '-checked'    => harp.include_bends,
+        '-value'    => 1,
+        '-label'    => 'Include bends',
+        )
+%]
+</td>
+<tr>
+<td>
+[% CGI.checkbox (
     '-name'     => 'include_overbends',
     '-checked'    => harp.include_overbends,
     '-value'    => 1,
-    '-label'    => 'Include Overblows / overdraws',
+    '-label'    => 'Include Overbends',
     )
 %]
+</td>
 <tr>
+    <tr>
+    <td>
+    [% CGI.checkbox (
+        '-name'     => 'include_unnecessary_overbends',
+        '-checked'    => harp.include_unnecessary_overbends,
+        '-value'    => 1,
+        '-label'    => 'Include Unnecessary Overbends',
+        )
+    %]
+    </td>
+    <tr>
 <td>[% CGI.submit ('-name' => 'submit', '-value' => 'Go!')%]</td>
 </tr>
 </table>

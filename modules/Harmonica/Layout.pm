@@ -11,7 +11,7 @@ use Class::MethodMaker [
 	new 	=> [ -hash => -init => 'new' ],
 	# scalar	=> [ qw/ positionkey / ],
 	scalar	=> [	
-		{-default => 'richter'}	=> 'tuning',
+		{-default => 'Richter'}	=> 'tuning',
 		{-default => 'C'}	=> 'key',
 		{-default => 1}		=> 'position',
 		
