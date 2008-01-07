@@ -28,7 +28,7 @@ sub showHarp : StartRunmode {
 				
 	my %harp_params;
 	foreach my $p ($q->param) {
-		$harp_params{$p} = $q->param($p) if $harp->can($p) && $q->param($p);
+		$harp_params{$p} = $q->param($p) if Harmonica::Layout::Table->can($p) && $q->param($p);
 	}
 		
 	my %template_params = (
