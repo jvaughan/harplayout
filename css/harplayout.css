@@ -16,3 +16,8 @@ table.harmonica td
     padding: 4px;
     background-color: #FFC;
 }
+
+tr.holenums td {
+	background-color: black;
+	color:	white;
+}
