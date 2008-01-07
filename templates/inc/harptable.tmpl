@@ -1,20 +1,21 @@
 <table class="harmonica">
 [% FOREACH bend IN harp.blowNotes %]
     <tr>
-    <td>[% IF loop.last %]Blow[% END %]</td>
+    <td>[% IF loop.last %]Blow[% ELSE %]&nbsp;[% END %]</td>
     [% FOREACH note IN bend %]
         [% PROCESS 'inc/notecell.tmpl' %]
     [% END %]
     </tr>
 [% END %]
 <tr class="holenums">
+<td>&nbsp;</td>
 [% FOREACH num IN harp.holeNums %]
   <td>[% num %]</td>
 [% END %]
 </tr>
 [% FOREACH bend IN harp.drawNotes %]
     <tr>
-    <td>[% IF loop.first %]Draw[% END %]</td>
+    <td>[% IF loop.first %]Draw[% ELSE %]&nbsp;[% END %]</td>
     [% FOREACH note IN bend %]
         [% PROCESS 'inc/notecell.tmpl' %]
     [% END %]
