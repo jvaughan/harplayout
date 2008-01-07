@@ -2,7 +2,7 @@
 [% FOREACH bend IN harp.blowNotes %]
     <tr>
     [% FOREACH note IN bend %]
-        <td>[% PROCESS 'inc/notecell.tmpl' %]</td>
+        [% PROCESS 'inc/notecell.tmpl' %]
     [% END %]
     </tr>
 [% END %]
@@ -14,7 +14,7 @@
 [% FOREACH bend IN harp.drawNotes %]
     <tr>
     [% FOREACH note IN bend %]
-        <td>[% PROCESS 'inc/notecell.tmpl' %]</td>
+        [% PROCESS 'inc/notecell.tmpl' %]
     [% END %]
     </tr>
 [% END %]
