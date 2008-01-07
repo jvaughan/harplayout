@@ -13,6 +13,7 @@ sub cgiapp_init	{
 	$self->template->config(
 		default_type 	=> 'TemplateToolkit',
 		include_paths	=> [qw(
+			../templates
 			/var/vhosts/turnip.org.uk/templates 
 			/Users/jvaughan/svn/jvaughan/trunk/dev/harplayout/templates
 			)
