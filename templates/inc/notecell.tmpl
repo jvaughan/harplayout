@@ -1,1 +1,7 @@
-<td>[% note.position_interval %]</td>
+[% IF note.position_interval %]
+    [% class = note.type %]
+[% ELSE %]
+    [% class = "empty" %]
+[% END %]
+
+<td class = "[% class %]">[% note.position_interval %]</td>
