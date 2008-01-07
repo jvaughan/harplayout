@@ -6,6 +6,8 @@ use CGI::Application::Plugin::AutoRunmode;
 
 use Harmonica::Layout::Table;
 
+use Data::Dumper;
+
 sub cgiapp_init	{
 	my $self = shift;
 
@@ -25,6 +27,7 @@ sub cgiapp_init	{
 sub showHarp : StartRunmode {
 	my $self = shift;
 	my $q = $self->query;
+	
 				
 	my %harp_params;
 	foreach my $p ($q->param) {
@@ -33,6 +36,7 @@ sub showHarp : StartRunmode {
 		
 	my %template_params = (
 		harp	=> Harmonica::Layout::Table->new( %harp_params ),
+		debug	=> Dumper($q),
 	);
 		
 	$self->template->process('main', \%template_params);
