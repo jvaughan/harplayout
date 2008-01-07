@@ -27,6 +27,15 @@
 </td>
 </tr>
 <tr>
+<td>
+[% CGI.checkbox (
+    '-name'     => 'include_overbends',
+    '-checked'    => harp.include_overbends,
+    '-value'    => 1,
+    '-label'    => 'Include Overblows / overdraws',
+    )
+%]
+<tr>
 <td>[% CGI.submit %]</td>
 </tr>
 </table>
