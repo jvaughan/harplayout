@@ -2,18 +2,28 @@
 
 table.harmonica
 {
-    border-color: #600;
-    border-width: 0 0 1px 1px;
+    border-color: white;
+    border-width: 0 0 0 0;
     border-style: solid;
+}
+
+table.harmonica td.empty {
+	background-color: white;
+	border-color: white;
+}
+
+table.harmoinca td.heading {
+	background-color: white
+	color: black;
 }
 
 table.harmonica td
 {
-    border-color: #600;
-    border-width: 1px 1px 0 0;
+    border-color: black;
+    border-width: 1px 1px 1px 1px;
     border-style: solid;
     margin: 0;
-    padding: 4px;
+    padding: 9px;
     background-color: #FFC;
 }
 

@@ -42,10 +42,11 @@ sub showHarp : StartRunmode {
 			$harp_params{$f} = $q->param($f) || 0;
 		}
 	}
-		
+	
+	my $harp = Harmonica::Layout::Table->new( %harp_params );	
 	my %template_params = (
-		harp	=> Harmonica::Layout::Table->new( %harp_params ),
-		debug	=> Dumper($q),
+		harp	=> $harp,
+		debug	=> Dumper($harp->blowNotes),
 	);
 		
 	$self->template->process('main', \%template_params);
