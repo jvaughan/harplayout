@@ -4,4 +4,10 @@
     [% class = "empty" %]
 [% END %]
 
-<td class = "[% class %]">[% note.position_interval %]</td>
+<td class="[% class %]">
+    <table class="notecell" >
+        [% IF harp.show_intervals %]<tr><td>[% note.position_interval %]</td></tr>[% END %]
+        [% IF harp.show_notes %]<tr><td>[% note.note %]</td></tr>[% END %]
+    </table>
+    <!-- >[% note.position_interval %] -->
+</td>

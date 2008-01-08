@@ -31,7 +31,7 @@ sub showHarp : StartRunmode {
 	my $q = $self->query;
 	
 	my @form_fields = qw/
-		position key song_key 
+		tuning position key song_key 
 		include_bends include_overbends include_unnecessary_overbends 
 		/;
 				

@@ -1,11 +1,12 @@
-table.harmonica td
+table.harmonica td.natural, table.harmonica td.drawbend, table.harmonica td.blowbend, table.harmonica td.overblow, table.harmonica td.overdraw,
+table.harmonica td.heading, table.harmonica td.holenum
 {
 	background-color: #FFFFCC;
    	border-color: black;
 	border-width: 1px 1px 1px 1px;
 	border-style: solid;	
 	margin: 0;
-	padding: 0.8em;
+	padding: 0.3em 0.5em 0.3em 0.5em;
 }
 
 table.harmonica tr {
@@ -35,7 +36,7 @@ table.harmonica td.heading {
 }
 
 
-tr.holenums td {
+tr.holenums td.heading, tr.holenums td.holenum {
 	background-color: black;
 	color:	white;
 }

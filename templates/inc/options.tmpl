@@ -2,6 +2,17 @@
 [% CGI.start_form('-method' => 'get')%]
 <table class = "options">
 <tr>
+<td>Tuning: </td>
+<td>
+[% CGI.popup_menu ( 
+    '-name'     => 'tuning',
+    '-values'   => harp.tunings_available,
+    '-default'  => harp.tuning,
+    '-class'    => 'dropdown',
+    '-id'       => 'tunings_dropdown',
+   )
+%]
+<tr>
 <td>Key: </td>
 <td>
 [% CGI.popup_menu ( 

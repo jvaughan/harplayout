@@ -17,15 +17,13 @@ use Class::MethodMaker [
 #	new_hash_with_init	=> 'new',
 	new 			=> [ -hash => -init => 'new' ],
 	scalar			=> [ {-default => 'Richter'}, 'tuning' ],
-	array			=> [ qw/ available blow draw /],
+	array			=> [ qw/ blow draw /],
 ]	;
 
 
 sub init {
 	my $self = shift;
-	
-	$self->available (sort keys %tunings);
-		
+
 	unless (grep { $self->tuning eq $_ } $self->available ) {
 		die "No such tuning '" . $self->tuning . "': $!" ;
 	}
@@ -34,6 +32,9 @@ sub init {
 	$self->draw ( @{ $tunings{ $self->tuning }->{draw} } );
 }
 
+sub available {
+	return sort keys %tunings;
+}
 
 sub plate {
 	my $self = shift;

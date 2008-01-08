@@ -208,4 +208,9 @@ sub keys_available {
 	return all_keys();
 }
 
+sub tunings_available {
+	my $self = shift;
+	return Harmonica::Tuning->available;
+}
+
 1;
