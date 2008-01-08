@@ -3,7 +3,7 @@
 [% IF harp.blowNotes.0.first_pos_interval %]
     <tr>
     <td class="heading">Blow</td>
-    [% INCLUDE 'inc/harprow.tmpl'
+    [% INCLUDE 'inc/harptable/harprow.tmpl'
         notes = harp.blowNotes
         plate = "Blow"
     %]
@@ -12,7 +12,7 @@
     [% FOREACH bendstep IN harp.blowNotes %]
         <tr>
         [% IF loop.last %]<td class="heading">Blow</td>[% ELSE %]<td class="empty">&nbsp;</td>[% END %]
-        [% INCLUDE 'inc/harprow.tmpl'
+        [% INCLUDE 'inc/harptable/harprow.tmpl'
             notes = bendstep
             plate = "Blow"
         %]
@@ -30,7 +30,7 @@
 [% IF harp.drawNotes.0.first_pos_interval %]
     <tr>
     <td class="heading">Draw</td>
-    [% INCLUDE 'inc/harprow.tmpl'
+    [% INCLUDE 'inc/harptable/harprow.tmpl'
         notes = harp.drawNotes
         plate = "Draw"
     %]
@@ -39,7 +39,7 @@
     [% FOREACH bendstep IN harp.drawNotes %]
         <tr>
         [% IF loop.first %]<td class="heading">Draw</td>[% ELSE %]<td class="empty">&nbsp;</td>[% END %]
-        [% INCLUDE 'inc/harprow.tmpl'
+        [% INCLUDE 'inc/harptable/harprow.tmpl'
             notes = bendstep
             plate = "Draw"
         %]
