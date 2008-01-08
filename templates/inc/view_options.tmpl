@@ -1,0 +1,57 @@
+<table>
+<tr>
+<td>
+[% CGI.checkbox (
+        '-name'     => 'include_bends',
+        '-checked'    => harp.include_bends,
+        '-value'    => 1,
+        '-label'    => 'Include bends',
+        )
+%]
+</td>
+</tr>
+<tr>
+<td>
+[% CGI.checkbox (
+    '-name'     => 'include_overbends',
+    '-checked'    => harp.include_overbends,
+    '-value'    => 1,
+    '-label'    => 'Include Overbends',
+    )
+%]
+</td>
+</tr>
+<tr>
+<td>
+[% CGI.checkbox (
+    '-name'     => 'include_unnecessary_overbends',
+    '-checked'    => harp.include_unnecessary_overbends,
+    '-value'    => 1,
+    '-label'    => 'Include Unnecessary Overbends',
+    )
+%]
+</td>
+</tr>
+<tr>
+<td>
+[% CGI.checkbox (
+    '-name'     => 'show_notes',
+    '-checked'    => harp.show_notes,
+    '-value'    => 1,
+    '-label'    => 'show notes',
+    )
+%]
+</td>
+</tr>
+<tr>
+<td>
+[% CGI.checkbox (
+    '-name'     => 'show_intervals',
+    '-checked'    => harp.show_intervals,
+    '-value'    => 1,
+    '-label'    => 'show intervals',
+    )
+%]
+</td>
+</tr>
+</table>
