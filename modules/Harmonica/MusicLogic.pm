@@ -8,7 +8,7 @@ use Data::Dumper;
 require Exporter;
 our @ISA	= qw/ Exporter /;
 our @EXPORT_OK	= qw/ interval_cmp subtract_interval add_interval note_from_key_interval note_from_position 
-		  interval_from_position category_from_interval all_keys
+		  interval_from_position position_from_notes category_from_interval all_keys 
 		  /;
 
 my $BOUNDARY = 7;

@@ -5,7 +5,9 @@ use Data::Dumper;
 use Switch;
 
 use Harmonica::Tuning;
-use Harmonica::MusicLogic qw/ interval_from_position note_from_key_interval note_from_position category_from_interval all_keys /;
+use Harmonica::MusicLogic qw/ 
+	interval_from_position note_from_key_interval note_from_position category_from_interval 
+	position_from_notes all_keys /;
 use Harmonica::Note;
 
 use Class::MethodMaker [
