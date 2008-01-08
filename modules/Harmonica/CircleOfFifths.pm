@@ -42,7 +42,7 @@ sub note_from_position {
 	my $note     = shift;
 	my $position = shift;
 
-	my $offset = $position -1;
+	my $offset = $position > 0 ? $position -1 : $position +1;
 	
 	# return $note unless ($offset);
 
@@ -53,8 +53,9 @@ sub note_from_position {
                 return $note;
         }
 	elsif ($offset < 0) {
+		my %co5 = reverse %co5_notes;
 		while ($offset++ < 0) {
-			$note = $co5_notes{$note};
+			$note = $co5{$note};
 		}
 		return $note;
 	} 
