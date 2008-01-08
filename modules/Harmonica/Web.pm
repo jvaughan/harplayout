@@ -32,7 +32,8 @@ sub showHarp : StartRunmode {
 	
 	my @form_fields = qw/
 		tuning position key song_key 
-		include_bends include_overbends include_unnecessary_overbends 
+		include_bends include_overbends include_unnecessary_overbends
+		show_notes show_intervals
 		/;
 				
 	my %harp_params;

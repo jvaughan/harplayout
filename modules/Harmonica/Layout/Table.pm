@@ -7,7 +7,7 @@ use base qw(Harmonica::Layout);
 use Class::MethodMaker [
 	new 	=> [ -hash => -init => 'new' ],	
 	scalar	=> [
-		{default => 0}	=> show_intervals,
+		{default => 1}	=> show_intervals,
 		{default => 1}	=> show_notes,
 	],			
 ];
