@@ -1,4 +1,5 @@
 <table class="harmonica">
+
 [% IF harp.blowNotes.0.first_pos_interval %]
     <tr>
     <td class="heading">Blow</td>
@@ -25,12 +26,25 @@
   <td>[% num %]</td>
 [% END %]
 </tr>
-[% FOREACH bend IN harp.drawNotes %]
+
+[% IF harp.drawNotes.0.first_pos_interval %]
     <tr>
-    [% IF loop.first %]<td class="heading">Draw</td>[% ELSE %]<td class="empty">&nbsp;</td>[% END %]
-    [% FOREACH note IN bend %]
-        [% PROCESS 'inc/notecell.tmpl' %]
-    [% END %]
+    <td class="heading">Draw</td>
+    [% INCLUDE 'inc/harprow.tmpl'
+        notes = harp.drawNotes
+        plate = "Draw"
+    %]
     </tr>
+[% ELSE %]
+    [% FOREACH bendstep IN harp.drawNotes %]
+        <tr>
+        [% IF loop.first %]<td class="heading">Draw</td>[% ELSE %]<td class="empty">&nbsp;</td>[% END %]
+        [% INCLUDE 'inc/harprow.tmpl'
+            notes = bendstep
+            plate = "Draw"
+        %]
+        </tr>   
+    [% END %]
 [% END %]
+
 </table>
