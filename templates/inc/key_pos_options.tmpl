@@ -14,6 +14,29 @@
     </td>
     <td>&nbsp;</td>
 </tr>
+</table>
+
+<div class="key_pos_container">
+    
+    <div class="key_pos" id="calc_position">
+        <p>Get <strong>song key</strong>:</p>
+        <form name="calc_song_key">
+            <form type="hidden" name="calculate" value="position">
+        <table>
+            <tr>
+                <td>Harp Key</td><td>[% INCLUDE '/form/dropdown/harp_key.tmpl' %]</td>
+            </tr>
+            <tr>
+                <td>Song Key</td><td>[% INCLUDE '/form/dropdown/position_key.tmpl %]</td>
+            </tr>
+            <tr>
+                <td>Position</td><td><strong>[% harp.position %]</strong></td>
+            </tr>
+        </table>
+    </div>
+    
+    <div>
+                    
 <tr>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
