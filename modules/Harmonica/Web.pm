@@ -31,14 +31,15 @@ sub showHarp : StartRunmode {
 	my $q = $self->query;
 	
 	my @form_fields = qw/
-		tuning position key song_key 
+		calculate
+		tuning position key position_key 
 		include_bends include_overbends include_unnecessary_overbends
 		show_notes show_intervals
 		/;
 				
 	my %harp_params;
 	
-	if ($q->param('submit')) {
+	if ( $self->submitted ) {
 		foreach my $f (@form_fields) {
 			next unless Harmonica::Layout::Table->can($f);
 			$harp_params{$f} = $q->param($f) || 0;
@@ -51,12 +52,18 @@ sub showHarp : StartRunmode {
 		harp	=> $harp,
 		debug	=> Dumper($b),
 	);
+	
+	$template_params{'calculate'} = $q->param('calculate') || 'position_key';
 		
 	$self->template->process('main', \%template_params);
 					
 	# do something here
 }
 
+sub submitted {
+	my $self = shift;
+	return $self->query->param('submit') ? 1 : 0;
+}
 
 
 

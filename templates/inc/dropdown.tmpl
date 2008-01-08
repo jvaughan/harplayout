@@ -1,0 +1,5 @@
+<select name="[% name %]">
+    [% FOREACH value IN values %]
+    <option [% IF value == default %]selected="selected"[% END %]>[% value %]</option>
+    [% END %]
+</select>

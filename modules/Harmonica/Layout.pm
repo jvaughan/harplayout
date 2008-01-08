@@ -2,6 +2,7 @@ package Harmonica::Layout;
 use strict;
 
 use Data::Dumper;
+use Switch;
 
 use Harmonica::Tuning;
 use Harmonica::MusicLogic qw/ interval_from_position note_from_key_interval note_from_position category_from_interval all_keys /;
@@ -11,14 +12,16 @@ use Class::MethodMaker [
 	new 	=> [ -hash => -init => 'new' ],
 	# scalar	=> [ qw/ positionkey / ],
 	scalar	=> [	
-		{-default => 'Richter'}	=> 'tuning',
-		{-default => 'C'}	=> 'key',
-		{-default => 1}		=> 'position',
+		{-default => 'Richter'}		=> 'tuning',
+		{-default => 'C'}		=> 'key',
+		{-default => 1}			=> 'position',
+		{-default => undef}		=> 'position_key',
+		{-default => 'position_key'}	=> 'calculate',
 		
 		{-default => 1}		=> 'include_bends',
 		{-default => 1}		=> 'include_overbends',
 		{-default => 0}		=> 'include_unnecessary_overbends',
-		{-default => 1}		=> 'include_interval_category',
+		{-default => 1}		=> 'include_interval_category',		
 	],
 ];
 
@@ -31,17 +34,26 @@ sub init {
 
 	# $self->positionkey( note_from_position($self->key, $self->position) );
 	
+	switch ( $self->calculate ) {
+		case 'key' {
+			my $key = note_from_position ($self->position_key, '-' . $self->position);
+			$self->key( $key );
+		}
+		
+		case 'position' {
+			my $pos = position_from_notes ( $self->key, $self->position_key);
+			$self->position( $pos );
+		}
+		
+		case 'position_key' {
+			my $p_k = note_from_position($self->key, $self->position);
+			$self->position_key ( $p_k );
+		}
+	}
+	
 	$self->addNaturalNotes;	
 	$self->addBends 	if $self->include_bends;
 	$self->addOverbends 	if $self->include_overbends;	
-}
-
-sub positionKey {
-	my $self = shift;
-	
-	# return "C";
-	
-	return note_from_position($self->key, $self->position);
 }
 
 
@@ -136,7 +148,7 @@ sub set_note {
 
 	$note->position_interval ( interval_from_position ($firstposint, $self->position) );
 	$note->interval_category ( category_from_interval ($note->position_interval)) if $self->include_interval_category;
-	$note->note ( note_from_key_interval($self->positionKey, $note->position_interval) );
+	$note->note ( note_from_key_interval($self->position_key, $note->position_interval) );
 	
 	if ($bendstep == 0) { # Is unbent?
 		$note->type('natural');

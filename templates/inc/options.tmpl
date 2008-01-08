@@ -2,41 +2,50 @@
 [% CGI.start_form('-method' => 'get')%]
 <table class = "options">
 <tr>
-<td>Tuning: </td>
-<td>
-[% CGI.popup_menu ( 
-    '-name'     => 'tuning',
-    '-values'   => harp.tunings_available,
-    '-default'  => harp.tuning,
-    '-class'    => 'dropdown',
-    '-id'       => 'tunings_dropdown',
-   )
-%]
+    <td>Tuning: </td>
+    <td>[% CGI.popup_menu ( 
+        '-name'     => 'tuning',
+        '-values'   => harp.tunings_available,
+        '-default'  => harp.tuning,
+        '-class'    => 'dropdown',
+        '-id'       => 'tunings_dropdown',
+        )
+        %]
+    </td>
+    <td>&nbsp;</td>
 </tr>
 <tr>
-<td>Key: </td>
-<td>
-[% CGI.popup_menu ( 
-                    '-name'    => 'key',
-                    '-values'  => harp.keys_available,
-                    '-default' => harp.key,
-                    '-class'  => 'dropdown',
-                    '-id'       => 'keys_dropdown',
-   )
-%]
-</td>
+    <td>Harp Key: </td>
+    <td>[% CGI.popup_menu ( 
+            '-name'    => 'key',
+            '-values'  => harp.keys_available,
+            '-default' => harp.key,
+            '-class'  => 'dropdown',
+            '-id'       => 'keys_dropdown',
+        )%]
+    </td>
+    <td><input type="radio" name="calculate" value="key" [% IF calculate == 'key' %]checked[% END %]></td>
 </tr>
 <tr>
-<td>Position: </td>
-<td>      
-[% CGI.popup_menu ( 
-                    '-name'    => 'position',
-                    '-values'  => harp.positions_available,
-                    '-default' => harp.position,
-                    '-class'  => 'dropdown',
-   )
-%]
-</td>
+    <td>Position: </td>
+    <td>[% CGI.popup_menu ( 
+            '-name'    => 'position',
+            '-values'  => harp.positions_available,
+            '-default' => harp.position,
+            '-class'  => 'dropdown',
+        )%]
+    </td>
+    <td><input type="radio" name="calculate" value="position" [% IF calculate == 'position' %]checked[% END %]></td>
+</tr>
+<tr>
+    <td>Song Key</td>
+    <td>[% INCLUDE 'inc/dropdown.tmpl'
+            name    = 'position_key'
+            values  = harp.keys_available
+            default = harp.position_key
+        %]
+    </td>
+    <td><input type="radio" name="calculate" value="position_key" [% IF calculate == 'position_key' %]checked[% END %]></td>
 </tr>
 <tr>
 <td>

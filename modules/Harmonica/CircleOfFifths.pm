@@ -43,6 +43,8 @@ sub note_from_position {
 	my $position = shift;
 
 	my $offset = $position -1;
+	
+	# return $note unless ($offset);
 
 	if ($offset > 0) {
                 while ($offset-- > 0) {
@@ -50,6 +52,12 @@ sub note_from_position {
                 }
                 return $note;
         }
+	elsif ($offset < 0) {
+		while ($offset++ < 0) {
+			$note = $co5_notes{$note};
+		}
+		return $note;
+	} 
 	else {
 		return $note;
 	}
