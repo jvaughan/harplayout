@@ -16,24 +16,21 @@
 </tr>
 <tr>
     <td>Harp Key: </td>
-    <td>[% CGI.popup_menu ( 
-            '-name'    => 'key',
-            '-values'  => harp.keys_available,
-            '-default' => harp.key,
-            '-class'  => 'dropdown',
-            '-id'       => 'keys_dropdown',
-        )%]
+    <td>[% INCLUDE 'inc/dropdown.tmpl'
+                    name    = 'key'
+                    values  = harp.keys_available
+                    default = harp.key
+        %]
     </td>
     <td><input type="radio" name="calculate" value="key" [% IF calculate == 'key' %]checked[% END %]></td>
 </tr>
 <tr>
     <td>Position: </td>
-    <td>[% CGI.popup_menu ( 
-            '-name'    => 'position',
-            '-values'  => harp.positions_available,
-            '-default' => harp.position,
-            '-class'  => 'dropdown',
-        )%]
+    <td>[% INCLUDE 'inc/dropdown.tmpl'
+                name    = 'position'
+                values  = harp.positions_available
+                default = harp.position
+        %]
     </td>
     <td><input type="radio" name="calculate" value="position" [% IF calculate == 'position' %]checked[% END %]></td>
 </tr>
