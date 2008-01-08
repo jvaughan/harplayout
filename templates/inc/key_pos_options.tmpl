@@ -3,22 +3,92 @@
         
     <div class="key_pos" id="calc_position_key">
         <p>Get <strong>song key</strong></p>
-        [%INCLUDE 'inc/key_pos_form.tmpl' 
-            calculate = "position_key"
-        %]
+        <table>
+            <tr>
+                <td>Harp Key: </td>
+                <td>[% INCLUDE 'form/dropdown.tmpl'
+                        name = "calc_position_key-key"
+                        values = harp.keys_available
+                        default = harp.key
+                    %]
+                </td>
+            </tr>
+                <td>Position: </td>
+                <td>[%INCLUDE 'form/dropdown.tmpl' 
+                        name    = 'calc_position_key-position'
+                        values  = harp.positions_available
+                        default = harp.position
+                    %]
+                </td>
+            </tr>
+            <tr>
+                <td>Song Key: </td>
+                <td><strong>[% harp.position_key %]</strong></td>
+            </tr>
+            <tr>
+            <td>[% CGI.submit('-name' => 'submit', '-value' => 'Get Song Key') %]
+            </td>
+        </table>
+    </div>
+
+    <div class="key_pos" id="calc_key">
+        <p>Get <strong>harp key</strong></p>
+        <table>
+            <tr>
+                <td>Song Key: </td>
+                <td>[% INCLUDE 'form/dropdown.tmpl'
+                        name = "calc_key-position_key"
+                        values = harp.keys_available
+                        default = harp.position_key
+                    %]
+                </td>
+            </tr>
+                <td>Position: </td>
+                <td>[%INCLUDE 'form/dropdown.tmpl' 
+                        name    = 'calc_key-position'
+                        values  = harp.positions_available
+                        default = harp.position
+                    %]
+                </td>
+            </tr>
+            <tr>
+                <td>Harp Key: </td>
+                <td><strong>[% harp.key %]</strong></td>
+            </tr>
+            <tr>
+            <td>[% CGI.submit('-name' => 'submit', '-value' => 'Get Harp Key') %]
+            </td>
+        </table>
     </div>
     
     <div class="key_pos" id="calc_position">
         <p>Get <strong>position</strong></p>
-        [%INCLUDE 'inc/key_pos_form.tmpl' 
-            calculate = "position"
-        %]
+        <table>
+            <tr>
+                <td>Song Key: </td>
+                <td>[% INCLUDE 'form/dropdown.tmpl'
+                        name = "calc_position-position_key"
+                        values = harp.keys_available
+                        default = harp.position_key
+                    %]
+                </td>
+            </tr>
+                <td>Harp Key: </td>
+                <td>[% INCLUDE 'form/dropdown.tmpl'
+                        name = "calc_position-key"
+                        values = harp.keys_available
+                        default = harp.key
+                    %]
+                </td>
+            </tr>
+            <tr>
+                <td>Position: </td>
+                <td><strong>[% harp.position %]</strong></td>
+            </tr>
+            <tr>
+            <td>[% CGI.submit('-name' => 'submit', '-value' => 'Get Position') %]
+            </td>
+        </table>
     </div>
-    
-    <div class="key_pos" id="calc_key">
-        <p>Get <strong>key</strong></p>
-        [%INCLUDE 'inc/key_pos_form.tmpl' 
-            calculate = "key"
-        %]
-    </div>
+        
 </div>

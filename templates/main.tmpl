@@ -1,16 +1,24 @@
 [% title = "Harmonica Layout" %]
 [% PROCESS 'inc/header.tmpl' %]
 
+[% USE CGI %]
+
 <body>
 <h1>Harp Layout</h1>
 
 <p>Welcome to Harp Layout.</p>
 
 
-<p>Harp Key is [% harp.key %]. Position is [% harp.position %].  Position key is [% harp.position_key %].
+<p>Harp Key is [% harp.key %]. Position is [% harp.position %].  Position key is [% harp.position_key %].</p>
+
+[% CGI.start_form('-method' => 'get') %]
 
 [% PROCESS 'inc/key_pos_options.tmpl' %]
-[% PROCESS 'inc/view_options.tmpl' %] 
+[% PROCESS 'inc/tuning_options.tmpl' %]
+[% PROCESS 'inc/view_options.tmpl' %]
+[% PROCESS 'form/hidden_fields.tmpl' %]
+</form>
+
 [% PROCESS 'inc/harptable.tmpl' %]
 <table class="harmonica">
     <tr><td class="natural">natural</td><td class="drawbend">bend</td><td class="overblow">over<br>bend</td></tr>

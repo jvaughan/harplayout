@@ -19,7 +19,7 @@
         <td>Position:</td><td>[% IF calculate == 'position' %]<strong>[% harp.position %]</strong>[% ELSE %][% INCLUDE 'form/dropdown/position.tmpl' %][% END %]</td>
     </tr>
     <tr>
-        <td>[% CGI.submit('-name' => 'submit', '-value' => 'Go!') %]</td></td>&nbsp;</td>
+        <td>[% CGI.submit('-name' => 'submit', '-value' => "Get $calculate") %]</td></td>&nbsp;</td>
     </tr>
 </table>
 </form>
