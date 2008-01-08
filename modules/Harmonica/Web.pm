@@ -21,6 +21,7 @@ sub cgiapp_init	{
 			/Users/jvaughan/svn/jvaughan/trunk/dev/harplayout/templates
 			)
 		],
+		
 	);
 }
 
@@ -43,10 +44,11 @@ sub showHarp : StartRunmode {
 		}
 	}
 	
-	my $harp = Harmonica::Layout::Table->new( %harp_params );	
+	my $harp = Harmonica::Layout::Table->new( %harp_params );
+	my $b = [$harp->blowNotes];	
 	my %template_params = (
 		harp	=> $harp,
-		debug	=> Dumper($harp->blowNotes),
+		debug	=> Dumper($b),
 	);
 		
 	$self->template->process('main', \%template_params);

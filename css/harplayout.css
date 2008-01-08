@@ -1,6 +1,6 @@
 table.harmonica td
 {
-	background-color: #FFC;
+	background-color: #FFFFCC;
    	border-color: black;
 	border-width: 1px 1px 1px 1px;
 	border-style: solid;	
@@ -13,12 +13,14 @@ table.harmonica tr {
 	padding: 0;
 }
 
-table.harmonica td.overdraw, table.harmonica td.overblow {
-	background-color: red;
+table.harmonica td.drawbend, table.harmonica td.blowbend {
+	background-color: #9BCD9D;
+	/* border-style:	dashed; */
 }
 
-table.harmonica td.drawbend, table.harmonica td.blowbend {
-	background-color: green;
+table.harmonica td.overdraw, table.harmonica td.overblow {
+	background-color: #F08080;
+	border-style:	dashed;
 }
 
 table.harmonica td.empty {
