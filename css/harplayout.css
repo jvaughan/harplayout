@@ -59,3 +59,23 @@ div.key_pos_or {
 div#tuning_options {
 	clear: both;
 }
+
+.chord, .blues, .passing, .danger {
+	
+}
+.chord {
+	color:	green;
+}
+
+.blues {
+	color:	blue;
+}
+
+.passing {
+	color: orange;
+}
+
+.danger {
+	color: red;
+}
+
