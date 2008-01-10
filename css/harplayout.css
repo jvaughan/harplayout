@@ -42,10 +42,18 @@ tr.holenums td.heading, tr.holenums td.holenum {
 }
 
 div.key_pos {
-	float: left;
-	background-color: #FFFFCC;
-	border: black 1px solid;
-	margin-right: 3em;
+	float: 			left;
+	background-color: 	#FFFFCC;
+	border: 		black 1px solid;
+/*	margin-right: 		3em; */
+	padding: 		0 0.5em 0 0.5em;
+}
+
+div.key_pos_or {
+	float: 		left;
+	padding-top:	3em;
+	padding-right: 1.5em;
+	padding-left:	1.5em;
 }
 	
 div#tuning_options {
