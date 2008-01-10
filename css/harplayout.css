@@ -46,7 +46,7 @@ div.key_pos {
 	background-color: 	#FFFFCC;
 	border: 		black 1px solid;
 /*	margin-right: 		3em; */
-	padding: 		0 0.5em 0 0.5em;
+	padding: 		0 0.5em 0.5em 0.5em;
 }
 
 div.key_pos_or {
