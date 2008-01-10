@@ -7,6 +7,11 @@ my %tunings = (
                 draw => [qw / 2  5  7  2  4  6  7  2  4  6 /],
         },
 
+	'Seydel Big Six' => {
+		blow => [qw / 1  3  5  1  3  5 /],
+                draw => [qw / 2  5  7  2  4  6 /],
+	},
+
 	'Paddy Richter' => {
 		blow => [qw / 1  3 b6  1  3  5  1  3  5  1 /],
                 draw => [qw / 2  5  7  2  4  6  7  2  4  6 /],
