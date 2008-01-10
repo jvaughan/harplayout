@@ -40,3 +40,14 @@ tr.holenums td.heading, tr.holenums td.holenum {
 	background-color: black;
 	color:	white;
 }
+
+div.key_pos {
+	float: left;
+	background-color: #FFFFCC;
+	border: black 1px solid;
+	margin-right: 3em;
+}
+	
+div#tuning_options {
+	clear: both;
+}
