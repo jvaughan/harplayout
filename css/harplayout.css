@@ -1,7 +1,7 @@
 table.harmonica td.natural, table.harmonica td.drawbend, table.harmonica td.blowbend, table.harmonica td.overblow, table.harmonica td.overdraw,
 table.harmonica td.heading, table.harmonica td.holenum
 {
-	background-color: #FFFFCC;
+	background-color: #FFFFE0;
    	border-color: black;
 	border-width: 1px 1px 1px 1px;
 	border-style: solid;	
@@ -43,7 +43,7 @@ tr.holenums td.heading, tr.holenums td.holenum {
 
 div.key_pos {
 	float: 			left;
-	background-color: 	#FFFFCC;
+	background-color: 	#FFFFE0;
 	border: 		black 1px solid;
 /*	margin-right: 		3em; */
 	padding: 		0 0.5em 0.5em 0.5em;
@@ -52,8 +52,8 @@ div.key_pos {
 div.key_pos_or {
 	float: 		left;
 	padding-top:	3em;
-	padding-right: 1.5em;
-	padding-left:	1.5em;
+	padding-right: 0.5em;
+	padding-left:	0.5em;
 }
 	
 div#tuning_options {
@@ -70,10 +70,35 @@ div.harp_table {
 
 div.view_options {
 	height: 100%;
-	border-right: 1px black dashed;
+	/* border-right: 1px black dashed; */
 	float: left;
 	margin:	1em 1em 0 0;
 	padding: 2em 2em 0 0em;
+}
+
+div.include_notes h3, div.display h3 {
+	margin-top:	0;
+	/* margin-right:	2em; */
+	padding: 0.2em 0em 0.2em 0.4em; 
+	width:	100%;
+	background-color: #9BCD9D;	
+}
+
+div.include_notes, div.display {
+	width:	100%;
+	border:	1px solid black;
+	background-color: #FFFFE0;
+	padding-right:	0.5em;
+	/* padding: 0 0.2em 0.2em 0.2em; */
+}
+
+div.include_notes_contents {
+	border: 0px solid black;
+	padding: 0 0.5em 0.5em 0.5em;
+}
+
+div.display {
+	margin-top:	1em;
 }
 
 .chord, .blues, .passing, .danger {
