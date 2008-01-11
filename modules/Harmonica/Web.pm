@@ -70,7 +70,7 @@ sub showHarp : StartRunmode {
 	my $b = [$harp->blowNotes];	
 	my %template_params = (
 		harp	=> $harp,
-		debug	=> Dumper($q),
+		debug	=> '',
 	);
 	
 		

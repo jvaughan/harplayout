@@ -15,11 +15,24 @@
 
 [% PROCESS 'inc/key_pos_options.tmpl' %]
 [% PROCESS 'inc/tuning_options.tmpl' %]
-[% PROCESS 'inc/view_options.tmpl' %]
+
 [% PROCESS 'form/hidden_fields.tmpl' %]
+
+
+<div class="options_harptable">
+    <div class="view_options">
+        [% PROCESS 'inc/view_options.tmpl' %]
+    </div>
+    
+    <div class="harp_table">
+        [% PROCESS 'inc/harptable.tmpl' %]
+    </div>
+    
+</div>
+        
 </form>
 
-[% PROCESS 'inc/harptable.tmpl' %]
+
 <table class="harmonica">
     <tr><td class="natural">natural</td><td class="drawbend">bend</td><td class="overblow">over<br>bend</td></tr>
 </table>

@@ -60,6 +60,22 @@ div#tuning_options {
 	clear: both;
 }
 
+div.options_harptable {
+	margin-top: 1em;
+}
+
+div.harp_table {
+	/* float: left; */
+}
+
+div.view_options {
+	height: 100%;
+	border-right: 1px black dashed;
+	float: left;
+	margin:	1em 1em 0 0;
+	padding: 2em 2em 0 0em;
+}
+
 .chord, .blues, .passing, .danger {
 	
 }
