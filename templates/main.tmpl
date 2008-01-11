@@ -11,7 +11,7 @@
 
 <p>Harp Key is [% harp.key %]. Position is [% harp.position %].  Position key is [% harp.position_key %].</p>
 
-[% CGI.start_form('-method' => 'get') %]
+[% CGI.start_form('-method' => 'post') %]
 
 [% PROCESS 'inc/key_pos_options.tmpl' %]
 [% PROCESS 'inc/tuning_options.tmpl' %]
