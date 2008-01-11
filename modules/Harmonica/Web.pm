@@ -32,7 +32,6 @@ sub showHarp : StartRunmode {
 	my $q = $self->query;
 	
 	my @form_fields = qw/
-		calculate
 		tuning position key position_key 
 		include_bends include_overbends include_unnecessary_overbends
 		show_notes show_intervals show_interval_categories
@@ -76,7 +75,6 @@ sub showHarp : StartRunmode {
 		debug	=> Dumper($q),
 	);
 	
-	$template_params{'calculate'} = $q->param('calculate') || 'position_key';
 		
 	$self->template->process('main', \%template_params);
 					
