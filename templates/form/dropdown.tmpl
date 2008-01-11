@@ -1,4 +1,4 @@
-<select name="[% name %]" onchange="submit()">
+<select name="[% name %]" onChange="[% onchange %]">
     [% FOREACH value IN values %]
     <option [% IF value == default %]selected="selected"[% END %]>[% value %]</option>
     [% END %]

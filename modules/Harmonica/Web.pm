@@ -45,8 +45,11 @@ sub showHarp : StartRunmode {
 			next unless Harmonica::Layout::Table->can($f);
 			$harp_params{$f} = $q->param($f) || 0;
 		}
+		
+		my $submit = lc ( $q->param('submit') ) || lc ( $q->param('js_submit') );
+		# die $submit;
 
-		switch ( lc ($q->param('submit')) ) {
+		switch ( $submit ) {
 			case 'get position' {
 				$harp_params{calculate} = 'position';
 				$harp_params{$_} = $q->param("calc_position-$_") || undef foreach (qw /key position_key/ );
@@ -82,7 +85,9 @@ sub showHarp : StartRunmode {
 
 sub submitted {
 	my $self = shift;
-	return $self->query->param('submit') ? 1 : 0;
+	return 1 if $self->query->param('submit') || $self->query->param('js_submit');
+
+	return 0;
 }
 
 
