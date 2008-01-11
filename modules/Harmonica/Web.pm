@@ -35,7 +35,7 @@ sub showHarp : StartRunmode {
 		calculate
 		tuning position key position_key 
 		include_bends include_overbends include_unnecessary_overbends
-		show_notes show_intervals
+		show_notes show_intervals show_interval_categories
 		/;
 				
 	my %harp_params;

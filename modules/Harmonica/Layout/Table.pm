@@ -9,6 +9,7 @@ use Class::MethodMaker [
 	scalar	=> [
 		{default => 1}	=> show_intervals,
 		{default => 1}	=> show_notes,
+		{default => 1}	=> show_interval_categories,
 	],			
 ];
 
