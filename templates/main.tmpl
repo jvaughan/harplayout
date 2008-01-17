@@ -4,32 +4,35 @@
 [% USE CGI %]
 
 <body>
+<div id="container">
+<div id="header">
 <h1>Harp Layout</h1>
+</div> <!-- header -->
+
+[% CGI.start_form('-method' => 'post') %]
+
+<div id="leftcol">
+    [% PROCESS 'inc/tuning_options.tmpl' %]
+    [% PROCESS 'form/hidden_fields.tmpl' %]
+    <div class="view_options">
+        [% PROCESS 'inc/view_options.tmpl' %]
+    </div>
+    <div class="spacer">&nbsp;</div>
+</div> <!-- leftcol -->
+
+<div id="content">
 
 <p>Welcome to Harp Layout.</p>
 
 
 <p>Harp Key is [% harp.key %]. Position is [% harp.position %].  Position key is [% harp.position_key %].</p>
 
-[% CGI.start_form('-method' => 'post') %]
-
 [% PROCESS 'inc/key_pos_options.tmpl' %]
-[% PROCESS 'inc/tuning_options.tmpl' %]
 
-[% PROCESS 'form/hidden_fields.tmpl' %]
-
-
-<div class="options_harptable">
-    <div class="view_options">
-        [% PROCESS 'inc/view_options.tmpl' %]
-    </div>
-    
-    <div class="harp_table">
-        [% PROCESS 'inc/harptable.tmpl' %]
-    </div>
-    
-</div>
-        
+<div class="harp_table">
+    [% PROCESS 'inc/harptable.tmpl' %]
+</div>   
+  
 </form>
 
 
@@ -38,6 +41,13 @@
 </table>
 
 <p>Debug: [% debug %]</p>
+</div> <!-- content -->
+
+<div id="footer">
+<p>Hello, I'm a footer</p>
+</div> <!-- footer -->
+
+</div> <!-- Container -->
 </body>
 </html>
 
