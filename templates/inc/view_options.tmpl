@@ -6,7 +6,7 @@
         '-checked'    => harp.include_bends,
         '-value'    => 1,
         '-label'    => 'Bends',
-        '-onchange' => "dosubmit('change options')"
+        '-onchange' => "handleChange('change options')"
         )
 %]
 <br>
@@ -15,7 +15,7 @@
     '-checked'    => harp.include_overbends,
     '-value'    => 1,
     '-label'    => 'Overblows / Overdraws',
-    '-onchange' => "dosubmit('change options')"
+    '-onchange' => "handleChange('change options')"
     )
 %]
 <br>
@@ -24,7 +24,7 @@
     '-checked'    => harp.include_unnecessary_overbends,
     '-value'    => 1,
     '-label'    => 'Unnecessary overblows / overdraws',
-    '-onchange' => "dosubmit('change options')"
+    '-onchange' => "handleChange('change options')"
     )
 %]
 </div>
@@ -38,7 +38,7 @@
     '-checked'    => harp.show_notes,
     '-value'    => 1,
     '-label'    => 'Note names',
-    '-onchange' => "dosubmit('change options')"
+    '-onchange' => "handleChange('change options')"
     )
 %]
 <br>
@@ -47,7 +47,7 @@
     '-checked'    => harp.show_intervals,
     '-value'    => 1,
     '-label'    => 'Intervals',
-    '-onchange' => "dosubmit('change options')"
+    '-onchange' => "handleChange('change options')"
     )
 %]
 <br>
@@ -56,7 +56,7 @@
     '-checked'    => harp.show_interval_categories,
     '-value'    => 1,
     '-label'    => 'Interval categories',
-    '-onchange' => "dosubmit('change options')"
+    '-onchange' => "handleChange('change options')"
     )
 %]
 </div>

@@ -12,7 +12,7 @@
                         name = "calc_position_key-key"     
                         values = harp.keys_available
                         default = harp.key
-                        onchange = "dosubmit('get song key')"
+                        onchange = "handleChange('get song key')"
                     %]
                 </td>
             </tr>
@@ -22,7 +22,7 @@
                         name    = 'calc_position_key-position'
                         values  = harp.positions_available
                         default = harp.position
-                        onchange = "dosubmit('get song key');"
+                        onchange = "handleChange('get song key');"
                     %]
                 </td>
             </tr>
@@ -48,7 +48,7 @@
                         name        = "calc_position-position_key"
                         values      = harp.keys_available
                         default     = harp.position_key
-                        onchange    = "dosubmit('get position')"
+                        onchange    = "handleChange('get position')"
                     %]
                 </td>
             </tr>
@@ -58,7 +58,7 @@
                         name        = "calc_position-key"
                         values      = harp.keys_available
                         default     = harp.key
-                        onchange    = "dosubmit('get position')"
+                        onchange    = "handleChange('get position')"
                     %]
                 </td>
             </tr>
@@ -85,7 +85,7 @@
                         name        = "calc_key-position_key"
                         values      = harp.keys_available
                         default     = harp.position_key
-                        onchange    = "dosubmit('get harp key')"
+                        onchange    = "handleChange('get harp key')"
                     %]
                 </td>
             </tr>
@@ -95,7 +95,7 @@
                         name        = 'calc_key-position'
                         values      = harp.positions_available
                         default     = harp.position
-                        onchange    = "dosubmit('get harp key')"
+                        onchange    = "handleChange('get harp key')"
                     %]
                 </td>
             </tr>
