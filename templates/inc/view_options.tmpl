@@ -1,6 +1,6 @@
-<div class = "include_notes">
+<div class="options" id="notes_options">
 <h3>Include Notes</h3>
-<div class = "include_notes_contents">
+<div class = "options_contents">
 [% CGI.checkbox (
         '-name'     => 'include_bends',
         '-checked'    => harp.include_bends,
@@ -30,9 +30,9 @@
 </div>
 </div>
 
-<div class="display">
+<div class="options" id="display_options">
 <h3>Display</h3>
-
+<div class = "options_contents">
 [% CGI.checkbox (
     '-name'     => 'show_notes',
     '-checked'    => harp.show_notes,
@@ -59,4 +59,5 @@
     '-onchange' => "handleChange('change options')"
     )
 %]
+</div>
 </div>

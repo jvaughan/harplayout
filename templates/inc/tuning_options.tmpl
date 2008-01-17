@@ -1,13 +1,10 @@
-<div id="tuning_options">
-<table>
-    <tr>
-        <td>Tuning: </td>
-        <td>[% INCLUDE 'form/dropdown.tmpl' 
-            name = 'tuning'
-            values = harp.tunings_available
-            default = harp.tuning
-            %]
-        </td>
-    </tr>
-</table>
+<div class="options" id="tuning_options">
+<h3>Tuning</h3>
+<div class = "options_contents">
+    [% INCLUDE 'form/dropdown.tmpl' 
+              name = 'tuning'
+              values = harp.tunings_available
+              default = harp.tuning
+    %]
 </div>
+</div>    
