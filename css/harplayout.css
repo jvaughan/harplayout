@@ -145,19 +145,11 @@ div.view_options {
 }
 
 div.options h3 {
-	margin-top:	0;
-	/* margin-right:	2em; */
-	padding: 0.2em 0em 0.2em 0.4em; 
-	width:	100%;
-	background-color: #9BCD9D;	
+
 }
 
 div.options {
-	margin-bottom: 1em;
-	border:	1px solid black;
-	background-color: #FFFFE0;
-	padding-right:	0.5em;
-	/* padding: 0 0.2em 0.2em 0.2em; */
+
 }
 
 div.options_contents {
