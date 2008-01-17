@@ -32,18 +32,11 @@ margin: 0;
 
 #leftcol
 {
-float: left;
-width: 190px;
-margin: 0;
-padding: 1em;
+
 }
 
 #content
 {
-margin-left: 230px;
-border-left: 1px solid gray;
-padding: 1em;
-/* max-width: 36em; */
 }
 
 #footer
@@ -131,15 +124,22 @@ div#tuning_options {
 	clear: both;
 }
 
+div.harp_and_options {
+	margin-top: 2em;
+	overflow:	hidden;
+	zoom:		1;	
+}
+
 div.harp_table {
-	margin-top: 2em; 
-  
+	float:	left;
+}
+
+div.harp_options {
+	padding-left: 2em;
+	float:	left;
 }
 
 div.view_options {
-	height: 100%;
-	/* border-right: 1px black dashed; */
-	float: left;
 	margin:	1em 0em 0 0;
 	padding: 2em 1em 0 0em;
 }
@@ -153,7 +153,7 @@ div.include_notes h3, div.display h3 {
 }
 
 div.include_notes, div.display {
-	width:	100%;
+
 	border:	1px solid black;
 	background-color: #FFFFE0;
 	padding-right:	0.5em;

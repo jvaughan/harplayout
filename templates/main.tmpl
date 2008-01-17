@@ -12,11 +12,7 @@
 [% CGI.start_form('-method' => 'post') %]
 
 <div id="leftcol">
-    [% PROCESS 'inc/tuning_options.tmpl' %]
-    [% PROCESS 'form/hidden_fields.tmpl' %]
-    <div class="view_options">
-        [% PROCESS 'inc/view_options.tmpl' %]
-    </div>
+
     <div class="spacer">&nbsp;</div>
 </div> <!-- leftcol -->
 
@@ -29,10 +25,18 @@
 
 [% PROCESS 'inc/key_pos_options.tmpl' %]
 
-<div class="harp_table">
-    [% PROCESS 'inc/harptable.tmpl' %]
-</div>   
-  
+<div class="harp_and_options">
+    <div class="harp_table">
+        [% PROCESS 'inc/harptable.tmpl' %]
+    </div>
+   
+    <div class="harp_options">
+        [% PROCESS 'inc/tuning_options.tmpl' %]
+        [% PROCESS 'inc/view_options.tmpl' %]
+    </div>
+</div>
+
+[% PROCESS 'form/hidden_fields.tmpl' %]
 </form>
 
 
