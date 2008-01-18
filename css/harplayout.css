@@ -109,9 +109,6 @@ div.key_pos {
 	padding: 		0 0.5em 0.5em 0.5em;
 }
 
-#calc_position, #calc_position_key {
-/*	float:		left; */
-}
 
 div.key_pos_or {
 	float: 		left;
@@ -119,13 +116,10 @@ div.key_pos_or {
 	padding-right: 0.5em;
 	padding-left:	0.5em;
 }
-	
-div#tuning_options {
 
-}
 
 div.harp_and_options {
-	margin-top: 2em;
+	margin-top:	2em;
 	overflow:	hidden;
 	zoom:		1;	
 }
@@ -139,31 +133,10 @@ div.harp_options {
 	float:	left;
 }
 
-div.view_options {
-	margin:	1em 0em 0 0;
-	padding: 2em 1em 0 0em;
-}
-
-div.options h3 {
-
-}
-
-div.options {
-
-}
-
-div.options_contents {
-	border: 0px solid black;
-	padding: 0 0.5em 0.5em 0.5em;
-}
-
-div#display_options {
-	margin-top:	1em;
-}
-
 .chord, .blues, .passing, .danger {
 	
 }
+
 .chord {
 	color:	green;
 }
