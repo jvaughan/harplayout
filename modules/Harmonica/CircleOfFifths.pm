@@ -5,8 +5,6 @@ require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT = qw(note_from_position interval_from_position co5_intervals co5_notes position_from_notes);
 
-use Music::Scales;
-
 my %co5_notes = (
 	C	=> 'G',
 	G       => 'D',

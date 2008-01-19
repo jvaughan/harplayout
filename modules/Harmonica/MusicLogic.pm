@@ -2,7 +2,6 @@ package Harmonica::MusicLogic;
 use strict;
 
 use Harmonica::CircleOfFifths;
-use Music::Scales;
 use Data::Dumper;
 
 require Exporter;
