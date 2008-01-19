@@ -22,7 +22,9 @@ sub cgiapp_init	{
 			../templates
 			)
 		],
-		
+		TemplateToolkit => {
+			POST_CHOMP => 2,
+		},
 	);
 }
 
