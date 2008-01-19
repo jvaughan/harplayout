@@ -1,6 +1,8 @@
 package Harmonica::Web;
 use strict;
 
+use define DEBUG => 1;
+
 use Switch;
 use base qw/ CGI::Application /;
 use CGI::Application::Plugin::AnyTemplate;
@@ -67,10 +69,12 @@ sub showHarp : StartRunmode {
 	} # Submitted?
 
 	my $harp = Harmonica::Layout::Table->new( %harp_params );
-	my $b = [$harp->blowNotes];	
+	my $b = [$harp->blowNotes];
+	my $debug = '';
+	$debug = Dumper ($q) if DEBUG;	
 	my %template_params = (
 		harp	=> $harp,
-		debug	=> '',
+		debug	=> $debug,
 	);
 	
 		
