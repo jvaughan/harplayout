@@ -39,18 +39,21 @@ sub init {
 	
 	switch ( $self->calculate ) {
 		case 'key' {
-			my $pos = $self->position - $label_position + 1;
-			my $key = note_from_position ($self->position_key, '-' . $self->position );
+			my $pos = ($self->position - $label_position) + 1;
+			my $key = note_from_position ($self->position_key, '-' . $pos );
 			$self->key( $key );
 		}
 		
 		case 'position' {
 			my $pos = position_from_notes ( $self->key, $self->position_key);
-			$self->position( $pos + $label_position -1 );
+			$pos += $label_position -1;
+			$pos -= 12 if $pos > 12;
+			$self->position( $pos );
 		} 
 		
 		case 'position_key' {
-			my $p_k = note_from_position($self->key, ( $self->position - $label_position +1) );
+			my $p_k = note_from_position($self->key, $self->position );
+			$p_k = note_from_position ($p_k, "-" . $label_position);
 			$self->position_key ( $p_k );
 		}
 	}
