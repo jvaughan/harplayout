@@ -7,8 +7,7 @@ background-color: #fff;
 color: #333;
 border: 1px solid gray;
 line-height: 130%;
-overflow: auto;
-}
+} 
 * html #container {
 height: 1%;
 }
@@ -120,8 +119,6 @@ div.key_pos_or {
 
 div.harp_and_options {
 	margin-top:	2em;
-	overflow:	hidden;
-	zoom:		1;	
 }
 
 div.harp_table {
