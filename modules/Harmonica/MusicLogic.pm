@@ -13,16 +13,17 @@ our @EXPORT_OK	= qw/ interval_cmp subtract_interval add_interval note_from_key_i
 my $BOUNDARY = 7;
 
 my %scale_notes = (
-C	=> [ qw/ C	Db	D	Eb	E	F	Gb	G	Ab	A	Bb	B /],
-Db	=> [ qw/ Db	D	Eb	E	F	Gb	G	Ab	A	Bb	B	C /],
+C	=> [ qw/ C	Db	D	Eb	E	F	Gb	G	Ab	A	Bb	B  /],
+Db	=> [ qw/ Db	D	Eb	E	F	Gb	G	Ab	A	Bb	B	C  /],
 D	=> [ qw/ D	Eb	E	F	F#	G	Ab	A	Bb	B	C	C# /],
-Eb	=> [ qw/ Eb	E	F	Gb	G	Ab	A	Bb	B	C	Db	D /],
-F	=> [ qw/ F	Gb	G	Ab	A	Bb	B	C	Db	D	Eb	E /],
+Eb	=> [ qw/ Eb	E	F	Gb	G	Ab	A	Bb	B	C	Db	D  /],
+E	=> [ qw/ E	F	F#	G	Ab	A	Bb	B	C	C#	D	D# /],
+F	=> [ qw/ F	Gb	G	Ab	A	Bb	B	C	Db	D	Eb	E  /],
 'F#'	=> [ qw/ F#	G	G#	A	A#	B	C	C#	D	D#	E	E# /],
 G	=> [ qw/ G	Ab	A	Bb	B	C	Db	D	Eb	E	F	F# /],
-Ab	=> [ qw/ Ab	A	Bb	B	C	Db	D	Eb	E	F	Gb	G /],
+Ab	=> [ qw/ Ab	A	Bb	B	C	Db	D	Eb	E	F	Gb	G  /],
 A	=> [ qw/ A	Bb	B	C	C#	D	Eb	E	F	F#	G	G# /],
-Bb	=> [ qw/ Bb	B	C	Db	D	Eb	E	F	Gb	G	Ab	A /],
+Bb	=> [ qw/ Bb	B	C	Db	D	Eb	E	F	Gb	G	Ab	A  /],
 B	=> [ qw/ B	C	C#	D	D#	E	F	F#	G	G#	A	A# /],
 );
 
