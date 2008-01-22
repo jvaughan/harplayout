@@ -11,8 +11,6 @@
 <h1>Harp Layout</h1>
 </div> <!-- header -->
 
-[% CGI.start_form('-method' => 'post') %]
-
 <div id="leftcol">
     <div class="spacer">&nbsp;</div>
 </div> <!-- leftcol -->
@@ -23,6 +21,7 @@
 
 
 <p>Harp Key is [% harp.key %]. Position is [% harp.position %].  Position key is [% harp.position_key %].</p>
+[% CGI.start_form('-method' => 'post') %]
 
 [% PROCESS 'inc/key_pos_options.tmpl' %]
 
