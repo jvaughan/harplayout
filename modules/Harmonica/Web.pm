@@ -1,7 +1,7 @@
 package Harmonica::Web;
 use strict;
 
-use define DEBUG => 1;
+use define DEBUG => 0;
 
 use Switch;
 use base qw/ CGI::Application /;
