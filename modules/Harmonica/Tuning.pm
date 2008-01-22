@@ -34,7 +34,7 @@ my %tunings = (
 
 	'Paddy Richter' => {
 		# Hole        1  2  3  4  5  6  7  8  9 10
-		blow => [qw / 1  3 b6  1  3  5  1  3  5  1 /],
+		blow => [qw / 1  3  6  1  3  5  1  3  5  1 /],
                 draw => [qw / 2  5  7  2  4  6  7  2  4  6 /],
 	},
 	
