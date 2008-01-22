@@ -16,14 +16,22 @@ my %tunings = (
 		blow => [qw / 1  3 b6  1  3  5  1  3  5  1 /],
                 draw => [qw / 2  5  7  2  4  6  7  2  4  6 /],
 	},
+	
+	'Richter lab in 2nd' => {
+		blow => [qw / 1  3 b6  1  3  5  1  3  5  1 /],
+                draw => [qw / 2  5  7  2  4  6  7  2  4  6 /],
+		label_position	=> 2,
+	},
 );
 
 use Class::MethodMaker [
 #	new_hash_with_init	=> 'new',
 	new 			=> [ -hash => -init => 'new' ],
-	scalar			=> [ {-default => 'Richter'}, 'tuning' ],
+	scalar			=> [ 
+		{-default => 1}, 'label_position',
+		{-default => 'Richter'}, 'tuning' ],
 	array			=> [ qw/ blow draw /],
-]	;
+];
 
 
 sub init {
@@ -32,9 +40,10 @@ sub init {
 	unless (grep { $self->tuning eq $_ } $self->available ) {
 		die "No such tuning '" . $self->tuning . "': $!" ;
 	}
-	
-	$self->blow ( @{ $tunings{ $self->tuning }->{blow} } );
-	$self->draw ( @{ $tunings{ $self->tuning }->{draw} } );
+	my $t = $tunings{ $self->tuning };
+	$self->blow ( @{ $t->{blow} } );
+	$self->draw ( @{ $t->{draw} } );
+	$self->label_position ( $t->{ label_position } ) if $t->{ label_position };
 }
 
 sub available {

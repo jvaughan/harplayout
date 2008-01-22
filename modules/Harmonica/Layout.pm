@@ -22,7 +22,8 @@ use Class::MethodMaker [
 		
 		{-default => 1}		=> 'include_bends',
 		{-default => 1}		=> 'include_overbends',
-		{-default => 0}		=> 'include_unnecessary_overbends',	
+		{-default => 0}		=> 'include_unnecessary_overbends',
+		'tuning_obj',	
 	],
 ];
 
@@ -32,22 +33,24 @@ sub init {
 
 	$self->{blow} = [];
 	$self->{draw} = [];
-
-	# $self->positionkey( note_from_position($self->key, $self->position) );
+	
+	$self->tuning_obj ( Harmonica::Tuning->new(tuning => $self->tuning) );
+	my $label_position = $self->tuning_obj->label_position;
 	
 	switch ( $self->calculate ) {
 		case 'key' {
-			my $key = note_from_position ($self->position_key, '-' . $self->position);
+			my $pos = $self->position - $label_position + 1;
+			my $key = note_from_position ($self->position_key, '-' . $self->position );
 			$self->key( $key );
 		}
 		
 		case 'position' {
 			my $pos = position_from_notes ( $self->key, $self->position_key);
-			$self->position( $pos );
-		}
+			$self->position( $pos + $label_position -1 );
+		} 
 		
 		case 'position_key' {
-			my $p_k = note_from_position($self->key, $self->position);
+			my $p_k = note_from_position($self->key, ( $self->position - $label_position +1) );
 			$self->position_key ( $p_k );
 		}
 	}
@@ -61,7 +64,7 @@ sub init {
 sub addNaturalNotes {
 	my $self = shift;
 
-	my $tuning = Harmonica::Tuning->new( tuning => $self->tuning );
+	my $tuning = $self->tuning_obj;
 	
 	# Poupulate each plate and reed with natural notes.
 	PLATE: foreach my $plate ($self->plates) {
