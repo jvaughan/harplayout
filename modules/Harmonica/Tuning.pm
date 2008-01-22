@@ -9,7 +9,7 @@ my %tunings = (
         },
 
 	'Seydel Big Six' => {
-		# Hole        1  2  3  4  5  6  7  8  9 10
+		# Hole        1  2  3  4  5  6
 		blow => [qw / 1  3  5  1  3  5 /],
                 draw => [qw / 2  5  7  2  4  6 /],
 	},
@@ -45,8 +45,9 @@ use Class::MethodMaker [
 #	new_hash_with_init	=> 'new',
 	new 			=> [ -hash => -init => 'new' ],
 	scalar			=> [ 
-		{-default => 1}, 'label_position',
-		{-default => 'Richter'}, 'tuning' ],
+		{-default => 1}		=> 'label_position',
+		{-default => 'Richter'}	=> 'tuning' 
+		],
 	array			=> [ qw/ blow draw /],
 ];
 
