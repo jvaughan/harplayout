@@ -23,11 +23,24 @@ my %tunings = (
 		label_position	=> 2,
 	},
 	
-	'Melody Maker (labelled in 2nd pos)' => {
+	'L.O Melody Maker (labelled in 2nd pos)' => {
 		blow => [qw / 1  3  6  1  3  5  1  3  5  1 /],
                 draw => [qw / 2  5  7  2 b5  6  7  2 b5  6 /],
 		label_position	=> 2,
 	},
+	
+	'L.O Natural Minor (labelled in 2nd pos)' => {
+		# Hole        1  2  3  4  5  6  7  8  9 10
+		blow => [qw / 1 b3  5  1 b3  5  1  3  5  1 /],
+                draw => [qw / 2  5 b7  2  4  6 b7  2  4  6 /],
+		label_position	=> 2,
+	},
+	
+	'L.O Harmonic Minor' => {
+		# Hole        1  2  3  4  5  6  7  8  9 10
+                blow => [qw / 1 b3  5  1 b3  5  1 b3  5  1 /],
+                draw => [qw / 2  5  7  2  4 b6  7  2  4 b6 /],
+        },
 );
 
 use Class::MethodMaker [
