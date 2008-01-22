@@ -8,6 +8,12 @@ my %tunings = (
                 draw => [qw / 2  5  7  2  4  6  7  2  4  6 /],
         },
 
+	'Solo (10 hole)' => {
+		# Hole        1  2  3  4  5  6  7  8  9 10
+		blow => [qw / 1  3  5  1  1  3  5  1  1  3 /],
+		draw => [qw / 2  4  6  7  2  4  6  7  2  4 /],
+	},
+
 	'Seydel Big Six' => {
 		# Hole        1  2  3  4  5  6
 		blow => [qw / 1  3  5  1  3  5 /],
