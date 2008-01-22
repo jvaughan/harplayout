@@ -3,8 +3,6 @@
 [% title = "Harp Layout" %]
 [% PROCESS 'inc/header.tmpl' %]
 
-
-
 <body>
 <div id="container">
 <div id="header">
@@ -20,12 +18,13 @@
 <p>Welcome to Harp Layout.</p>
 
 
-<p>Harp Key is [% harp.key %]. Position is [% harp.position %].  Position key is [% harp.position_key %].</p>
+
 [% CGI.start_form('-method' => 'post') %]
 
 [% PROCESS 'inc/key_pos_options.tmpl' %]
 
 <div class="harp_and_options">
+    <p>[% INCLUDE 'inc/nicepos.tmpl' pos = harp.position %] position harp in key of [% harp.key %] for song in [% harp.position_key %].  Harp tuning is [% harp.tuning %]</p>
     <div class="harp_table">
         [% PROCESS 'inc/harptable.tmpl' %]
     </div>
