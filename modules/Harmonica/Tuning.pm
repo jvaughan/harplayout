@@ -17,12 +17,6 @@ my %tunings = (
                 draw => [qw / 2  5  7  2  4  6  7  2  4  6 /],
 	},
 	
-	'Richter lab in 2nd' => {
-		blow => [qw / 1  3 b6  1  3  5  1  3  5  1 /],
-                draw => [qw / 2  5  7  2  4  6  7  2  4  6 /],
-		label_position	=> 2,
-	},
-	
 	'L.O Melody Maker (labelled in 2nd pos)' => {
 		blow => [qw / 1  3  6  1  3  5  1  3  5  1 /],
                 draw => [qw / 2  5  7  2 b5  6  7  2 b5  6 /],
