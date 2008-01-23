@@ -31,6 +31,26 @@ my %tunings = (
 		blow => [qw / 1  3  5 b7  2  4  6  1  3  5 /],
 		draw => [qw / 2  4  6  1  3  5 b7  2  4  6  /],
 	},
+	
+	'Seydel Melodic Maker' => {
+		# Hole        1  2  3  4  5  6  7  8  9 10
+		blow => [qw / 1  3  6  1  3  5  1  3  5  1 /],
+                draw => [qw / 2  5  7  2 b5  6  7  2 b5  6 /],
+		label_position	=> 1,
+	},
+	
+	'Seydel Augmented' => {
+		# Hole        1  2  3  4  5  6  7  8  9 10
+                blow => [qw / 1  3 b6  1  3 b6  1  3 b6  1 /],
+                draw => [qw /b3  5  7 b3  5  7 b3  5  7 b3 /],	
+	},
+	
+	'Seydel Dorian (labelled in 2nd pos)' => {
+		# Hole        1  2  3  4  5  6  7  8  9 10
+                blow => [qw / 1  3  5  1  3  5  1  3  5  1 /],
+                draw => [qw / 2  5 b7  2  4  6 b7  2  4  6 /],
+		label_position	=> 2,
+        },
 
 	'Paddy Richter' => {
 		# Hole        1  2  3  4  5  6  7  8  9 10
@@ -56,6 +76,13 @@ my %tunings = (
 		blow => [qw / 1 b3  5  1 b3  5  1  3  5  1 /],
                 draw => [qw / 2  5 b7  2  4  6 b7  2  4  6 /],
 		label_position	=> 2,
+	},
+	
+	'Natural Minor (labelled in 1st pos)' => {
+		# Hole        1  2  3  4  5  6  7  8  9 10
+		blow => [qw / 1 b3  5  1 b3  5  1  3  5  1 /],
+                draw => [qw / 2  5 b7  2  4  6 b7  2  4  6 /],
+		label_position	=> 1,
 	},
 	
 	'L.O Harmonic Minor' => {
