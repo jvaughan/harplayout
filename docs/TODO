@@ -1,13 +1,15 @@
 BEFORE RELEASE
 ==============
 
+Add description of interval categories etc.
+Add copyright etc.
 Improve appearance
 DONE: Correct Note names 
-Add tunings
+DOING: Add tunings
 DONE: Allow tunings like melody maker (labelled in 2nd pos)
 
 
 FUTURE
 ======
 Mouseover table-cells gives more info
-Ajax Harp table
+Ajax Harp table / Form?
