@@ -1,6 +1,8 @@
 BEFORE BETA
 ===========
 Add copyright etc.
+Rename modules dir -> perl
+Rename modules harplayout::...
 
 DONE: Add description of interval categories etc.
 DONE: Correct Note names 
