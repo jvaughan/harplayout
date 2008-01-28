@@ -1,5 +1,3 @@
-[% USE CGI ('-no_xhtml', 'true') %]
-
 [% title = "Harp Layout" %]
 [% PROCESS 'inc/header.tmpl' %]
 
@@ -15,7 +13,7 @@
 
 <div id="content">
 
-[% CGI.start_form('-method' => 'post') %]
+<form method="post" action="" enctype="multipart/form-data">
 
 <div class="key_pos_container">
     [% PROCESS 'inc/key_pos_options.tmpl' %]
