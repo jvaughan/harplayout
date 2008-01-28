@@ -1,8 +1,8 @@
-package Harmonica::Layout::Table;
+package HarpLayout::Harmonica::Table;
 
 use Data::Dumper;
 
-use base qw(Harmonica::Layout);
+use base qw(HarpLayout::Harmonica);
 
 use Class::MethodMaker [
 	new 	=> [ -hash => -init => 'new' ],	

@@ -1,7 +1,7 @@
-package Harmonica::MusicLogic;
+package HarpLayout::MusicLogic;
 use strict;
 
-use Harmonica::CircleOfFifths;
+use HarpLayout::MusicLogic::CircleOfFifths;
 use Data::Dumper;
 
 require Exporter;

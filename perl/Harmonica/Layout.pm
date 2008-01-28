@@ -1,14 +1,14 @@
-package Harmonica::Layout;
+package HarpLayout::Harmonica;
 use strict;
 
 use Data::Dumper;
 use Switch;
 
-use Harmonica::Tuning;
-use Harmonica::MusicLogic qw/ 
+use HarpLayout::Harmonica::Tuning;
+use HarpLayout::Harmonica::MusicLogic qw/ 
 	interval_from_position note_from_key_interval note_from_position category_from_interval 
 	position_from_notes all_keys /;
-use Harmonica::Note;
+use HarpLayout::Harmonica::Note;
 
 use Class::MethodMaker [
 	new 	=> [ -hash => -init => 'new' ],
@@ -34,7 +34,7 @@ sub init {
 	$self->{blow} = [];
 	$self->{draw} = [];
 	
-	$self->tuning_obj ( Harmonica::Tuning->new(tuning => $self->tuning) );
+	$self->tuning_obj ( HarpLayout::Harmonica::Tuning->new(tuning => $self->tuning) );
 	my $label_position = $self->tuning_obj->label_position;
 	
 	switch ( $self->calculate ) {
@@ -149,7 +149,7 @@ sub set_note {
 	my $self = shift;
 	my ($plate, $reed, $bendstep, $firstposint) = @_;
 
-	my $note = Harmonica::Note->new;
+	my $note = HarpLayout::Harmonica::Note->new;
 	$note->first_pos_interval($firstposint);
 	$note->bendstep( $bendstep );
 
@@ -229,7 +229,7 @@ sub keys_available {
 
 sub tunings_available {
 	my $self = shift;
-	return Harmonica::Tuning->available;
+	return HarpLayout::Harmonica::Tuning->available;
 }
 
 1;

@@ -1,4 +1,4 @@
-package Harmonica::Web;
+package HarpLayout::Webapp;
 use strict;
 
 use define DEBUG => 0;
@@ -8,7 +8,7 @@ use base qw/ CGI::Application /;
 use CGI::Application::Plugin::AnyTemplate;
 use CGI::Application::Plugin::AutoRunmode;
 
-use Harmonica::Layout::Table;
+use HarpLayout::Harmonica::Table;
 
 use Data::Dumper;
 
@@ -43,7 +43,7 @@ sub showHarp : StartRunmode {
 	
 	if ( $self->submitted ) {
 		foreach my $f ( @form_fields ) {
-			next unless Harmonica::Layout::Table->can($f);
+			next unless HarpLayout::Harmonica::Table->can($f);
 			$harp_params{$f} = $q->param($f) || 0;
 		}
 		
@@ -70,7 +70,7 @@ sub showHarp : StartRunmode {
 		}
 	} # Submitted?
 
-	my $harp = Harmonica::Layout::Table->new( %harp_params );
+	my $harp = HarpLayout::Harmonica::Table->new( %harp_params );
 	my $b = [$harp->blowNotes];
 	my $debug = '';
 	$debug = Dumper ($q) if DEBUG;	

@@ -1,4 +1,4 @@
-package Harmonica::Tuning;
+package HarpLayout::Harmonica::Tuning;
 use strict;
 
 my %tunings = (

@@ -1,4 +1,4 @@
-package Harmonica::CircleOfFifths;
+package HarpLayout::MusicLogic::CircleOfFifths;
 use strict;
 
 require Exporter;

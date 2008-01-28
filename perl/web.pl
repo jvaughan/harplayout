@@ -3,10 +3,10 @@ use strict;
 
 use CGI::Carp qw(fatalsToBrowser);
 
-use Harmonica::Web;
+use HarpLayout::Webapp;
 use Data::Dumper;
 
-my $web = Harmonica::Web->new;
+my $web = HarpLayout::Webapp->new;
 
 $web->run;
 

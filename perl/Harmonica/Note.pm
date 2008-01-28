@@ -1,7 +1,7 @@
-package Harmonica::Note;
+package HarpLayout::Harmonica::Note;
 use strict;
 
-use Harmonica::MusicLogic qw/ add_interval subtract_interval interval_cmp /;
+use HarpLayout::MusicLogic qw/ add_interval subtract_interval interval_cmp /;
 
 use Class::MethodMaker [
         new	=> [ -hash => -init => 'new' ],
