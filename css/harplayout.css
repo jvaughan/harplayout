@@ -130,6 +130,19 @@ div.harp_options {
 	float:	left;
 }
 
+#harptable_legend {
+	float: left;
+}
+
+#interval_categories_legend {
+	padding-left: 1em;
+	float: left; 
+}
+
+table#harptable_legend td {
+	height: 2em;
+}
+
 .chord, .blues, .passing, .danger {
 	
 }

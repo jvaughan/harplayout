@@ -50,6 +50,35 @@
 %]
 </div>
 </div>
-<table class="harmonica">
-    <tr><td class="natural">natural</td><td class="drawbend">bend</td><td class="overblow">over<br>bend</td></tr>
+
+<div class="options" id="legend">
+<h3>Legend</h3>
+<div class = "options_contents">
+<table class="harmonica" id="harptable_legend">
+    <tr>
+        <td class="natural">natural</td>
+    </tr>
+        
+    [% IF harp.include_bends %]
+    <tr>
+        <td class="drawbend">bend</td>
+    </tr>
+    [% END %]
+        
+    [% IF harp.include_overbends %]
+    <tr>
+        <td class="overblow">over<br>bend</td></tr>
+    </tr>
+    [% END %]
 </table>
+
+[% IF harp.show_interval_categories %]
+<div id="interval_categories_legend">
+    <span class="chord">&bull;</span> Chord note<br>
+    <span class="blues">&bull;</span> Blue note<br>
+    <span class="passing">&bull;</span> Passing note<br>
+    <span class="danger">&bull;</span> Danger note
+</div>
+[% END %]
+</div>
+</div>
