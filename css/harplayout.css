@@ -163,3 +163,6 @@ table#harptable_legend td {
 	color: red;
 }
 
+p#copyright {
+	text-align: right;
+}
