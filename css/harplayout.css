@@ -130,6 +130,10 @@ div.harp_options {
 	float:	left;
 }
 
+#options_submit {
+	padding-top: 1em;
+}
+
 #harptable_legend {
 	float: left;
 }
