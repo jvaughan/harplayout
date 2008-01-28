@@ -5,7 +5,7 @@ use Data::Dumper;
 use Switch;
 
 use HarpLayout::Harmonica::Tuning;
-use HarpLayout::Harmonica::MusicLogic qw/ 
+use HarpLayout::MusicLogic qw/ 
 	interval_from_position note_from_key_interval note_from_position category_from_interval 
 	position_from_notes all_keys /;
 use HarpLayout::Harmonica::Note;
