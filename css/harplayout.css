@@ -148,7 +148,7 @@ table#harptable_legend td {
 }
 
 .chord, .blues, .passing, .danger {
-	
+	font-size: 80%;
 }
 
 .chord {
