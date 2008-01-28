@@ -1,115 +1,113 @@
-<div class="key_pos_container">
-    <input type="hidden" name="js_submit" value="">
+<input type="hidden" name="js_submit" value="">
     
-    <p>To start, get your layout using:</p>
+<p>To start, get your layout using:</p>
         
-    <div class="key_pos" id="calc_position_key">
-        <p><strong>Harp key</strong> and <strong>Position</strong></p>
+<div class="key_pos" id="calc_position_key">
+    <p><strong>Harp key</strong> and <strong>Position</strong></p>
         <table>
             <tr>
-                <td>Harp Key: </td>
-                <td>[% INCLUDE 'form/dropdown.tmpl'
-                        name = "calc_position_key-key"     
-                        values = harp.keys_available
-                        default = harp.key
-                        onchange = "handleChange('get song key')"
-                    %]
-                </td>
-            </tr>
-            <tr>
-                <td>Position: </td>
-                <td>[%INCLUDE 'form/dropdown.tmpl' 
-                        name    = 'calc_position_key-position'
-                        values  = harp.positions_available
-                        default = harp.position
-                        onchange = "handleChange('get song key');"
-                    %]
-                </td>
-            </tr>
-            <tr>
-                <td>Song Key: </td>
-                <td><strong>[% harp.position_key %]</strong></td>
-            <tr>
-            <td><noscript><div>[% INCLUDE 'form/submit.tmpl' name = 'submit' value = 'Get Song Key' %]</div></noscript>
+            <td>Harp Key: </td>
+            <td>[% INCLUDE 'form/dropdown.tmpl'
+                    name = "calc_position_key-key"     
+                    values = harp.keys_available
+                    default = harp.key
+                    onchange = "handleChange('get song key')"
+                %]
             </td>
             </tr>
-        </table>
-    </div> <!-- calc_position_key -->
-    
-    <div class="key_pos_or">
-        <strong>- OR -</strong>
-    </div>
-
-    <div class="key_pos" id="calc_key">
-        <p><strong>Song key</strong> and <strong>Position</strong></p>
-        <table>
             <tr>
-                <td>Song Key: </td>
-                <td>[% INCLUDE 'form/dropdown.tmpl'
-                        name        = "calc_key-position_key"
-                        values      = harp.keys_available
-                        default     = harp.position_key
-                        onchange    = "handleChange('get harp key')"
-                    %]
-                </td>
-            </tr>
-            <tr>
-                <td>Position: </td>
-                <td>[%INCLUDE 'form/dropdown.tmpl' 
-                        name        = 'calc_key-position'
-                        values      = harp.positions_available
-                        default     = harp.position
-                        onchange    = "handleChange('get harp key')"
-                    %]
-                </td>
-            </tr>
-            <tr>
-                <td>Harp Key: </td>
-                <td><strong>[% harp.key %]</strong></td>
-            </tr>
-            <tr>
-            <td><noscript><div>[% INCLUDE 'form/submit.tmpl' name = 'submit' value = 'Get Harp Key' %]</div></noscript>
+            <td>Position: </td>
+            <td>[%INCLUDE 'form/dropdown.tmpl' 
+                    name    = 'calc_position_key-position'
+                    values  = harp.positions_available
+                    default = harp.position
+                    onchange = "handleChange('get song key');"
+                %]
             </td>
-            </tr>
-        </table>
-    </div> <!-- calc_key -->
+        </tr>
+        <tr>
+            <td>Song Key: </td>
+            <td><strong>[% harp.position_key %]</strong></td>
+        </tr>
+        <tr>
+        <td><noscript><div>[% INCLUDE 'form/submit.tmpl' name = 'submit' value = 'Get Song Key' %]</div></noscript>
+        </td>
+        </tr>
+    </table>
+</div> <!-- calc_position_key -->
     
-    <div class="key_pos_or">
-           <strong>- OR -</strong>
-    </div>
-    
-    <div class="key_pos" id="calc_position">
-        <p><strong>Song key</strong> and <strong>Harp key</strong></p>
-        <table>
-            <tr>
-                <td>Song Key: </td>
-                <td>[% INCLUDE 'form/dropdown.tmpl'
-                        name        = "calc_position-position_key"
-                        values      = harp.keys_available
-                        default     = harp.position_key
-                        onchange    = "handleChange('get position')"
-                    %]
-                </td>
-            </tr>
-            <tr>
-                <td>Harp Key: </td>
-                <td>[% INCLUDE 'form/dropdown.tmpl'
-                        name        = "calc_position-key"
-                        values      = harp.keys_available
-                        default     = harp.key
-                        onchange    = "handleChange('get position')"
-                    %]
-                </td>
-            </tr>
-            <tr>
-                <td>Position: </td>
-                <td><strong>[% harp.position %]</strong></td>
-            </tr>
-            <tr>
-            <td><noscript><div>[% INCLUDE 'form/submit.tmpl' name = 'submit' value = 'Get Position' %]</div></noscript>
-            </td>
-            </tr>
-        </table>
-    </div> <!-- calc_position -->
-
+<div class="key_pos_or">
+    <strong>- OR -</strong>
 </div>
+
+<div class="key_pos" id="calc_key">
+    <p><strong>Song key</strong> and <strong>Position</strong></p>
+    <table>
+        <tr>
+            <td>Song Key: </td>
+            <td>[% INCLUDE 'form/dropdown.tmpl'
+                    name        = "calc_key-position_key"
+                    values      = harp.keys_available
+                    default     = harp.position_key
+                    onchange    = "handleChange('get harp key')"
+                %]
+            </td>
+        </tr>
+        <tr>
+            <td>Position: </td>
+            <td>[%INCLUDE 'form/dropdown.tmpl' 
+                    name        = 'calc_key-position'
+                    values      = harp.positions_available
+                    default     = harp.position
+                    onchange    = "handleChange('get harp key')"
+                %]
+            </td>
+        </tr>
+        <tr>
+            <td>Harp Key: </td>
+            <td><strong>[% harp.key %]</strong></td>
+        </tr>
+        <tr>
+        <td><noscript><div>[% INCLUDE 'form/submit.tmpl' name = 'submit' value = 'Get Harp Key' %]</div></noscript>
+        </td>
+        </tr>
+    </table>
+</div> <!-- calc_key -->
+    
+<div class="key_pos_or">
+       <strong>- OR -</strong>
+</div>
+    
+<div class="key_pos" id="calc_position">
+    <p><strong>Song key</strong> and <strong>Harp key</strong></p>
+    <table>
+        <tr>
+            <td>Song Key: </td>
+            <td>[% INCLUDE 'form/dropdown.tmpl'
+                    name        = "calc_position-position_key"
+                    values      = harp.keys_available
+                    default     = harp.position_key
+                    onchange    = "handleChange('get position')"
+                %]
+            </td>
+        </tr>
+        <tr>
+            <td>Harp Key: </td>
+            <td>[% INCLUDE 'form/dropdown.tmpl'
+                    name        = "calc_position-key"
+                    values      = harp.keys_available
+                    default     = harp.key
+                    onchange    = "handleChange('get position')"
+                %]
+            </td>
+        </tr>
+        <tr>
+            <td>Position: </td>
+            <td><strong>[% harp.position %]</strong></td>
+        </tr>
+        <tr>
+        <td><noscript><div>[% INCLUDE 'form/submit.tmpl' name = 'submit' value = 'Get Position' %]</div></noscript>
+        </td>
+        </tr>
+    </table>
+</div> <!-- calc_position -->
