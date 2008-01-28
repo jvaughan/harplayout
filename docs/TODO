@@ -6,15 +6,13 @@ Rename modules harplayout::...
 
 DONE: Add description of interval categories etc.
 DONE: Correct Note names 
-DOING: Add tunings
+
 DONE: Allow tunings like melody maker (labelled in 2nd pos)
 
 
 BEFORE RELEASE
 ==============
-
-
-
+Add tunings
 Improve appearance
 
 
