@@ -13,18 +13,18 @@ our @EXPORT_OK	= qw/ interval_cmp subtract_interval add_interval note_from_key_i
 my $BOUNDARY = 7;
 
 my %scale_notes = (
-C	=> [ qw/ C	Db	D	Eb	E	F	Gb	G	Ab	A	Bb	B  /],
-Db	=> [ qw/ Db	D	Eb	E	F	Gb	G	Ab	A	Bb	B	C  /],
-D	=> [ qw/ D	Eb	E	F	F#	G	Ab	A	Bb	B	C	C# /],
-Eb	=> [ qw/ Eb	E	F	Gb	G	Ab	A	Bb	B	C	Db	D  /],
-E	=> [ qw/ E	F	F#	G	Ab	A	Bb	B	C	C#	D	D# /],
-F	=> [ qw/ F	Gb	G	Ab	A	Bb	B	C	Db	D	Eb	E  /],
-'F#'	=> [ qw/ F#	G	G#	A	A#	B	C	C#	D	D#	E	E# /],
-G	=> [ qw/ G	Ab	A	Bb	B	C	Db	D	Eb	E	F	F# /],
-Ab	=> [ qw/ Ab	A	Bb	B	C	Db	D	Eb	E	F	Gb	G  /],
-A	=> [ qw/ A	Bb	B	C	C#	D	Eb	E	F	F#	G	G# /],
-Bb	=> [ qw/ Bb	B	C	Db	D	Eb	E	F	Gb	G	Ab	A  /],
-B	=> [ qw/ B	C	C#	D	D#	E	F	F#	G	G#	A	A# /],
+C	=> [ 'C',	'Db',	'D',	'Eb',	'E',	'F',	'Gb',	'G',	'Ab',	'A',	'Bb',	'B',  ],
+Db	=> [ 'Db',	'D',	'Eb',	'E',	'F',	'Gb',	'G',	'Ab',	'A',	'Bb',	'B',	'C',  ],
+D	=> [ 'D',	'Eb',	'E',	'F',	'F#',	'G',	'Ab',	'A',	'Bb',	'B',	'C',	'C#', ],
+Eb	=> [ 'Eb',	'E',	'F',	'Gb',	'G',	'Ab',	'A',	'Bb',	'B',	'C',	'Db',	'D',  ],
+E	=> [ 'E',	'F',	'F#',	'G',	'Ab',	'A',	'Bb',	'B',	'C',	'C#',	'D',	'D#', ],
+F	=> [ 'F',	'Gb',	'G',	'Ab',	'A',	'Bb',	'B',	'C',	'Db',	'D',	'Eb',	'E',  ],
+'F#'	=> [ 'F#',	'G',   	'G#',	'A',	'A#',	'B',	'C',	'C#',	'D',	'D#',	'E',	'E#', ],
+G	=> [ 'G',	'Ab',	'A',	'Bb',	'B',	'C',	'Db',	'D',	'Eb',	'E',	'F',	'F#', ],
+Ab	=> [ 'Ab',	'A',	'Bb',	'B',	'C',	'Db',	'D',	'Eb',	'E',	'F',	'Gb',	'G',  ],
+A	=> [ 'A',	'Bb',	'B',	'C',	'C#',	'D',	'Eb',	'E',	'F',	'F#',	'G',	'G#', ],
+Bb	=> [ 'Bb',	'B',	'C',	'Db',	'D',	'Eb',	'E',	'F',	'Gb',	'G',	'Ab',	'A',  ],
+B	=> [ 'B',	'C',	'C#',	'D',	'D#',	'E',	'F',	'F#',	'G',	'G#',	'A',	'A#', ],
 );
 
 
