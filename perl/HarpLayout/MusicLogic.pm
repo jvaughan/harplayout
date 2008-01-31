@@ -29,7 +29,7 @@ B	=> [ 'B',	'C',	'C#',	'D',	'D#',	'E',	'F',	'F#',	'G',	'G#',	'A',	'A#', ],
 
 
 sub all_keys {
-	return ('G', 'Ab', 'A', 'Bb', 'B', 'C', 'Db', 'D', 'F#', 'E', 'F', 'F#',);
+	return ('G', 'Ab', 'A', 'Bb', 'B', 'C', 'Db', 'D', 'Eb', 'E', 'F', 'F#',);
 }
 
 
