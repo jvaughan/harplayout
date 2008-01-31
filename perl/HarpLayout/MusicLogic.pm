@@ -29,9 +29,7 @@ B	=> [ 'B',	'C',	'C#',	'D',	'D#',	'E',	'F',	'F#',	'G',	'G#',	'A',	'A#', ],
 
 
 sub all_keys {
-	my %co5 = co5_notes();
-	
-	return sort keys %co5;
+	return ('G', 'Ab', 'A', 'Bb', 'B', 'C', 'Db', 'D', 'Eb', 'E', 'F', 'F#',);
 }
 
 
