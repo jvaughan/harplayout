@@ -1,0 +1,69 @@
+/* Harp Playout || Print CSS
+   Copyright (c) 2007/08 Jon Vaughan <jon-web@harplayout.com>
+--------------------------------------------------------------------*/
+
+@import url("harplayout.css");
+
+#container {
+  font-family: Arial, Helvetica, sans-serif; 
+  margin: 0;
+  padding: 0;
+  color: rgb(5,5,5);
+  font-size: 12pt;
+  line-height: 18pt;
+  border: 0;
+}
+
+#header {
+  border-bottom: 0;
+}
+
+#header h1 {
+  font-size: 36px;
+  font-weight: normal;
+  letter-spacing: 2px;
+}
+
+/* Keep in case j0n wants to go back to a <p> instead of <h3>
+div.harp_and_options > p:first-child {
+  font-weight: bold;
+  margin: -30px 0 14px 0;
+}
+*/
+ 
+h3 {
+  margin: -50px 0 12px 0;
+  font-size: 18px;
+  font-weight: normal;
+  letter-spacing: 1px;
+}
+
+h1, h3 {
+  color: rgb(5,5,5)
+}
+
+.key_pos_container, .harp_options, .chord, .blues, .passing, .danger, #footer, h1:after {
+  display: none;
+}
+
+
+/* ##### Dinnae work fer some reason... hmmm ##### 
+
+table.harmonica td.natural, table.harmonica td.drawbend, table.harmonica td.blowbend,
+table.harmonica td.overblow, table.harmonica td.overdraw, table.harmonica td.heading,
+table.harmonica td.holenum {
+  background-color: rgb(255,255,224);
+  border: 1px solid rgb(0,0,0);
+}
+table.harmonica td.drawbend, table.harmonica td.blowbend {
+  background-color: rgb(230,230,250);
+}
+table.harmonica td.overdraw, table.harmonica td.overblow {
+  background-color: rgb(255,182,193);
+}
+tr.holenums td.heading, tr.holenums td.holenum {
+  background-color: rgb(7,7,7);
+  color: rgb(255,255,255);
+}
+
+*/
