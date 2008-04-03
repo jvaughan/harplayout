@@ -14,7 +14,7 @@ body {
   border-bottom: 1px solid #ae976a;
 }
 
-#header h1:after {
+#header h1:after, div.options h3:before {
   color: #ffffe0;
 }
 
@@ -28,7 +28,7 @@ div.key_pos {
   border: 1px solid #777;
 }
 
-div.harp_options {
+h2, h3, div.key_pos_or, div.harp_options, a {
   color: #685c45;
 }
 
@@ -48,13 +48,6 @@ div.harp_options {
   color: #e22828;	/* Red */
 }
 
-h2, h3, div.key_pos_or {
-  color: #685c45;
-}
-
-div.options h3:before {
-  color: #ffffe0;
-}
 
 div.options h3 {
   background-color: #e7d9bd;
@@ -64,7 +57,6 @@ div.options h3 {
 }
 
 a {
-  color: #685c45;
   border-bottom: 1px dotted #685c45;
 }
 
