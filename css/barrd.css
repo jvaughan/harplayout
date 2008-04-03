@@ -1,0 +1,267 @@
+/* Harp Playout || Screen CSS
+   Copyright (c) 2007/08 Jon Vaughan <jon-web@harplayout.com>
+--------------------------------------------------------------------*/
+
+/* -- START CSS --
+   Page Wrapper & Header
+--------------------------------------------------------------------*/
+
+body {
+  background-color: #fff;
+}
+
+#container {
+  width: 90%;
+  min-width: 750px;
+  margin: 10px auto;
+  border: 1px solid #c0c0c0;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 150%;
+  color: #555;
+} 
+
+* html #container { /* Naschty - but interesting :-/ */
+  height: 1%;
+}
+
+#header {
+  padding: 1.5em 1em;
+  background-color: #fdd463;
+  border-bottom: 1px solid #d88517;
+  color: #d88517;
+}
+
+#header h1 {
+  font-weight: normal;
+  font-size: 2.5em;
+  letter-spacing: 3px;
+  padding: 0;
+  margin: 0;
+}
+
+#header h1:after {
+  content: " >>>";
+  letter-spacing: -2px;
+  color: #ffffe0;
+}
+
+/* Left Hand Column
+   -- NOTE --
+   -----------------------------------------------------------------
+   ### Unsure what these are supposed to do? deprecated?
+   ### "display: none" used as a fix to avoid editing HTML file...
+   ### As recommended in the HTML file, delete from here and there
+--------------------------------------------------------------------*/
+
+#leftcol {}
+
+#leftcol p { margin: 0 0 1em 0; }
+
+.spacer { clear: both; }
+
+.leftcol { display: none; } /* HACK */
+.spacer  { display: none; } /* HACK */
+
+/* Main Content Wrapper
+--------------------------------------------------------------------*/
+
+#content { padding: 1em; }
+
+#content h2 {
+  font-size: 1.5em;
+  font-weight: normal;
+  margin: .5em 0 1.5em 0;
+  letter-spacing: 1px;
+}
+
+/* Footer Wrapper
+--------------------------------------------------------------------*/
+
+#footer {
+  clear: both;
+  padding: 1em;
+  background-color: #ffffe0;
+  border-top: 1px solid #d88517;
+}
+
+/* General Layout - ID's & Classes  
+--------------------------------------------------------------------*/
+
+#options_submit {
+  padding-top: 1em;
+}
+
+#harptable_legend {
+  float: left;
+}
+
+#interval_categories_legend {
+  float: left; 
+  padding-left: 1em;
+}
+
+div.key_pos_container {
+  overflow: hidden; 
+  zoom: 1;
+}
+
+div.key_pos {
+  float: left;
+  background-color: #ffffe0;
+  border: 1px solid #777;
+  padding: 0 0.5em 0.5em 0.5em;
+}
+
+div.key_pos_or {
+  float: left;
+  padding: 4.5em 0.5em 0 0.5em;
+}
+
+div.harp_and_options {
+  margin-top: 2em;
+}
+
+div.harp_table {
+  float: left;
+}
+
+div.harp_options {
+  float: left;
+  padding-left: 2em;
+  color: #d88517;
+}
+
+/* General Text Classes & Additional Typography
+--------------------------------------------------------------------*/
+
+.chord, .blues, .passing, .danger {
+  font-size: 2em; /* Changed as 80% is too small */
+  vertical-align: bottom;
+}
+
+.chord {
+  color: #0f0; /* Green */
+}
+
+.blues {
+  color: #00f; /* Blue */
+}
+
+.passing {
+  color: #fdd463; /* Orange */
+}
+
+.danger {
+  color: #f00; /* Red */
+}
+
+#header h1, h2, h3 {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+}
+
+h2, h3, div.key_pos_or {
+  color: #d88517;
+}
+
+h3 {
+  font-size: 1.2em;
+  letter-spacing: 1px;
+}
+
+div.options h3:before {
+  content: ">";
+  margin: 0 4px 0 0;
+  font-weight: normal;
+  color: #d88517;
+}
+
+div.options h3 {
+  padding: 2px 0 2px 6px;
+  background-color: #fdd463;
+  border-bottom: 1px solid #d88517;
+  border-right: 1px solid #c0c0c0;
+  color: #ffffe0;
+}
+
+p#copyright { /* #footer - we need to change this too, bad... */
+  padding: 0;
+  margin: 0;
+  text-align: right;
+}
+
+/* Links
+--------------------------------------------------------------------*/
+
+a {
+  color: #ea9b22;
+  padding: 0 0 1px 0;
+  text-decoration: none;
+  border-bottom: 1px dotted #ea9b22;
+}
+
+a:hover {
+  border-bottom: 1px solid #ea9b22;
+}
+
+/* HTML - Table Data
+--------------------------------------------------------------------*/
+
+table#harptable_legend td {
+  height: 2em;
+}
+
+table.harmonica {
+  margin: 0 0 1em 0;
+  text-align: center;
+}
+
+table.harmonica tr {
+  margin: 0;
+  padding: 0;
+}
+
+table.harmonica td.natural, table.harmonica td.drawbend, table.harmonica td.blowbend,
+table.harmonica td.overblow, table.harmonica td.overdraw, table.harmonica td.heading,
+table.harmonica td.holenum {
+  background-color: #ffffe0;
+  border: 1px solid #777;
+  margin: 0;
+  padding: 0.3em 0.5em;
+}
+
+table.harmonica td.drawbend, table.harmonica td.blowbend {
+  background-color: #e6e6fa;
+}
+
+table.harmonica td.overdraw, table.harmonica td.overblow {
+  background-color: #ffb6c1;
+  border-style: dashed;
+}
+
+table.harmonica td.empty {
+  background-color: #fff;
+  border-color: #fff;
+}
+
+table.harmonica td.heading {
+  border-width: 0;
+}
+
+tr.holenums td.heading, tr.holenums td.holenum {
+  background-color: #777;
+  color: #fff;
+}
+
+/* HTML - Form Elements
+--------------------------------------------------------------------*/
+select { /* <- LEAVE THIS, it's cool, trust me */
+  cursor: pointer;
+}
+
+select { /* Only viewable in UA's that don't emulate OS X stylee */
+  padding: 1px 2px;
+  margin: 0;
+  color: #777;
+  background-color: #fff;
+  border: 1px solid #777;
+}
