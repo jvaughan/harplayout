@@ -6,17 +6,11 @@
    Page Wrapper & Header
 --------------------------------------------------------------------*/
 
-body {
-  background-color: #fff;
-}
-
 #container {
   width: 90%;
   min-width: 750px;
   margin: 10px auto;
-  border: 1px solid #c0c0c0;
   font-family: Arial, Helvetica, sans-serif;
-  color: #333333;
 } 
 
 * html #container { 
@@ -26,8 +20,6 @@ body {
 #header {
   padding: 0.8em 1em;
   /* background-color: #E2DCB0; */
-  background-color: #cbb58a;
-  border-bottom: 1px solid #ae976a;
 }
 
 #header h1 {
@@ -41,7 +33,6 @@ body {
 #header h1:after {
   content: " >>>";
   letter-spacing: -2px;
-  color: #ffffe0;
 }
 
 /* Left Hand Column
@@ -77,8 +68,6 @@ body {
 #footer {
   clear: both;
   padding: 1em;
-  background-color: #e7d9bd;
-  border-top: 1px solid #ae976a;
 }
 
 /* General Layout - ID's & Classes  
@@ -104,8 +93,6 @@ div.key_pos_container {
 
 div.key_pos {
   float: left;
-  background-color: #ffffe0;
-  border: 1px solid #777;
   padding: 0 0.5em 0.5em 0.5em;
   line-height: 130%;
 }
@@ -126,7 +113,6 @@ div.harp_table {
 div.harp_options {
   float: left;
   padding-left: 2em;
-  color: #685c45;
   line-height: 130%;
 }
 
@@ -138,28 +124,8 @@ div.harp_options {
   vertical-align: bottom;
 }
 
-.chord {
-  color: green;		/* Green */
-}
-
-.blues {
-  color: #464fa3;	/* Blue */
-}
-
-.passing {
-  color: #f58e25;	/* Orange */
-}
-
-.danger {
-  color: #e22828;	/* Red */
-}
-
 #header h1, h2, h3 {
   font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-}
-
-h2, h3, div.key_pos_or {
-  color: #685c45;
 }
 
 h3 {
@@ -171,15 +137,10 @@ div.options h3:before {
   content: ">";
   margin: 0 4px 0 0;
   font-weight: normal;
-  color: #ffffe0;
 }
 
 div.options h3 {
   padding: 2px 0 2px 6px;
-  background-color: #e7d9bd;
-  border-bottom: 1px solid #cbb58a;
-  border-right: 1px solid #c0c0c0;
-  color: #333;
 }
 
 p#copyright {
@@ -192,14 +153,8 @@ p#copyright {
 --------------------------------------------------------------------*/
 
 a {
-  color: #685c45;
   padding: 0 0 1px 0;
   text-decoration: none;
-  border-bottom: 1px dotted #685c45;
-}
-
-a:hover {
-  border-bottom: 1px solid #685c45;
 }
 
 /* HTML - Harmonica Table Data
@@ -215,7 +170,6 @@ table.harmonica {
 }
 
 table.harmonica td {
-  color: #333;
   line-height: 150%;
 }
 
@@ -227,34 +181,20 @@ table.harmonica tr {
 table.harmonica td.natural, table.harmonica td.drawbend, table.harmonica td.blowbend,
 table.harmonica td.overblow, table.harmonica td.overdraw, table.harmonica td.heading,
 table.harmonica td.holenum {
-  background-color: #ffffe0;
-  border: 1px solid #777;
   margin: 0;
   padding: 0.3em 0.5em;
 }
 
-table.harmonica td.drawbend, table.harmonica td.blowbend {
-  background-color: #e6e6fa;
-}
 
 table.harmonica td.overdraw, table.harmonica td.overblow {
-  background-color: #ffb6c1;
   border-style: dashed;
 }
 
-table.harmonica td.empty {
-  background-color: #fff;
-  border-color: #fff;
-}
 
 table.harmonica td.heading {
   border-width: 0;
 }
 
-tr.holenums td.heading, tr.holenums td.holenum {
-  background-color: #444;
-  color: #fff;
-}
 
 /* HTML - Form Elements
 --------------------------------------------------------------------*/
@@ -265,7 +205,4 @@ select { /* change mouse cursor to pointer for dropdowns hover */
 select { /* Only viewable in UA's that don't emulate OS X stylee */
   padding: 1px 2px;
   margin: 0;
-  color: #777;
-  background-color: #fff;
-  border: 1px solid #777;
 }
