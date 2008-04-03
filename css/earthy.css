@@ -83,6 +83,10 @@ table.harmonica td.holenum {
   border: 1px solid #777;
 }
 
+table.harmonica td.heading {
+  border-width: 0;
+}
+
 table.harmonica td.drawbend, table.harmonica td.blowbend {
   background-color: #e6e6fa;
 }
@@ -96,8 +100,7 @@ table.harmonica td.empty {
   border-color: #fff;
 }
 
-
-tr.holenums td.heading, tr.holenums td.holenum {
+table.harmonica tr.holenums td.heading, tr.holenums td.holenum {
   background-color: #444;
   color: #fff;
 }
