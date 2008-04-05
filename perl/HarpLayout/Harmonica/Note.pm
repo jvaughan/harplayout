@@ -5,7 +5,7 @@ use HarpLayout::MusicLogic qw/ add_interval subtract_interval interval_cmp /;
 
 use Class::MethodMaker [
         new	=> [ -hash => -init => 'new' ],
-        scalar	=> [ qw/first_pos_interval position_interval interval_category note bendstep description type/ ]
+        scalar	=> [ qw/first_pos_interval position_interval interval_category note bendstep description type id/ ],
 ];
 
 use overload

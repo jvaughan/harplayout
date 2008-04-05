@@ -6,7 +6,7 @@
 
 <td class="[% class %]">
 [% UNLESS class == "empty" %]
-    <table class="notecell" >
+    <table class="notecell" id="[% note.id %]">
         [% IF harp.show_intervals %]<tr><td>[% note.position_interval %]</td></tr>[% END %]
         [% IF harp.show_notes %]<tr><td>[% note.note %]</td></tr>[% END %]
         [% IF harp.show_interval_categories %]<tr><td><span class="[% note.interval_category %]">&bull;</span></td></tr>[% END %]
