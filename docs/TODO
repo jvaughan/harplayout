@@ -1,20 +1,7 @@
-BEFORE BETA
-===========
-
-DONE: Rename modules dir -> perl
-DONE: Rename modules harplayout::...
-
-DONE: Add copyright etc.
-DONE: Add description of interval categories etc.
-DONE: Correct Note names 
-
-DONE: Allow tunings like melody maker (labelled in 2nd pos)
-
-
 BEFORE RELEASE
 ==============
 Add tunings
-Improve appearance
+DONE: Improve appearance
 
 
 
