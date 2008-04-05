@@ -5,6 +5,7 @@
 /* -- START CSS --
    Page Wrapper & Header
 --------------------------------------------------------------------*/
+@import url("/css/prototip/prototip.css");
 
 #container {
   width: 90%;
