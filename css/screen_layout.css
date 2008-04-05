@@ -209,3 +209,14 @@ select { /* Only viewable in UA's that don't emulate OS X stylee */
   padding: 1px 2px;
   margin: 0;
 }
+
+.prototip .default .content { font-size: 14px;}
+.prototip .default .content .blue,
+.prototip .default .content .chord,
+.prototip .default .content .passing,
+.prototip .default .content .danger   { font-size: 14px;}
+
+.prototip .default {
+  border-width: 1px;
+  border-style: solid;
+}

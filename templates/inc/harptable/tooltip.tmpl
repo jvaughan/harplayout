@@ -1,0 +1,13 @@
+[% ic = note.interval_category %]
+<table>
+    <tr>
+    <td>Interval:</td><td><strong>[% note.position_interval %]</strong></td>
+    </tr>
+    <tr>
+    <td>Note:</td><td><strong>[% note.note %]</strong></td>
+    </tr>
+    <tr>
+    <td colspan="2"><span class="[% ic %]"><strong>&bull; [% ic FILTER ucfirst %]</strong></span> note</td>
+    </tr>
+</table>
+

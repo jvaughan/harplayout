@@ -14,3 +14,11 @@
     <!-- >[% note.position_interval %] -->
 [% END %]
 </td>
+<script type="text/javascript">
+document.observe('dom:loaded', function() {
+
+	new Tip('[% note.id %]', '[% PROCESS "inc/harptable/tooltip.tmpl" FILTER replace('\n', '') %]', {title : '[% note.description %]'});
+
+
+});
+</script>
