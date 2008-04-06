@@ -1,4 +1,5 @@
 @import url("screen_layout.css");
+@import url("earthy_tooltips.css");
 
 body {
   background-color: #fff;
@@ -103,6 +104,3 @@ select { /* Only viewable in UA's that don't emulate OS X stylee */
   border: 1px solid #777;
 }
 
-.prototip .default {border-color: #ae976a;}
-.prototip .default .content { background: #e7d9bd; color: #333;}
-.prototip .default .toolbar { background: #cbb58a; color: #333;}

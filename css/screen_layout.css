@@ -5,7 +5,6 @@
 /* -- START CSS --
    Page Wrapper & Header
 --------------------------------------------------------------------*/
-@import url("/css/prototip/prototip.css");
 
 #container {
   width: 90%;
@@ -210,13 +209,12 @@ select { /* Only viewable in UA's that don't emulate OS X stylee */
   margin: 0;
 }
 
-.prototip .default .content { font-size: 14px;}
-.prototip .default .content .blue,
-.prototip .default .content .chord,
-.prototip .default .content .passing,
-.prototip .default .content .danger   { font-size: 14px;}
+.prototip .harptt { width: 150px; border-width: 1px; border-style: solid; border-color: #ae976a;}
+.prototip .harptt .toolbar { background: #cbb58a; font: italic 17px Georgia, serif; }
+.prototip .harptt .title { padding: 5px; }
+.prototip .harptt .content { background: #e7d9bd; font: 14px Arial, Helvetica, sans-serif; padding: 5px;}
 
-.prototip .default {
-  border-width: 1px;
-  border-style: solid;
-}
+.prototip .harptt .content .blue,
+.prototip .harptt .content .chord,
+.prototip .harptt .content .passing,
+.prototip .harptt .content .danger   { font-size: 14px;}
