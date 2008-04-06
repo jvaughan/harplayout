@@ -72,7 +72,7 @@ table.harmonica td.natural, table.harmonica td.drawbend, table.harmonica td.blow
 table.harmonica td.overblow, table.harmonica td.overdraw, table.harmonica td.heading,
 table.harmonica td.holenum {
   background-color: #ffffe0;
-  border: 1px solid #777;
+  border-color: #777;
 }
 
 table.harmonica td.heading {
