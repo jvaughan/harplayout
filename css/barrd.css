@@ -134,7 +134,7 @@ div.harp_options {
 /* General Text Classes & Additional Typography
 --------------------------------------------------------------------*/
 
-.chord, .blues, .passing, .danger {
+.chord, .blue, .passing, .danger {
   font-size: 2em; /* Changed as 80% is too small */
   vertical-align: bottom;
 }
@@ -143,7 +143,7 @@ div.harp_options {
   color: #0f0; /* Green */
 }
 
-.blues {
+.blue {
   color: #00f; /* Blue */
 }
 

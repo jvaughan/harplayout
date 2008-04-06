@@ -135,14 +135,14 @@ sub category_from_interval {
 		1	=> 'chord',
 		b2	=> 'danger',
 		2	=> 'passing',
-		b3	=> 'blues',
+		b3	=> 'blue',
 		3	=> 'chord',
 		4	=> 'passing',
-		b5	=> 'blues',
+		b5	=> 'blue',
 		5	=> 'chord',
 		b6	=> 'danger',
 		6	=> 'passing',
-		b7	=> 'blues',
+		b7	=> 'blue',
 		7	=> 'danger',
 	);
 	

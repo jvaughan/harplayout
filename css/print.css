@@ -42,7 +42,7 @@ h1, h3 {
   color: rgb(5,5,5)
 }
 
-.key_pos_container, .harp_options, .chord, .blues, .passing, .danger, #footer, h1:after {
+.key_pos_container, .harp_options, .chord, .blue, .passing, .danger, #footer, h1:after {
   display: none;
 }
 
