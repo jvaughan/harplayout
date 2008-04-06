@@ -16,17 +16,30 @@
 </td>
 <script type="text/javascript">
 document.observe('dom:loaded', function() {
-
-	new Tip(
+    
+    if(navigator.userAgent.search(/msie/i)!= -1) {
+    // Don't use scriptaculous effect on msie - not smooth
+    new Tip(
 	    '[% note.id %]', 
-	    '[% PROCESS "inc/harptable/tooltip.tmpl" FILTER replace('\n', '') %]', 
+	    '[% PROCESS "inc/harptable/tooltip.tmpl" FILTER replace('\n', '') %]',
 	    {
 	        title:   '[% note.description %]',
-	        effect:  'appear',
-	        duration: '0.2',
 	        className: 'harptt'
 	    }
 	);
+    } else {
+        // Non-ie Code
+        new Tip(
+    	    '[% note.id %]', 
+    	    '[% PROCESS "inc/harptable/tooltip.tmpl" FILTER replace('\n', '') %]',
+    	    {
+    	        title:   '[% note.description %]',
+    	        effect:  'appear',
+    	        duration: '0.2',
+    	        className: 'harptt'
+    	    }
+    	);
+    }
 	
 });
 </script>
