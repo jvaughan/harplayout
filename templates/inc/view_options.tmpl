@@ -8,14 +8,14 @@
     onchange    = "handleChange('change options')"
 %]
 
-<br>
+<br />
 [% INCLUDE 'form/checkbox.tmpl'
     name        = 'include_overbends'
     checked     = harp.include_overbends
     label       = 'Overblows / Overdraws'
     onchange    = "handleChange('change options')"
 %]
-<br>
+<br />
 [% INCLUDE 'form/checkbox.tmpl'
     name        = 'include_unnecessary_overbends'
     checked     = harp.include_unnecessary_overbends
@@ -34,14 +34,14 @@
     label       = 'Note names'
     onchange    = "handleChange('change options')"
 %]   
-<br>
+<br />
 [% INCLUDE 'form/checkbox.tmpl'
     name        = 'show_intervals'
     checked     = harp.show_intervals
     label       = 'Intervals'
     onchange    = "handleChange('change options')"
 %]
-<br>
+<br />
 [% INCLUDE 'form/checkbox.tmpl'
     name        = 'show_interval_categories'
     checked     = harp.show_interval_categories
@@ -72,16 +72,16 @@
         
     [% IF harp.include_overbends %]
     <tr>
-        <td class="overblow">over<br>bend</td>
+        <td class="overblow">over<br />bend</td>
     </tr>
     [% END %]
 </table>
 
 [% IF harp.show_interval_categories %]
 <div id="interval_categories_legend">
-    <span class="chord">&bull;</span> Chord note<br>
-    <span class="blue">&bull;</span> Blue note<br>
-    <span class="passing">&bull;</span> Passing note<br>
+    <span class="chord">&bull;</span> Chord note<br />
+    <span class="blue">&bull;</span> Blue note<br />
+    <span class="passing">&bull;</span> Passing note<br />
     <span class="danger">&bull;</span> Danger note
 </div>
 [% END %]
