@@ -13,27 +13,7 @@
 
 <div id="content">
 
-<form method="post" action="" enctype="multipart/form-data">
-
-<div class="key_pos_container">
-    [% PROCESS 'inc/key_pos_options.tmpl' %]
-</div>
-
-<div class="harp_and_options">
-    <h3>[% INCLUDE 'inc/nicepos.tmpl' pos = harp.position %] position harp in key of [% harp.key %] for song in [% harp.position_key %].  Harp tuning is [% harp.tuning %]</h3>
-    <div class="harp_table">
-        [% PROCESS 'inc/harptable.tmpl' %]
-    </div>
-   
-    <div class="harp_options">
-        [% PROCESS 'inc/tuning_options.tmpl' %]
-        [% PROCESS 'inc/view_options.tmpl' %]
-    </div>
-</div>
-
-[% PROCESS 'form/hidden_fields.tmpl' %]
-</form>
-
+[% INCLUDE 'inc/form_and_harp.tmpl' %]
 
 [% IF debug %]<p>Debug: [% debug %]</p>[% END %]
 </div> <!-- content -->

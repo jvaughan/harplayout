@@ -79,10 +79,14 @@ sub showHarp : StartRunmode {
 		debug	=> $debug,
 	);
 	
-		
-	$self->template->process('main', \%template_params);
-					
-	# do something here
+	$self->processDefTmpl(\%template_params);
+}
+
+
+sub processDefTmpl {
+	my $self = shift;
+	my $template_params = shift;
+	$self->template->process('main', $template_params);
 }
 
 sub submitted {
