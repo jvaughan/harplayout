@@ -4,16 +4,8 @@
     [% class = "empty" %]
 [% END %]
 
-<td class="[% class %]" id="[% note.id %]">
+<td class="[% class %]" [% IF note.id %] id="[% note.id %]" [% END %]>
 [% UNLESS class == "empty" %]
-    <table class="notecell">
-        [% IF harp.show_intervals %]<tr><td>[% note.position_interval %]</td></tr>[% END %]
-        [% IF harp.show_notes %]<tr><td>[% note.note %]</td></tr>[% END %]
-        [% IF harp.show_interval_categories %]<tr><td><span class="[% note.interval_category %]">&bull;</span></td></tr>[% END %]
-    </table>
-    <!-- >[% note.position_interval %] -->
-[% END %]
-</td>
 <script type="text/javascript">
 document.observe('dom:loaded', function() {
     
@@ -43,3 +35,11 @@ document.observe('dom:loaded', function() {
 	
 });
 </script>
+    <table class="notecell">
+        [% IF harp.show_intervals %]<tr><td>[% note.position_interval %]</td></tr>[% END %]
+        [% IF harp.show_notes %]<tr><td>[% note.note %]</td></tr>[% END %]
+        [% IF harp.show_interval_categories %]<tr><td><span class="[% note.interval_category %]">&bull;</span></td></tr>[% END %]
+    </table>
+    <!-- >[% note.position_interval %] -->
+[% END %]
+</td>

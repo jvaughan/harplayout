@@ -156,7 +156,7 @@ sub set_note {
 	$note->position_interval ( interval_from_position ($firstposint, $self->position) );
 	$note->interval_category ( category_from_interval ($note->position_interval));
 	$note->note ( note_from_key_interval($self->position_key, $note->position_interval) );
-	$note->id("${reed}hole_${plate}_step${bendstep}");
+	$note->id("hole${reed}_${plate}_step${bendstep}");
 	
 	if ($bendstep == 0) { # Is unbent?
 		$note->type('natural');
