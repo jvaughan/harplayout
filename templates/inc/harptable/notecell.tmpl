@@ -17,8 +17,15 @@
 <script type="text/javascript">
 document.observe('dom:loaded', function() {
 
-	new Tip('[% note.id %]', '[% PROCESS "inc/harptable/tooltip.tmpl" FILTER replace('\n', '') %]', {title : '[% note.description %]'});
-
-
+	new Tip(
+	    '[% note.id %]', 
+	    '[% PROCESS "inc/harptable/tooltip.tmpl" FILTER replace('\n', '') %]', 
+	    {
+	        title:   '[% note.description %]',
+	        effect:  'appear',
+	        duration: '0.2'
+	    }
+	);
+	
 });
 </script>
