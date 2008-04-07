@@ -1,12 +1,19 @@
 function handleChange (subval) {
-    // form.key.value = 'zzd';
-    document.forms[0].js_submit.value = subval;
-    document.forms[0].submit(); 
+	document.forms[0].js_submit.value = subval;
+	reloadFormAndHarp();
+}
+
+function reloadFormAndHarp () {	
+	var url = '/perl/form_and_harp.pl';
+	var target = '#form_and_harp';
+	var formid = '#mainform';
+
+	var qstring = jQuery(formid).serialize();
+	var geturl = url + '?' + qstring;
+	jQuery(target).load ( geturl );
 }
 
 function makeTT (id, header, html) {
-    document.observe('dom:loaded', function() {
-    
     if(navigator.userAgent.search(/msie/i)!= -1) {
         // Don't use scriptaculous effect on msie - not smooth
         new Tip(
@@ -30,6 +37,4 @@ function makeTT (id, header, html) {
     	    }
     	);
     }
-
-    });
 }
