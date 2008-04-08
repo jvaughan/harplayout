@@ -79,15 +79,10 @@ sub showHarp : StartRunmode {
 		debug	=> $debug,
 	);
 	
-	$self->processDefTmpl(\%template_params);
+	my $template = $q->param('ajax_request') ? 'inc/form_and_harp' : 'main';
+	$self->template->process($template, \%template_params);
 }
 
-
-sub processDefTmpl {
-	my $self = shift;
-	my $template_params = shift;
-	$self->template->process('main', $template_params);
-}
 
 sub submitted {
 	my $self = shift;

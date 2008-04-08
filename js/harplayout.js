@@ -4,12 +4,12 @@ function handleChange (subval) {
 }
 
 function reloadFormAndHarp () {	
-	var url = '/perl/form_and_harp.pl';
+	var url = '/perl/web.pl?ajax_request=1';
 	var target = '#form_and_harp';
 	var formid = '#mainform';
 
 	var qstring = jQuery(formid).serialize();
-	var geturl = url + '?' + qstring;
+	var geturl = url + '&' + qstring;
 	jQuery(target).load ( geturl );
 }
 
