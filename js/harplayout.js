@@ -1,3 +1,10 @@
+jQuery(document).ready(
+    function() {
+        fadeHarpIn();
+    }
+);
+
+
 function handleChange (subval) {
 	document.forms[0].js_submit.value = subval;
 	reloadFormAndHarp();
@@ -8,9 +15,37 @@ function reloadFormAndHarp () {
 	var target = '#form_and_harp';
 	var formid = '#mainform';
 
+	fadeHarpOut();
+
 	var qstring = jQuery(formid).serialize();
 	var geturl = url + '&' + qstring;
-	jQuery(target).load ( geturl );
+	jQuery(target).load ( geturl, function () { fadeHarpIn(); } );
+}
+
+function fadeHarpIn() {
+    new Effect.Opacity('harp_table',
+    {
+        duration: 0.3,
+        transition: Effect.Transitions.linear,
+        from: 0.0, to: 1.0,
+        beforeUpdate: makeHarpVis
+    }
+    );
+}
+
+function fadeHarpOut() {
+    new Effect.Opacity('harp_table',
+    {
+        duration: 0.3,
+        transition: Effect.Transitions.linear,
+        from: 1.0, to: 0.0
+    }
+    );
+}
+
+function makeHarpVis () {
+    ht = document.getElementById("harp_table");
+    ht.style.visibility = "visible";
 }
 
 function makeTT (id, header, html) {

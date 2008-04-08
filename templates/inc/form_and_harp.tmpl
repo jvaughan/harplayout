@@ -7,7 +7,7 @@
 
 <div class="harp_and_options">
     <h3>[% INCLUDE 'inc/nicepos.tmpl' pos = harp.position %] position harp in key of [% harp.key %] for song in [% harp.position_key %].  Harp tuning is [% harp.tuning %]</h3>
-    <div class="harp_table">
+    <div id="harp_table">
         [% PROCESS 'inc/harptable.tmpl' %]
     </div>
    

@@ -106,7 +106,7 @@ div.harp_and_options {
   margin-top: 2em;
 }
 
-div.harp_table {
+div#harp_table {
   float: left;
 }
 
