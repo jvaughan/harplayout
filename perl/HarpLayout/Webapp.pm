@@ -4,7 +4,7 @@ use strict;
 use define DEBUG => 0;
 
 use Switch;
-use base qw/ CGI::Application /;
+use base qw/ CGI::Application::FastCGI /;
 use CGI::Application::Plugin::AnyTemplate;
 use CGI::Application::Plugin::AutoRunmode;
 
