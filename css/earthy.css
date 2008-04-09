@@ -1,5 +1,4 @@
 @import url("screen_layout.css");
-@import url("earthy_tooltips.css");
 
 body {
   background-color: #fff;
@@ -103,4 +102,16 @@ select { /* Only viewable in UA's that don't emulate OS X stylee */
   background-color: #fff;
   border: 1px solid #777;
 }
+
+@import url("prototip/prototip.css");
+
+.prototip .harptt { width: 150px; border-width: 1px; border-style: solid; border-color: #ae976a;}
+.prototip .harptt .toolbar { background: #cbb58a; font: italic 17px Georgia, serif; }
+.prototip .harptt .title { padding: 5px; }
+.prototip .harptt .content { background: #e7d9bd; font: 14px Arial, Helvetica, sans-serif; padding: 5px;}
+
+.prototip .harptt .content .blue,
+.prototip .harptt .content .chord,
+.prototip .harptt .content .passing,
+.prototip .harptt .content .danger   { font-size: 14px;}
 
