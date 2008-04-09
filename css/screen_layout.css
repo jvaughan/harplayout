@@ -108,6 +108,7 @@ div.harp_and_options {
 
 div#harp_table {
   float: left;
+  min-width: 35em;
 }
 
 div.harp_options {
