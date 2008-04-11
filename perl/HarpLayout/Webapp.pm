@@ -41,7 +41,7 @@ sub showHarp : StartRunmode {
 	my $q = $self->query;
 	
 	my @form_fields = qw/
-		tuning position key position_key 
+		tuning position key song_key 
 		include_bends include_overbends include_unnecessary_overbends
 		show_notes show_intervals show_interval_categories
 		/;
@@ -60,19 +60,19 @@ sub showHarp : StartRunmode {
 		switch ( $submit ) {
 			case 'get position' {
 				$harp_params{calculate} = 'position';
-				$harp_params{$_} = $q->param("calc_position-$_") || undef foreach (qw /key position_key/ );
+				$harp_params{$_} = $q->param("calc_position-$_") || undef foreach (qw /key song_key/ );
 			}
 			case 'get harp key' {
 				$harp_params{calculate} = 'key';
-				$harp_params{$_} = $q->param("calc_key-$_") || undef foreach (qw /position position_key/ );
+				$harp_params{$_} = $q->param("calc_key-$_") || undef foreach (qw /position song_key/ );
 			}
 			case 'get song key' {
-				$harp_params{calculate} = 'position_key';
-				$harp_params{$_} = $q->param("calc_position_key-$_") || undef foreach (qw /key position/ );
+				$harp_params{calculate} = 'song_key';
+				$harp_params{$_} = $q->param("calc_song_key-$_") || undef foreach (qw /key position/ );
 			}
 			else {
 				$harp_params{$_} = $q->param($_) foreach qw/key position/;
-				$harp_params{calculate} = 'position_key';
+				$harp_params{calculate} = 'song_key';
 			}
 		}
 	} # Submitted?

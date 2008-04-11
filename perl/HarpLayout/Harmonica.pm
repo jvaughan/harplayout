@@ -17,8 +17,8 @@ use Class::MethodMaker [
 		{-default => 'Richter'}		=> 'tuning',
 		{-default => 'C'}		=> 'key',
 		{-default => 1}			=> 'position',
-		{-default => undef}		=> 'position_key',
-		{-default => 'position_key'}	=> 'calculate',
+		{-default => undef}		=> 'song_key',
+		{-default => 'song_key'}	=> 'calculate',
 		
 		{-default => 1}		=> 'include_bends',
 		{-default => 1}		=> 'include_overbends',
@@ -40,21 +40,21 @@ sub init {
 	switch ( $self->calculate ) {
 		case 'key' {
 			my $pos = ($self->position - $label_position) + 1;
-			my $key = note_from_position ($self->position_key, '-' . $pos );
+			my $key = note_from_position ($self->song_key, '-' . $pos );
 			$self->key( $key );
 		}
 		
 		case 'position' {
-			my $pos = position_from_notes ( $self->key, $self->position_key);
+			my $pos = position_from_notes ( $self->key, $self->song_key);
 			$pos += $label_position -1;
 			$pos -= 12 if $pos > 12;
 			$self->position( $pos );
 		} 
 		
-		case 'position_key' {
+		case 'song_key' {
 			my $p_k = note_from_position($self->key, $self->position );
 			$p_k = note_from_position ($p_k, "-" . $label_position);
-			$self->position_key ( $p_k );
+			$self->song_key ( $p_k );
 		}
 	}
 	
@@ -155,7 +155,7 @@ sub set_note {
 
 	$note->position_interval ( interval_from_position ($firstposint, $self->position) );
 	$note->interval_category ( category_from_interval ($note->position_interval));
-	$note->note ( note_from_key_interval($self->position_key, $note->position_interval) );
+	$note->note ( note_from_key_interval($self->song_key, $note->position_interval) );
 	$note->id("hole${reed}_${plate}_step${bendstep}");
 	
 	if ($bendstep == 0) { # Is unbent?
