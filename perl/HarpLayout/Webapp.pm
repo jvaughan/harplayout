@@ -29,6 +29,13 @@ sub cgiapp_init	{
 }
 
 
+sub setup {
+	my $self = shift;
+	
+	$self->header_add (-charset => 'utf-8');
+}
+
+
 sub showHarp : StartRunmode {
 	my $self = shift;
 	my $q = $self->query;
