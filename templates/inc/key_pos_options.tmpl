@@ -8,9 +8,9 @@
             <tr>
             <td>Harp Key: </td>
             <td>[% INCLUDE 'form/dropdown.tmpl'
-                    name = "calc_song_key-key"     
+                    name = "calc_song_key-harp_key"     
                     values = harp.keys_available
-                    default = harp.key
+                    default = harp.harp_key
                     onchange = "handleChange('get song key')"
                 %]
             </td>
@@ -46,7 +46,7 @@
         <tr>
             <td>Song Key: </td>
             <td>[% INCLUDE 'form/dropdown.tmpl'
-                    name        = "calc_key-song_key"
+                    name        = "calc_harp_key-song_key"
                     values      = harp.keys_available
                     default     = harp.song_key
                     onchange    = "handleChange('get harp key')"
@@ -56,7 +56,7 @@
         <tr>
             <td>Position: </td>
             <td>[%INCLUDE 'form/dropdown.tmpl' 
-                    name        = 'calc_key-position'
+                    name        = 'calc_harp_key-position'
                     values      = harp.positions_available
                     default     = harp.position
                     onchange    = "handleChange('get harp key')"
@@ -65,7 +65,7 @@
         </tr>
         <tr>
             <td>Harp Key: </td>
-            <td><strong>[% harp.key %]</strong></td>
+            <td><strong>[% harp.harp_key %]</strong></td>
         </tr>
         <tr>
         <td><noscript><div>[% INCLUDE 'form/submit.tmpl' name = 'submit' value = 'Get Harp Key' %]</div></noscript>
@@ -94,9 +94,9 @@
         <tr>
             <td>Harp Key: </td>
             <td>[% INCLUDE 'form/dropdown.tmpl'
-                    name        = "calc_position-key"
+                    name        = "calc_position-harp_key"
                     values      = harp.keys_available
-                    default     = harp.key
+                    default     = harp.harp_key
                     onchange    = "handleChange('get position')"
                 %]
             </td>

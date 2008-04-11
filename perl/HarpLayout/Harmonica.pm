@@ -15,7 +15,7 @@ use Class::MethodMaker [
 	# scalar	=> [ qw/ positionkey / ],
 	scalar	=> [	
 		{-default => 'Richter'}		=> 'tuning',
-		{-default => 'C'}		=> 'key',
+		{-default => 'C'}		=> 'harp_key',
 		{-default => 1}			=> 'position',
 		{-default => undef}		=> 'song_key',
 		{-default => 'song_key'}	=> 'calculate',
@@ -38,21 +38,21 @@ sub init {
 	my $label_position = $self->tuning_obj->label_position;
 	
 	switch ( $self->calculate ) {
-		case 'key' {
+		case 'harp_key' {
 			my $pos = ($self->position - $label_position) + 1;
 			my $key = note_from_position ($self->song_key, '-' . $pos );
-			$self->key( $key );
+			$self->harp_key( $key );
 		}
 		
 		case 'position' {
-			my $pos = position_from_notes ( $self->key, $self->song_key);
+			my $pos = position_from_notes ( $self->harp_key, $self->song_key);
 			$pos += $label_position -1;
 			$pos -= 12 if $pos > 12;
 			$self->position( $pos );
 		} 
 		
 		case 'song_key' {
-			my $p_k = note_from_position($self->key, $self->position );
+			my $p_k = note_from_position($self->harp_key, $self->position );
 			$p_k = note_from_position ($p_k, "-" . $label_position);
 			$self->song_key ( $p_k );
 		}
