@@ -12,9 +12,9 @@ makeTT('[% note.id %]', '[% note.description %]',  '[% PROCESS "inc/harptable/to
 //]]>
 </script>
     <table class="notecell">
-        [% IF harp.show_intervals %]<tr><td class="interval">[% note.position_interval %]</td></tr>[% END %]
-        [% IF harp.show_notes %]<tr><td class="note">[% note.note %]</td></tr>[% END %]
-        [% IF harp.show_interval_categories %]<tr><td class="interval_category"><span class="[% note.interval_category %]">&bull;</span></td></tr>[% END %]
+        <tr><td class="interval"  [% UNLESS harp.show_intervals %] style="display:none" [% END %]>[% note.position_interval %]</td></tr>
+        <tr><td class="note" [% UNLESS harp.show_notes %] style="display:none" [% END %]>[% note.note %]</td></tr>
+        <tr><td class="interval_category" [% UNLESS harp.show_interval_categories %] style="display:none" [% END %]><span class="[% note.interval_category %]">&bull;</span></td></tr>
     </table>
     <!-- >[% note.position_interval %] -->
 [% END %]

@@ -14,6 +14,14 @@ jQuery(document).ready(
 
 function handleChange (subval) {
 	document.forms[0].js_submit.value = subval;
+	
+	if (subval == 'note'
+	 || subval == 'interval'
+	 || subval == 'interval_category') {
+		var class = '.' + subval;
+		jQuery(class).toggle();
+		return;
+	}
 	reloadFormAndHarp();
 }
 

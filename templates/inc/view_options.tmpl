@@ -32,21 +32,22 @@
     name        = 'show_notes'
     checked     = harp.show_notes
     label       = 'Note names'
-    onchange    = "handleChange('change options')"
+    onchange    = "handleChange('note')"
+    id          = 'show_notes_id'
 %]   
 <br />
 [% INCLUDE 'form/checkbox.tmpl'
     name        = 'show_intervals'
     checked     = harp.show_intervals
     label       = 'Intervals'
-    onchange    = "handleChange('change options')"
+    onchange    = "handleChange('interval')"
 %]
 <br />
 [% INCLUDE 'form/checkbox.tmpl'
     name        = 'show_interval_categories'
     checked     = harp.show_interval_categories
     label       = 'Interval categories'
-    onchange    = "handleChange('change options')"
+    onchange    = "handleChange('interval_category')"
 %]
 </div>
 </div>
