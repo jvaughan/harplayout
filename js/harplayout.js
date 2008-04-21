@@ -18,8 +18,7 @@ function handleChange (subval) {
 	if (subval == 'note'
 	 || subval == 'interval'
 	 || subval == 'interval_category') {
-		var class = '.' + subval;
-		jQuery(class).toggle();
+		jQuery('.' + subval).toggle();
 		return;
 	}
 	reloadFormAndHarp();
