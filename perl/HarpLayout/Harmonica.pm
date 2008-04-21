@@ -20,10 +20,7 @@ use Class::MethodMaker [
 		{-default => undef}		=> 'song_key',
 		{-default => 'song_key'}	=> 'calculate',
 		
-		{-default => 1}		=> 'include_bends',
-		{-default => 1}		=> 'include_overbends',
-		{-default => 0}		=> 'include_unnecessary_overbends',
-		'tuning_obj',	
+		{-default => undef}		=> 'tuning_obj',
 	],
 ];
 
@@ -59,8 +56,8 @@ sub init {
 	}
 	
 	$self->addNaturalNotes;	
-	$self->addBends 	if $self->include_bends;
-	$self->addOverbends 	if $self->include_overbends;	
+	$self->addBends;
+	$self->addOverbends;
 }
 
 
@@ -112,6 +109,7 @@ sub addOverbends {
 		my $hole = 0;
 		
 		REED: foreach ( $self->reeds($plate) ) {
+			my %attrs;
 			$hole++;
 			my $natural = $self->get_note( $plate, $hole, 0 );
 			my $opp_natural = $self->get_note( $opp_plate, $hole, 0 );
@@ -121,11 +119,11 @@ sub addOverbends {
 			# Overbent note is one semitone higher than the natural note of the opposing reed.
 			my $overbend = $opp_natural + 1;
 			
-			unless ( $self->include_unnecessary_overbends ) {
-				# Don't add the overblow if the note is available in the next hole up
-				next if $self->holeHasNote( $hole +1, $overbend );
-			}
-			$self->set_note ( $plate, $hole, 1, $overbend->first_pos_interval );
+			if ( $self->holeHasNote( $hole +1, $overbend ) ) {
+				# Considered unnecessary overbend if the note is available in the next hole up
+				$attrs{unnecessary_ob} = 1;
+			};
+			$self->set_note ( $plate, $hole, 1, $overbend->first_pos_interval, \%attrs);
 		} # REED
 	} # PLATE
 }
@@ -147,7 +145,7 @@ sub set_note {
 	# Bend step - 0 for natural, 1 for first semitone bend, 2 for wholetone bend, etc
 	# The first position interval
 	my $self = shift;
-	my ($plate, $reed, $bendstep, $firstposint) = @_;
+	my ($plate, $reed, $bendstep, $firstposint, $attrs) = @_;
 
 	my $note = HarpLayout::Harmonica::Note->new;
 	$note->first_pos_interval($firstposint);
@@ -168,7 +166,13 @@ sub set_note {
 			$note->type("${plate}bend");
 			$note->description("$reed hole $plate bend step $bendstep")
 		} else { # overbend
-			$note->type("over${plate}");
+			if ( $attrs->{unnecessary_ob} ) {
+				$note->type("unnecessary_over${plate}")
+			}
+			else {
+				$note->type("over${plate}");
+			}
+			
 			$note->description("$reed hole over${plate}");			
 		}
 	}

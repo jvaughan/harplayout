@@ -5,7 +5,7 @@
     name        = 'include_bends'
     checked     = harp.include_bends
     label       = 'Bends'
-    onchange    = "handleChange('change options')"
+    onchange    = "handleChange('bends')"
 %]
 
 <br />
@@ -13,14 +13,14 @@
     name        = 'include_overbends'
     checked     = harp.include_overbends
     label       = 'Overblows / Overdraws'
-    onchange    = "handleChange('change options')"
+    onchange    = "handleChange('overbends')"
 %]
 <br />
 [% INCLUDE 'form/checkbox.tmpl'
     name        = 'include_unnecessary_overbends'
     checked     = harp.include_unnecessary_overbends
     label       = 'Unnecessary OBs / ODs'
-    onchange    = "handleChange('change options')"
+    onchange    = "handleChange('unnecessary_overbends')"
 %]
 </div>
 </div>

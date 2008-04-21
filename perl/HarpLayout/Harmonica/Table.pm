@@ -7,6 +7,10 @@ use base qw(HarpLayout::Harmonica);
 use Class::MethodMaker [
 	new 	=> [ -hash => -init => 'new' ],	
 	scalar	=> [
+		{-default => 1}	=> 'include_bends',
+		{-default => 1}	=> 'include_overbends',
+		{-default => 0}	=> 'include_unnecessary_overbends',
+		
 		{default => 1}	=> show_intervals,
 		{default => 1}	=> show_notes,
 		{default => 1}	=> show_interval_categories,

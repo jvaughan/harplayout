@@ -70,8 +70,9 @@ table.harmonica td {
 }
 
 table.harmonica td.natural, table.harmonica td.drawbend, table.harmonica td.blowbend,
-table.harmonica td.overblow, table.harmonica td.overdraw, table.harmonica td.heading,
-table.harmonica td.holenum {
+table.harmonica td.overblow, table.harmonica td.overdraw,
+table.harmonica td.unnecessary_overblow, table.harmonica td.unnecessary_overdraw,
+table.harmonica td.heading, table.harmonica td.holenum {
   background-color: #ffffe0;
   border-color: #777;
 }
@@ -84,7 +85,8 @@ table.harmonica td.drawbend, table.harmonica td.blowbend {
   background-color: #e6e6fa;
 }
 
-table.harmonica td.overdraw, table.harmonica td.overblow {
+table.harmonica td.overdraw, table.harmonica td.overblow,
+table.harmonica td.unnecessary_overdraw, table.harmonica td.unnecessary_overblow {
   background-color: #ffb6c1;
 }
 

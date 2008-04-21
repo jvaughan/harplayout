@@ -15,13 +15,50 @@ jQuery(document).ready(
 function handleChange (subval) {
 	document.forms[0].js_submit.value = subval;
 	
-	if (subval == 'note'
-	 || subval == 'interval'
-	 || subval == 'interval_category') {
-		jQuery('.' + subval).toggle();
-		return;
+	switch (subval) {
+		case 'note':
+			var newdis = jQuery('#show_notes').attr("checked") ? "table-cell" : "none";
+			jQuery('.note').css("display", newdis);
+			return;
+		
+		case 'interval':
+			var newdis = jQuery('#show_intervals').attr("checked") ? "table-cell" : "none";
+			jQuery('.interval').css("display", newdis);
+			return;
+		
+		case 'interval_category':
+			var newdis = jQuery('#show_interval_categories').attr("checked") ? "table-cell" : "none";
+			jQuery('.interval_category').css("display", newdis);
+			return;
+		
+		case 'bends':
+			var newvis = jQuery('#include_bends').attr("checked") ? "visible" : "hidden";
+			jQuery('.blowbend, .drawbend').css("visibility", newvis);
+			return;
+
+		case 'overbends':
+			var newvis = jQuery('#include_overbends').attr("checked") ? "visible" : "hidden";
+			jQuery('.overblow, .overdraw').css("visibility", newvis);
+			controlOBLegend();
+			return;
+			
+		case 'unnecessary_overbends':
+			var newvis = jQuery('#include_unnecessary_overbends').attr("checked") ? "visible" : "hidden";
+			jQuery('.unnecessary_overblow, .unnecessary_overdraw').css("visibility", newvis);
+			controlOBLegend();
+			return;
 	}
+	
 	reloadFormAndHarp();
+}
+
+function controlOBLegend () {
+	if ( jQuery('#include_overbends').attr("checked") || jQuery('#include_unnecessary_overbends').attr("checked") ) {
+		jQuery('#harptable_legend .overblow').css("visibility", "visible");
+	}
+	else {
+		jQuery('#harptable_legend .overblow').css("visibility", "hidden");
+	}
 }
 
 function reloadFormAndHarp () {	

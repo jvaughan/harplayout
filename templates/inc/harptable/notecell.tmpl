@@ -4,7 +4,20 @@
     [% class = "empty" %]
 [% END %]
 
-<td class="[% class %]" [% IF note.id %] id="[% note.id %]" [% END %]>
+[% IF (class == "drawbend" OR class == "blowbend") AND NOT harp.include_bends %]
+    [% style = "visibility: hidden;" %]
+[% END %]
+
+[% IF (class == "overblow" OR class == "overdraw")
+    AND NOT harp.include_overbends %]
+    [% style = "visibility: hidden;" %]
+[% END %]
+
+[% IF (class == "unnecessary_overblow" OR class == "unnecessary_overdraw") AND NOT harp.include_unnecessary_overbends %]
+    [% style = "visibility: hidden;" %]
+[% END %]
+
+<td class="[% class %]" [% IF note.id %] id="[% note.id %]" [% END %] [% IF style %]style="[% style %]"[% END %]>
 [% UNLESS class == "empty" %]
 <script type="text/javascript">
 //<![CDATA[
