@@ -123,6 +123,12 @@ jQuery(document).ready(
 function handleChange (subval) {
 	document.forms[0].js_submit.value = subval;
 	
+	if ( BrowserDetect.browser == "Explorer" && BrowserDetect.version < 7 ) {
+		// Don't try to dynamically toggle with IE6 and earlier
+		reloadFormAndHarp();
+		return;
+	}
+	
 	switch (subval) {
 		case 'note':
 			var newdis = jQuery('#show_notes').attr("checked") ? "table-cell" : "none";
