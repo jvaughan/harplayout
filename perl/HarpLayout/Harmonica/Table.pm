@@ -1,7 +1,5 @@
 package HarpLayout::Harmonica::Table;
 
-use Data::Dumper;
-
 use base qw(HarpLayout::Harmonica);
 
 use Class::MethodMaker [
@@ -39,7 +37,6 @@ sub _makeTable {
 			my $bs = 0;
 			while (my $n = $self->get_note( $plate, $hole, $bs) ) {
 				$table[$bs][$hole -1] = $n;
-				#print "n: " . Dumper($n);
 				$bs++;
 			}
 		} # REED loop
@@ -75,10 +72,7 @@ sub printTable {
 	
 	my @blow = @{ $self->{table}->{blow} };
 	
-	warn Dumper ($blow[0][0]);
-	
 	for my $bend (0 .. $#blow) {
-		#print "bb: " . Dumper ($blow[$bend]);
 		for my $reed (0 .. $#{ $blow[$bend] }) {
 			my $note = $blow[$bend][$reed];
 			my $fpi = defined $note ? $note->first_pos_interval : '';
