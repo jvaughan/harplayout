@@ -2,6 +2,7 @@ package HarpLayout::Webapp;
 use strict;
 
 use define DEBUG => 0;
+use define DISABLE_INTERVAL_CATEGORIES => 0;
 
 use Switch;
 use base qw/ CGI::Application::FastCGI /;
@@ -77,6 +78,10 @@ sub showHarp : StartRunmode {
 		}
 	} # Submitted?
 
+	if ( DISABLE_INTERVAL_CATEGORIES ) {
+		$harp_params{show_interval_categories} = 0;
+	}
+
 	my $harp = HarpLayout::Harmonica::Table->new( %harp_params );
 	my $b = [$harp->blowNotes];
 	my $debug = '';
@@ -84,6 +89,7 @@ sub showHarp : StartRunmode {
 	my %template_params = (
 		harp	=> $harp,
 		debug	=> $debug,
+		disable_interval_categories => DISABLE_INTERVAL_CATEGORIES ? 1 : 0,
 	);
 	
 	my $template = $q->param('ajax_request') ? 'inc/form_and_harp' : 'main';

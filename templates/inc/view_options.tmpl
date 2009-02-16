@@ -42,6 +42,7 @@
     label       = 'Intervals'
     onchange    = "handleChange('interval')"
 %]
+[% UNLESS disable_interval_categories %]
 <br />
 [% INCLUDE 'form/checkbox.tmpl'
     name        = 'show_interval_categories'
@@ -49,6 +50,7 @@
     label       = 'Interval categories'
     onchange    = "handleChange('interval_category')"
 %]
+[% END %]
 </div>
 </div>
 <noscript>
