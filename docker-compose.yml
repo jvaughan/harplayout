@@ -1,4 +1,4 @@
 hlapp:
-  build: .
+  build: hlapp
   ports:
    - "9000"
