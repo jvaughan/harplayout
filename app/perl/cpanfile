@@ -1,0 +1,9 @@
+requires 'Class::MethodMaker';
+#requires 'CGI::Application::FastCGI';
+requires 'Clone::PP';
+requires 'CGI::PSGI';
+requires 'CGI::Application';
+requires 'CGI::Application::PSGI';
+requires 'CGI::Application::Plugin::AnyTemplate';
+requires 'CGI::Application::Plugin::AutoRunmode';
+
