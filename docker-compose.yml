@@ -1,4 +1,13 @@
+nginx:
+  build: nginx
+  ports:
+   - "80"
+  links:
+   - hlapp:starman
+
 hlapp:
   build: hlapp
+  expose:
+   - "9000"
   ports:
    - "9000"
