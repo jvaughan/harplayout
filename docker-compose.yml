@@ -4,8 +4,12 @@ nginx:
    - "8222:80"
   links:
    - hlapp:starman
+  environment:
+   - "VIRTUAL_HOST=harplayout.com"
+  restart: always
 
 hlapp:
   build: hlapp
   expose:
    - "9000"
+  restart: always
