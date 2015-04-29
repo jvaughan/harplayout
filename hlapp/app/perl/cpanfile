@@ -1,5 +1,4 @@
 requires 'Class::MethodMaker';
-#requires 'CGI::Application::FastCGI';
 requires 'Clone::PP';
 requires 'CGI::PSGI';
 requires 'CGI::Application';
