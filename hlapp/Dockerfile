@@ -5,9 +5,12 @@ RUN apt-get install -y libswitch-perl libtemplate-perl cpanminus make gcc starma
 
 RUN cpanm Carton
 
-COPY app app
+COPY app /app
+RUN adduser --disabled-password --gecos '' starman
+RUN chown -R starman:starman /app
 
-WORKDIR app/perl
+USER starman
+WORKDIR /app/perl
 RUN carton install
 
 #CMD PERL_CARTON_PATH=$PERL_CARTON_PATH:. carton exec starman --port 80 app.psgi
