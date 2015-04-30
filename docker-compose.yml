@@ -5,7 +5,7 @@ nginx:
   links:
    - hlapp:starman
   environment:
-   - "VIRTUAL_HOST=harplayout.com"
+   - "VIRTUAL_HOST=harplayout.com,www.harplayout.com"
   restart: always
 
 hlapp:
