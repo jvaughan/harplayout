@@ -1,0 +1,12 @@
+requires 'Plack', '0.9980';
+requires 'Starman', '0.2000';
+requires 'Template';
+requires 'Switch';
+requires 'Class::MethodMaker';
+requires 'Clone::PP';
+requires 'CGI::PSGI';
+requires 'CGI::Application';
+requires 'CGI::Application::PSGI';
+requires 'CGI::Application::Plugin::AnyTemplate';
+requires 'CGI::Application::Plugin::AutoRunmode';
+

@@ -1,11 +1,12 @@
 package HarpLayout::Webapp;
 use strict;
 
-use define DEBUG => 0;
-use define DISABLE_INTERVAL_CATEGORIES => 0;
+use constant DEBUG => 0;
+use constant DISABLE_INTERVAL_CATEGORIES => 0;
 
 use Switch;
-use base qw/ CGI::Application::FastCGI /;
+#use base qw/ CGI::Application::FastCGI /;
+use base qw/ CGI::Application /;
 use CGI::Application::Plugin::AnyTemplate;
 use CGI::Application::Plugin::AutoRunmode;
 
