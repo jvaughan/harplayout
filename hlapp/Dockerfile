@@ -1,7 +1,7 @@
 FROM perl
 
 RUN apt-get update
-RUN apt-get install -y libswitch-perl libtemplate-perl cpanminus make gcc starman libclass-methodmaker-perl
+RUN apt-get install -y cpanminus make gcc starman
 
 RUN cpanm Carton
 
