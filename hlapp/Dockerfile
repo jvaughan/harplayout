@@ -13,5 +13,8 @@ USER starman
 WORKDIR /app/perl
 RUN carton install
 
-#CMD PERL_CARTON_PATH=$PERL_CARTON_PATH:. carton exec starman --port 80 app.psgi
-CMD ./run.sh
+RUN export PERL5LIB="$PERL5LIB:."
+
+RUN echo $PERL5LIB
+
+CMD carton exec starman --port 9000 --workers 2 --preload-app app.psgi
