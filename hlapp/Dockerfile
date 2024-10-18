@@ -17,4 +17,6 @@ RUN export PERL5LIB="$PERL5LIB:."
 
 RUN echo $PERL5LIB
 
+ENV ASSET_BASE_URL="/"
+
 CMD carton exec starman --port 9000 --workers 2 --preload-app app.psgi

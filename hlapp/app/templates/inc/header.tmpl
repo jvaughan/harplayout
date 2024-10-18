@@ -1,15 +1,17 @@
 [% INSERT 'inc/doctype_xhtml_1.0_strict.tmpl' %]
+[% USE env = EnvHash %]
+
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
     <title>[% title %]</title>
-    <link rel="stylesheet" type="text/css" href="css/earthy.css" media="screen" title="Earthy" />
-    <script type="text/javascript" src="/js/protoculous.js"></script>
-    <script type="text/javascript" src="/js/prototip.js"></script>
-    <script type="text/javascript" src="/js/jquery.js"></script>
+    <link rel="stylesheet" type="text/css" href="[% env.ASSET_BASE_URL %]css/earthy.css" media="screen" title="Earthy" />
+    <script type="text/javascript" src="[% env.ASSET_BASE_URL %]js/protoculous.js"></script>
+    <script type="text/javascript" src="[% env.ASSET_BASE_URL %]js/prototip.js"></script>
+    <script type="text/javascript" src="[% env.ASSET_BASE_URL %]js/jquery.js"></script>
     <script type="text/javascript">
     //<![CDATA[
         jQuery.noConflict();
     //]]>
     </script>
-    <script type="text/javascript" src="/js/harplayout.js"></script>
+    <script type="text/javascript" src="[% env.ASSET_BASE_URL %]js/harplayout.js"></script>
 </head>

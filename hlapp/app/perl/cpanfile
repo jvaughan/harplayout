@@ -9,4 +9,4 @@ requires 'CGI::Application';
 requires 'CGI::Application::PSGI';
 requires 'CGI::Application::Plugin::AnyTemplate';
 requires 'CGI::Application::Plugin::AutoRunmode';
-
+requires 'Template::Plugin::EnvHash';
