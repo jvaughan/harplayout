@@ -95,7 +95,13 @@ my %tunings = (
 		# Hole        1  2  3  4  5  6  7  8  9 10
                 blow => [qw / 1 b3  5  1 b3  5  1 b3  5  1 /],
                 draw => [qw / 2  5  7  2  4 b6  7  2  4 b6 /],
-        },
+	},
+
+	'Will Wilde' => {
+		# Hole        1  2  3  4  5  6  7  8  9 10
+		blow => [qw / 1  3  5  1  3  3  5  1  3  6 /],
+		draw => [qw / 2  5  7  2  4  5  7  2  5  1 /],
+	},
 );
 
 use Class::MethodMaker [
