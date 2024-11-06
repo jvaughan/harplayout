@@ -78,6 +78,10 @@
   padding-top: 1em;
 }
 
+#harp_table {
+	visibility: hidden;
+}
+
 #harptable_legend {
   float: left;
 }
