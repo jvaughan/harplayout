@@ -11,7 +11,7 @@
   min-width: 750px;
   margin: 10px auto;
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 0.9em; // compensate for large sans-serif fonts
+  font-size: 0.9em; /* compensate for large sans-serif fonts */
 } 
 
 * html #container { 
@@ -41,8 +41,6 @@
    -----------------------------------------------------------------
    Deprecated
 --------------------------------------------------------------------*/
-
-#leftcol {}
 
 #leftcol p { margin: 0 0 1em 0; }
 
