@@ -105,14 +105,6 @@ var BrowserDetect = {
 };
 BrowserDetect.init();
 
-
-// Add css for javascript users.
-var fileref=document.createElement("link");
-fileref.setAttribute("rel", "stylesheet");
-fileref.setAttribute("type", "text/css");
-fileref.setAttribute("href", "/css/js_only.css");
-document.getElementsByTagName("head")[0].appendChild(fileref)
-
 jQuery(document).ready(
     function() {
         fadeHarpIn();
