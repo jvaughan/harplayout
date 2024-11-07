@@ -1,0 +1,7 @@
+[Unit]
+Description=Harplayout Network
+
+[Network]
+Label=app=harplayout
+IPv6=true
+NetworkName=harplayout

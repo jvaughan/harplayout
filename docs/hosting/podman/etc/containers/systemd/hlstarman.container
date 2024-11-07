@@ -1,0 +1,21 @@
+[Unit]
+Description=Harplayout app container
+Requires=network-online.target
+
+[Service]
+Restart=always
+TimeoutStartSec=900
+
+[Container]
+#Label=app=harplayout
+ContainerName=hlapp
+Image=docker.io/jonvaughan/harplayout-hlapp:0.0.2
+Network=harplayout.network
+ExposeHostPort=9000
+Environment=ASSET_BASE_URL=https://assets.harplayout.com/
+HostName=starman
+UserNS=auto
+Pull=newer
+
+[Install]
+WantedBy=multi-user.target default.target
