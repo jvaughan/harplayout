@@ -19,7 +19,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "types": ["vite/client", "vitest/globals", "node"]
+    "types": ["vite/client", "vite-plugin-pwa/client", "vitest/globals", "node"]
   },
   "include": ["src"]
 }

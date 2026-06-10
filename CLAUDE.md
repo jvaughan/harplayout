@@ -126,6 +126,24 @@ Inline `<style>` blocks would be hashed the same way. `dist/_headers` is a build
 `curl -sI <url> | grep -i content-security-policy` and watch the browser console for CSP
 violations.
 
+**PWA (installable + offline).** `VitePWA` in [react/vite.config.ts](react/vite.config.ts)
+emits a service worker (Workbox, `registerType: "autoUpdate"`) and manifest; it's registered
+from [react/src/main.tsx](react/src/main.tsx) (not an injected inline script, to keep the CSP
+clean). Icons come from `public/favicon.svg` via `npm run gen:icons` (sharp) — the PNGs are
+**committed** (don't move generation into the build; sharp is a native dep). Two non-obvious,
+load-bearing details:
+
+- **Precache `/`, not `/index.html`.** Cloudflare canonicalises `/index.html` → `/` (a 307).
+  Workbox rejects redirects during SW install, so precaching `/index.html` makes the SW fail
+  to activate — and **Android Chrome won't offer "Install app" without an active SW** (desktop
+  Chrome installs without one, which masks the failure). The `workbox.manifestTransforms` +
+  `navigateFallback: "/"` in `vite.config.ts` precache the clean `/` URL instead. Do **not**
+  revert to precaching `index.html`.
+- The CSP already allows the SW (`worker-src 'self'`, `manifest-src 'self'`).
+
+Verify after deploy: `curl -sI <url>/ | head -1` is 200, and DevTools → Application → Service
+Workers shows it **activated** (no precache error).
+
 ### Music engine (`react/src/music/`)
 
 A faithful 1:1 port of the Perl modules; keep the two in sync when changing logic.
