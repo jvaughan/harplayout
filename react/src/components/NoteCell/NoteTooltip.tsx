@@ -1,5 +1,5 @@
 import { createPortal } from "react-dom";
-import type { Note } from "../music/note";
+import type { Note } from "../../music/note";
 import { CATEGORY_LABEL } from "./noteLabels";
 
 // Portalled to <body> and anchored above the hovered cell (viewport coords in

@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
-import type { Note } from "../music/note";
-import type { ViewOptions } from "../state/useHarpState";
+import type { Note } from "../../music/note";
+import type { ViewOptions } from "../../state/useHarpState";
 import { NoteTooltip } from "./NoteTooltip";
 import { CATEGORY_LABEL } from "./noteLabels";
 
