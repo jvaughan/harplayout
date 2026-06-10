@@ -1,0 +1,9 @@
+{
+  // Name must match your Worker's name in the Cloudflare dashboard.
+  "name": "harplayout-react",
+  "compatibility_date": "2026-06-10",
+  // Static-asset-only Worker: no `main` script, just serve the Vite build output.
+  "assets": {
+    "directory": "./dist"
+  }
+}
