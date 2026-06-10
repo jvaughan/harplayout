@@ -6,6 +6,9 @@
   // (and non-production branch builds) can be reviewed before promoting to prod.
   "preview_urls": true,
   // Static-asset-only Worker: no `main` script, just serve the Vite build output.
+  // Default html_handling keeps clean URLs (/index.html -> / canonicalisation).
+  // The PWA works with that because the service worker precaches "/" (the 200
+  // clean URL), not "/index.html" (which redirects) — see vite.config.ts.
   "assets": {
     "directory": "./dist"
   }

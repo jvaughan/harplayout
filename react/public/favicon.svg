@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <!-- HarpLayout icon: the full 10-hole harp table from the app (Richter, C, 1st
+       position). Green = natural (blow/draw), grey = hole row, blue = bends,
+       pink = overbends — cell positions match the screenshot. Note text is
+       omitted (illegible at icon sizes). Re-run `npm run gen:icons` after edits. -->
+  <rect width="512" height="512" fill="#0f1419"/>
+
+  <!-- top overbend/bend (hole 10 highest) -->
+  <rect x="423" y="95" width="34" height="34" rx="6" fill="#5a8dff"/>
+
+  <!-- overbends (pink) + high bends (blue), one row above blow -->
+  <rect x="54"  y="136" width="34" height="34" rx="6" fill="#e25c8a"/>
+  <rect x="177" y="136" width="34" height="34" rx="6" fill="#e25c8a"/>
+  <rect x="218" y="136" width="34" height="34" rx="6" fill="#e25c8a"/>
+  <rect x="259" y="136" width="34" height="34" rx="6" fill="#e25c8a"/>
+  <rect x="341" y="136" width="34" height="34" rx="6" fill="#5a8dff"/>
+  <rect x="382" y="136" width="34" height="34" rx="6" fill="#5a8dff"/>
+  <rect x="423" y="136" width="34" height="34" rx="6" fill="#5a8dff"/>
+
+  <!-- blow row (green) -->
+  <g fill="#3fae5a">
+    <rect x="54"  y="177" width="34" height="34" rx="6"/>
+    <rect x="95"  y="177" width="34" height="34" rx="6"/>
+    <rect x="136" y="177" width="34" height="34" rx="6"/>
+    <rect x="177" y="177" width="34" height="34" rx="6"/>
+    <rect x="218" y="177" width="34" height="34" rx="6"/>
+    <rect x="259" y="177" width="34" height="34" rx="6"/>
+    <rect x="300" y="177" width="34" height="34" rx="6"/>
+    <rect x="341" y="177" width="34" height="34" rx="6"/>
+    <rect x="382" y="177" width="34" height="34" rx="6"/>
+    <rect x="423" y="177" width="34" height="34" rx="6"/>
+  </g>
+
+  <!-- hole row (grey) -->
+  <g fill="#3a4654">
+    <rect x="54"  y="218" width="34" height="34" rx="6"/>
+    <rect x="95"  y="218" width="34" height="34" rx="6"/>
+    <rect x="136" y="218" width="34" height="34" rx="6"/>
+    <rect x="177" y="218" width="34" height="34" rx="6"/>
+    <rect x="218" y="218" width="34" height="34" rx="6"/>
+    <rect x="259" y="218" width="34" height="34" rx="6"/>
+    <rect x="300" y="218" width="34" height="34" rx="6"/>
+    <rect x="341" y="218" width="34" height="34" rx="6"/>
+    <rect x="382" y="218" width="34" height="34" rx="6"/>
+    <rect x="423" y="218" width="34" height="34" rx="6"/>
+  </g>
+
+  <!-- draw row (green) -->
+  <g fill="#3fae5a">
+    <rect x="54"  y="259" width="34" height="34" rx="6"/>
+    <rect x="95"  y="259" width="34" height="34" rx="6"/>
+    <rect x="136" y="259" width="34" height="34" rx="6"/>
+    <rect x="177" y="259" width="34" height="34" rx="6"/>
+    <rect x="218" y="259" width="34" height="34" rx="6"/>
+    <rect x="259" y="259" width="34" height="34" rx="6"/>
+    <rect x="300" y="259" width="34" height="34" rx="6"/>
+    <rect x="341" y="259" width="34" height="34" rx="6"/>
+    <rect x="382" y="259" width="34" height="34" rx="6"/>
+    <rect x="423" y="259" width="34" height="34" rx="6"/>
+  </g>
+
+  <!-- first bend/overbend row below draw -->
+  <rect x="54"  y="300" width="34" height="34" rx="6" fill="#5a8dff"/>
+  <rect x="95"  y="300" width="34" height="34" rx="6" fill="#5a8dff"/>
+  <rect x="136" y="300" width="34" height="34" rx="6" fill="#5a8dff"/>
+  <rect x="177" y="300" width="34" height="34" rx="6" fill="#5a8dff"/>
+  <rect x="259" y="300" width="34" height="34" rx="6" fill="#5a8dff"/>
+  <rect x="300" y="300" width="34" height="34" rx="6" fill="#e25c8a"/>
+  <rect x="382" y="300" width="34" height="34" rx="6" fill="#e25c8a"/>
+  <rect x="423" y="300" width="34" height="34" rx="6" fill="#e25c8a"/>
+
+  <!-- deeper bends (holes 2 & 3) -->
+  <rect x="95"  y="341" width="34" height="34" rx="6" fill="#5a8dff"/>
+  <rect x="136" y="341" width="34" height="34" rx="6" fill="#5a8dff"/>
+  <rect x="136" y="382" width="34" height="34" rx="6" fill="#5a8dff"/>
+</svg>
