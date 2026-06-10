@@ -1,0 +1,19 @@
+version: 2
+updates:
+  # React app dependencies only. Scoped to /react so the legacy Perl app's
+  # vendored JS (jquery et al.) is never touched.
+  - package-ecosystem: npm
+    directory: /react
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      # Batch routine bumps into one PR to cut noise; majors stay separate.
+      react-minor-and-patch:
+        update-types: [minor, patch]
+
+  # Keep the workflow's actions (checkout, setup-node) current.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
