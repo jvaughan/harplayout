@@ -1,8 +1,10 @@
 import { CalculatorBar } from "./components/CalculatorBar";
 import { HarpTable } from "./components/HarpTable";
 import { Legend } from "./components/Legend";
+import { ThemeToggle } from "./components/ThemeToggle";
 import { ViewOptions } from "./components/ViewOptions";
 import { useHarpState } from "./state/useHarpState";
+import { useTheme } from "./state/useTheme";
 
 function ordinal(n: number): string {
   const s = ["th", "st", "nd", "rd"];
@@ -13,12 +15,18 @@ function ordinal(n: number): string {
 export default function App() {
   const store = useHarpState();
   const { harp, view, toggle } = store;
+  const { theme, toggle: toggleTheme } = useTheme();
 
   return (
     <div className="app">
       <header className="app-header">
-        <h1>Harp Layout</h1>
-        <p className="tagline">Harmonica tablature for any tuning, key & position</p>
+        <div className="app-header-text">
+          <h1>Harp Layout</h1>
+          <p className="tagline">
+            Harmonica tablature for any tuning, key & position
+          </p>
+        </div>
+        <ThemeToggle theme={theme} toggle={toggleTheme} />
       </header>
 
       <CalculatorBar store={store} />
