@@ -223,7 +223,7 @@ table.harmonica {
 }
 
 .cell {
-  border-radius: 8px;
+  border-radius: 4px;
   min-width: 2.9rem;
   text-align: center;
   vertical-align: middle;
@@ -309,7 +309,7 @@ table.harmonica {
 .holenum {
   background: var(--panel-2);
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: 4px;
   text-align: center;
   font-weight: 700;
   color: var(--accent);
