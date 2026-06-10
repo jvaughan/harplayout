@@ -1,0 +1,349 @@
+:root {
+  --bg: #0f1419;
+  --panel: #1a212b;
+  --panel-2: #232c38;
+  --border: #313d4d;
+  --text: #e6edf3;
+  --muted: #95a3b3;
+  --accent: #5aa7ff;
+
+  /* note type colours */
+  --natural-bg: #2d3a2a;
+  --natural-edge: #5b7a4f;
+  --bend-bg: #2b2f47;
+  --bend-edge: #5b63a3;
+  --over-bg: #432a39;
+  --over-edge: #a3567f;
+
+  /* interval categories */
+  --chord: #46c463;
+  --blue: #5a8dff;
+  --passing: #f5a623;
+  --danger: #ef4d4d;
+
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.5;
+}
+
+.app {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 3rem;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 2rem;
+  letter-spacing: 0.5px;
+  font-weight: 700;
+}
+
+.tagline {
+  margin: 0.15rem 0 0;
+  color: var(--muted);
+}
+
+/* ---- calculators ---- */
+.calculators {
+  margin-top: 1.5rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.85rem;
+}
+
+.field > span {
+  color: var(--muted);
+}
+
+select,
+output {
+  background: var(--panel-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.4rem 0.5rem;
+  font-size: 0.95rem;
+}
+
+select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.tuning {
+  max-width: 340px;
+  margin-bottom: 1rem;
+}
+
+.calc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.calc-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.calc-card h3 {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.result output {
+  font-weight: 700;
+  color: var(--accent);
+  border-style: dashed;
+}
+
+/* ---- summary ---- */
+.summary {
+  margin: 1.75rem 0 1rem;
+  font-size: 1.15rem;
+  font-weight: 500;
+}
+
+.summary-tuning {
+  color: var(--muted);
+}
+
+/* ---- harp layout ---- */
+.harp-and-options {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.harp-wrap {
+  overflow-x: auto;
+  flex: 1 1 480px;
+}
+
+table.harmonica {
+  border-collapse: separate;
+  border-spacing: 4px;
+}
+
+.row-heading {
+  text-align: right;
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 0.8rem;
+  padding-right: 0.4rem;
+  white-space: nowrap;
+}
+
+.cell {
+  border-radius: 8px;
+  min-width: 2.9rem;
+  text-align: center;
+  vertical-align: middle;
+  border: 1px solid transparent;
+}
+
+.cell.empty {
+  background: transparent;
+  border-color: transparent;
+}
+
+.note-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  padding: 0.3rem 0.45rem;
+}
+
+.interval {
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.note-name {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.cat-dot {
+  font-size: 0.7rem;
+  line-height: 1;
+}
+
+.cat-dot.chord {
+  color: var(--chord);
+}
+.cat-dot.blue {
+  color: var(--blue);
+}
+.cat-dot.passing {
+  color: var(--passing);
+}
+.cat-dot.danger {
+  color: var(--danger);
+}
+
+.cell.natural {
+  background: var(--natural-bg);
+  border-color: var(--natural-edge);
+}
+
+.cell.blowbend,
+.cell.drawbend {
+  background: var(--bend-bg);
+  border-color: var(--bend-edge);
+}
+
+.cell.overblow,
+.cell.overdraw,
+.cell.unnecessary_overblow,
+.cell.unnecessary_overdraw {
+  background: var(--over-bg);
+  border: 1px dashed var(--over-edge);
+}
+
+.cell.unnecessary_overblow,
+.cell.unnecessary_overdraw {
+  opacity: 0.7;
+}
+
+/* a filtered-out note keeps its space but hides content */
+.cell.hidden-note .note-inner {
+  visibility: hidden;
+}
+.cell.hidden-note {
+  background: transparent;
+  border-color: var(--border);
+  border-style: dashed;
+  opacity: 0.4;
+}
+
+.holenum {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 700;
+  color: var(--accent);
+  min-width: 2.9rem;
+}
+
+/* ---- options panel ---- */
+.options-panel {
+  flex: 0 0 240px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.view-options fieldset {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin: 0 0 0.9rem;
+  padding: 0.6rem 0.9rem 0.8rem;
+}
+
+.view-options legend {
+  color: var(--muted);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0 0.3rem;
+}
+
+.check {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.18rem 0;
+  cursor: pointer;
+  font-size: 0.92rem;
+}
+
+.check input {
+  accent-color: var(--accent);
+  width: 1rem;
+  height: 1rem;
+}
+
+.legend {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.6rem 0.9rem 0.9rem;
+}
+
+.legend h4 {
+  margin: 0.2rem 0 0.6rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.legend ul {
+  list-style: none;
+  margin: 0 0 0.5rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.9rem;
+}
+
+.swatch {
+  display: inline-block;
+  width: 1.1rem;
+  height: 1.1rem;
+  border-radius: 5px;
+  vertical-align: middle;
+  margin-right: 0.45rem;
+}
+
+.swatch.natural {
+  background: var(--natural-bg);
+  border: 1px solid var(--natural-edge);
+}
+.swatch.blowbend {
+  background: var(--bend-bg);
+  border: 1px solid var(--bend-edge);
+}
+.swatch.overblow {
+  background: var(--over-bg);
+  border: 1px dashed var(--over-edge);
+}
+
+.categories .cat-dot {
+  font-size: 0.95rem;
+  margin-right: 0.4rem;
+}
+
+.app-footer {
+  margin-top: 2.5rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+  border-top: 1px solid var(--border);
+  padding-top: 1rem;
+}

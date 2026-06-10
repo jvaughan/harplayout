@@ -1,0 +1,10 @@
+# Node / React build artifacts
+react/node_modules/
+react/dist/
+react/.vite/
+
+# Cloudflare
+.wrangler/
+
+# OS
+.DS_Store
