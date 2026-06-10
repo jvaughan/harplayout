@@ -105,6 +105,34 @@ describe("view options (pure render filters)", () => {
   });
 });
 
+describe("note tooltip", () => {
+  it("shows a styled tooltip with note details on hover, and hides on leave", () => {
+    render(<App />);
+    const cell = table().querySelector(".cell.natural") as HTMLElement;
+
+    expect(document.querySelector(".note-tooltip")).toBeNull();
+
+    fireEvent.mouseEnter(cell);
+    const tip = document.querySelector(".note-tooltip") as HTMLElement;
+    expect(tip).not.toBeNull();
+    // Header + the Interval/Note rows are present.
+    expect(tip.querySelector(".tt-header")!.textContent).toBeTruthy();
+    expect(tip.textContent).toContain("Interval");
+    expect(tip.textContent).toContain("Note");
+
+    fireEvent.mouseLeave(cell);
+    expect(document.querySelector(".note-tooltip")).toBeNull();
+  });
+
+  it("does not use the native title attribute", () => {
+    render(<App />);
+    const cell = table().querySelector(".cell.natural") as HTMLElement;
+    expect(cell.getAttribute("title")).toBeNull();
+    // ...but keeps an accessible label for screen readers.
+    expect(cell.getAttribute("aria-label")).toContain("Interval");
+  });
+});
+
 describe("harp table", () => {
   it("renders Blow / Hole / Draw headings and 10 holes for Richter", () => {
     render(<App />);

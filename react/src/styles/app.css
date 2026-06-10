@@ -305,6 +305,79 @@ table.harmonica {
   border-style: solid;
 }
 
+/* Hovered-note tooltip: portalled to <body>, anchored above the cell.
+   Mirrors the legacy Prototip box (header + Interval/Note/Category). */
+.note-tooltip {
+  position: fixed;
+  transform: translate(-50%, calc(-100% - 10px));
+  z-index: 50;
+  pointer-events: none;
+  min-width: 132px;
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  font-size: 0.78rem;
+  animation: tt-appear 0.12s ease-out;
+}
+
+@keyframes tt-appear {
+  from {
+    opacity: 0;
+    transform: translate(-50%, calc(-100% - 4px));
+  }
+}
+
+.note-tooltip .tt-header {
+  background: var(--panel-2);
+  border-bottom: 1px solid var(--border);
+  border-radius: 7px 7px 0 0;
+  padding: 6px 10px;
+  font-weight: 700;
+}
+
+.note-tooltip .tt-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 7px 10px;
+}
+
+.note-tooltip .tt-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.note-tooltip .tt-label {
+  color: var(--muted);
+}
+
+.note-tooltip .tt-val {
+  font-weight: 600;
+}
+
+.note-tooltip .tt-catrow {
+  justify-content: flex-start;
+  align-items: center;
+  gap: 6px;
+  margin-top: 1px;
+}
+
+/* Little diamond pointing down at the anchored cell. */
+.note-tooltip .tt-arrow {
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  transform: translateX(-50%) rotate(45deg);
+  background: var(--panel);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
 .holenum {
   background: var(--panel-2);
   border: 1px solid var(--border);

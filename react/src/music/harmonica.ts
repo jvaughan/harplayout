@@ -199,17 +199,17 @@ class HarpBuilder {
 
     if (bendstep === 0) {
       note.type = "natural";
-      note.description = `${reed} hole ${plate} natural`;
+      note.description = `${reed} hole ${plate} - natural`;
     } else {
       const natural = this.getNote(plate, reed, 0)!;
       if (intervalLt(note, natural)) {
         note.type = `${plate}bend` as NoteType;
-        note.description = `${reed} hole ${plate} bend step ${bendstep}`;
+        note.description = `${reed} hole ${plate} - bend step ${bendstep}`;
       } else {
         note.type = (attrs?.unnecessaryOb
           ? `unnecessary_over${plate}`
           : `over${plate}`) as NoteType;
-        note.description = `${reed} hole over${plate}`;
+        note.description = `${reed} hole - over${plate}`;
       }
     }
 
