@@ -1,7 +1,12 @@
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
-import { buildHarp, type Calculate, type HarpLayout } from "./harmonica";
+import {
+  buildHarp,
+  type Calculate,
+  type HarpLayout,
+  type Key,
+} from "./harmonica";
 
 // Mirror of dump_grid.pl / scripts/dumpGrid.ts output format.
 function render(h: HarpLayout): string {
@@ -24,8 +29,8 @@ function render(h: HarpLayout): string {
 
 interface Case {
   tuning: string;
-  harpKey: string;
-  songKey: string;
+  harpKey: Key;
+  songKey: Key;
   position: number;
   calculate: Calculate;
 }

@@ -6,6 +6,7 @@ import {
   intervalFromPosition,
   noteFromPosition,
   positionFromNotes,
+  type Interval,
   type Key,
 } from "./circleOfFifths";
 import {
@@ -23,6 +24,8 @@ import {
   type NoteType,
 } from "./note";
 import { getTuning, labelPosition } from "./tunings";
+
+export type { Key };
 
 export type Calculate = "harp_key" | "position" | "song_key";
 type Plate = "blow" | "draw";
@@ -56,6 +59,21 @@ function oppPlate(plate: Plate): Plate {
   return plate === "blow" ? "draw" : "blow";
 }
 
+// Build the NoteType for a reed from its plate and the role it plays. Replaces
+// template-literal string assembly + `as NoteType` casts with exhaustive returns.
+function noteType(
+  plate: Plate,
+  role: "natural" | "bend" | "overbend",
+  unnecessary = false,
+): NoteType {
+  if (role === "natural") return "natural";
+  if (role === "bend") return plate === "blow" ? "blowbend" : "drawbend";
+  if (unnecessary) {
+    return plate === "blow" ? "unnecessary_overblow" : "unnecessary_overdraw";
+  }
+  return plate === "blow" ? "overblow" : "overdraw";
+}
+
 class HarpBuilder {
   tuning: string;
   harpKey: Key;
@@ -85,30 +103,35 @@ class HarpBuilder {
   }
 
   // Harmonica.pm:37-56 — resolve the one value implied by the other two.
+  //
+  // Positions are 1-based circle-of-fifths offsets. `labelPos` is the position a
+  // tuning is conventionally labelled in (1 for most; 2 for e.g. natural minor),
+  // so we shift by `labelPos - 1` to move between the labelled and absolute
+  // position frames before walking the circle.
   private resolveUnknown() {
     switch (this.calculate) {
       case "harp_key": {
-        const pos = this.position - this.labelPos + 1;
-        this.harpKey = noteFromPosition(this.songKey, -pos);
+        // Walk back from the song key by the absolute position to the harp key.
+        const steps = this.position - this.labelPos + 1;
+        this.harpKey = noteFromPosition(this.songKey, -steps);
         break;
       }
       case "position": {
         let pos = positionFromNotes(this.harpKey, this.songKey);
-        pos += this.labelPos - 1;
-        if (pos > 12) pos -= 12;
+        pos += this.labelPos - 1; // into the labelled-position frame
+        if (pos > 12) pos -= 12; // wrap around the 12 positions
         this.position = pos;
         break;
       }
       case "song_key": {
-        let pk = noteFromPosition(this.harpKey, this.position);
-        pk = noteFromPosition(pk, -this.labelPos);
-        this.songKey = pk;
+        const playedKey = noteFromPosition(this.harpKey, this.position);
+        this.songKey = noteFromPosition(playedKey, -this.labelPos);
         break;
       }
     }
   }
 
-  private plateIntervals(plate: Plate): string[] {
+  private plateIntervals(plate: Plate): Interval[] {
     const t = getTuning(this.tuning);
     return plate === "blow" ? t.blow : t.draw;
   }
@@ -182,7 +205,7 @@ class HarpBuilder {
     plate: Plate,
     reed: number,
     bendstep: number,
-    firstPosInterval: string,
+    firstPosInterval: Interval,
     attrs?: { unnecessaryOb?: boolean },
   ): Note {
     const positionInterval = intervalFromPosition(firstPosInterval, this.position);
@@ -198,17 +221,15 @@ class HarpBuilder {
     };
 
     if (bendstep === 0) {
-      note.type = "natural";
+      note.type = noteType(plate, "natural");
       note.description = `${reed} hole ${plate} - natural`;
     } else {
       const natural = this.getNote(plate, reed, 0)!;
       if (intervalLt(note, natural)) {
-        note.type = `${plate}bend` as NoteType;
+        note.type = noteType(plate, "bend");
         note.description = `${reed} hole ${plate} - bend step ${bendstep}`;
       } else {
-        note.type = (attrs?.unnecessaryOb
-          ? `unnecessary_over${plate}`
-          : `over${plate}`) as NoteType;
+        note.type = noteType(plate, "overbend", attrs?.unnecessaryOb);
         note.description = `${reed} hole - over${plate}`;
       }
     }
