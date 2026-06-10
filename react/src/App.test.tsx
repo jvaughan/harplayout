@@ -16,5 +16,8 @@ describe("App", () => {
     expect(html).toContain("Get song key");
     expect(html).toContain("Get harp key");
     expect(html).toContain("Get position");
+    // Theme switcher (defaults to dark, so it offers "Light").
+    expect(html).toContain("theme-toggle");
+    expect(html).toContain("Light");
   });
 });
