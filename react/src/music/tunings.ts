@@ -103,8 +103,12 @@ export const TUNINGS: Record<string, Tuning> = {
   },
 };
 
+// Richter is the standard/default tuning, so it leads; the rest are alphabetical.
 export function availableTunings(): string[] {
-  return Object.keys(TUNINGS).sort();
+  const rest = Object.keys(TUNINGS)
+    .filter((name) => name !== "Richter")
+    .sort();
+  return ["Richter", ...rest];
 }
 
 export function getTuning(name: string): Tuning {
