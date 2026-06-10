@@ -2,6 +2,7 @@
 react/node_modules/
 react/dist/
 react/.vite/
+react/*.tsbuildinfo
 
 # Cloudflare
 .wrangler/
