@@ -7,9 +7,29 @@ updates:
     schedule:
       interval: weekly
     open-pull-requests-limit: 5
+    # Each dependency joins the FIRST group it matches. The family groups below
+    # include majors on purpose: these packages must move in lockstep (e.g.
+    # @vitejs/plugin-react 6 requires vite 8; @types/react-dom 19 needs react 19),
+    # so grouping them avoids the half-upgraded, mutually-conflicting PRs that
+    # come from bumping them one at a time.
     groups:
-      # Batch routine bumps into one PR to cut noise; majors stay separate.
-      react-minor-and-patch:
+      # React runtime + its types.
+      react:
+        patterns:
+          - react
+          - react-dom
+          - "@types/react"
+          - "@types/react-dom"
+      # Vite build + test tooling (plugin-react and vite are version-locked).
+      vite:
+        patterns:
+          - vite
+          - vitest
+          - "@vitejs/*"
+          - "@vitest/*"
+      # Everything else: batch routine bumps to cut noise; unrelated majors
+      # (typescript, eslint, …) still come as their own PRs.
+      misc-minor-and-patch:
         update-types: [minor, patch]
 
   # Keep the workflow's actions (checkout, setup-node) current.
