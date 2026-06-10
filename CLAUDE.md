@@ -115,6 +115,17 @@ CI ([.github/workflows/react-ci.yml](.github/workflows/react-ci.yml)) runs `buil
 pushes/PRs touching `react/**`, but is independent of (and does not gate) the Cloudflare
 deploy — Cloudflare's own build command is the gate.
 
+**Security headers / CSP.** The `securityHeaders` Vite plugin in
+[react/vite.config.ts](react/vite.config.ts) writes `dist/_headers` at build time —
+Cloudflare Workers static assets apply `_headers` from the assets root. The CSP is strict
+(`default-src 'self'`; the site has no external origins). The inline `<script>` in
+`index.html` (anti-flash theme bootstrap) is permitted via a **sha256 hash computed from
+the emitted `index.html` on every build**, so it never goes stale — don't hardcode it.
+Inline `<style>` blocks would be hashed the same way. `dist/_headers` is a build artifact
+(gitignored); only `vite.config.ts` is the source. After deploying, sanity-check with
+`curl -sI <url> | grep -i content-security-policy` and watch the browser console for CSP
+violations.
+
 ### Music engine (`react/src/music/`)
 
 A faithful 1:1 port of the Perl modules; keep the two in sync when changing logic.
