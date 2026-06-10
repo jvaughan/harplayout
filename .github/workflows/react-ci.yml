@@ -1,0 +1,34 @@
+# Fast feedback for the React app: runs the same build:ci gate Cloudflare uses.
+# Deploy gating itself lives in Cloudflare's build command; this just reports
+# the result on commits/PRs before (or independently of) deploy.
+name: react CI
+
+on:
+  push:
+    paths: ["react/**", ".github/workflows/react-ci.yml"]
+  pull_request:
+    paths: ["react/**", ".github/workflows/react-ci.yml"]
+
+# Don't pile up runs on a fast series of pushes to the same branch; cancel the
+# superseded one. Also avoids wasted duplicate runs when a branch has an open PR.
+concurrency:
+  group: react-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    working-directory: react
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: react/.nvmrc
+          cache: npm
+          cache-dependency-path: react/package-lock.json
+      - run: npm ci
+      # Identical to Cloudflare's build command, so CI tests exactly what deploys.
+      - run: npm run build:ci
