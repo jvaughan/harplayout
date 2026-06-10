@@ -13,13 +13,15 @@ export default tseslint.config(
       "react-refresh": reactRefresh,
     },
     languageOptions: {
-      ecmaVersion: 2022,
+      ecmaVersion: 2025,
       sourceType: "module",
     },
     rules: {
-      // The two canonical hooks-correctness rules — the main thing TS can't catch.
-      "react-hooks/rules-of-hooks": "error",
-      "react-hooks/exhaustive-deps": "warn",
+      // Full react-hooks v7 ruleset (rules-of-hooks, exhaustive-deps, plus the
+      // React Compiler checks: purity, immutability, manual-memo, etc.). Spread
+      // the rules directly because the plugin's bundled flat config declares
+      // `plugins` as a legacy string array that ESLint 10 rejects.
+      ...reactHooks.configs["recommended-latest"].rules,
       // Keep modules fast-refresh-friendly (component files export only components).
       "react-refresh/only-export-components": [
         "warn",

@@ -1,8 +1,12 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
+    "target": "ES2025",
     "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    // target ES2025 permits modern syntax (Vite downlevels it for the bundle),
+    // but lib stays at ES2023 — what's realistically widely-available at runtime —
+    // so TS errors if we reach for a newer API (e.g. Set.union) that esbuild
+    // won't polyfill and the Vite target won't help with.
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
     "moduleResolution": "bundler",
