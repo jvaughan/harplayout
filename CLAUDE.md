@@ -84,7 +84,36 @@ npm run build    # type-check + static bundle into react/dist/
 npm run test     # Vitest: unit tests + Perl cross-check
 ```
 
-The build output (`react/dist/`) is a static site, deployable to any static host (e.g. Cloudflare Pages: root dir `react`, build command `npm run build`, output dir `dist`).
+The build output (`react/dist/`) is a static site, deployable to any static host.
+
+### Deploying & previewing (Cloudflare Workers)
+
+The React app deploys as a **Cloudflare Workers static-assets project** (not Pages),
+configured by [react/wrangler.jsonc](react/wrangler.jsonc) (`assets.directory = ./dist`).
+Two deploy paths exist:
+
+- **GitHub integration (primary).** Cloudflare's Workers Builds watches the repo and,
+  on push, runs the build and uploads a new *version*. Production is promoted manually.
+  The build command in the Cloudflare dashboard is `npm run build:ci` (lint + test +
+  build), so the deploy is gated by the same checks CI runs.
+- **Wrangler CLI (ad hoc).** From `react/`: `npm run build && npx wrangler versions upload`
+  uploads a version without routing production traffic; `npx wrangler versions deploy`
+  promotes a version to production.
+
+**Previewing before promoting.** `preview_urls: true` in `wrangler.jsonc` gives every
+uploaded version its own preview URL (production traffic unaffected). Find it by:
+
+- **CLI:** `npx wrangler versions upload` prints `Version Preview URL` directly; or
+  `npx wrangler versions list` shows all versions (the `Source` field shows the git
+  commit for GitHub-integration builds).
+- **Deterministic URL:** `https://<first-8-chars-of-version-id>-harplayout-react.jon-vaughan.workers.dev`.
+- **GitHub:** Cloudflare's app reports build status on the commit/PR, commenting the
+  preview URL on PRs.
+- **Dashboard:** Worker → Deployments/Versions → pick a version → Preview URL.
+
+CI ([.github/workflows/react-ci.yml](.github/workflows/react-ci.yml)) runs `build:ci` on
+pushes/PRs touching `react/**`, but is independent of (and does not gate) the Cloudflare
+deploy — Cloudflare's own build command is the gate.
 
 ### Music engine (`react/src/music/`)
 
