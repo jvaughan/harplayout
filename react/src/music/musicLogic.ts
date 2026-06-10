@@ -37,13 +37,31 @@ export function intervalToNum(s: Interval): string {
   return s;
 }
 
-// num_to_interval: "2.5" -> "b3", "5" -> "5". Inverse of intervalToNum.
+// The 12 intervals in chromatic order — the canonical label set.
+const INTERVALS: Interval[] = [
+  "1",
+  "b2",
+  "2",
+  "b3",
+  "3",
+  "4",
+  "b5",
+  "5",
+  "b6",
+  "6",
+  "b7",
+  "7",
+];
+
+// num_to_interval: "2.5" -> "b3", "5" -> "5". Inverse of intervalToNum, as a
+// lookup so it returns a strictly-typed Interval (every input comes from the
+// intervalToNum value set, e.g. the RING below).
+const NUM_TO_INTERVAL: Record<string, Interval> = Object.fromEntries(
+  INTERVALS.map((i) => [intervalToNum(i), i]),
+);
+
 export function numToInterval(n: string): Interval {
-  if (/\.5/.test(n)) {
-    const v = Number(n) + 0.5;
-    return `b${v}`;
-  }
-  return n;
+  return NUM_TO_INTERVAL[n];
 }
 
 const INT_TO_CHROM: Record<Interval, number> = {
@@ -91,7 +109,9 @@ export function categoryFromInterval(interval: Interval): IntervalCategory {
 // The 12-element chromatic ring: keys of co5_intervals mapped to numeric strings,
 // then string-sorted (matching Perl's default `sort`). JS Array.sort defaults to
 // the same lexicographic string ordering, and for these values it equals numeric order.
-const RING: string[] = Object.keys(co5Intervals()).map(intervalToNum).sort();
+const RING: string[] = (Object.keys(co5Intervals()) as Interval[])
+  .map(intervalToNum)
+  .sort();
 
 function sortedNumericIntervals(): string[] {
   return RING;
@@ -141,12 +161,12 @@ function intervalGtDiff(diff: number): boolean {
   return false;
 }
 
-// interval_cmp: returns 1/0 like the Perl (used as a boolean by callers).
+// interval_cmp: windowed circular comparison of two intervals on the ring.
 export function intervalCmp(
   op: "gt" | "lt",
   int1: Interval,
   int2: Interval,
-): 0 | 1 {
+): boolean {
   const n1 = intervalToNum(int1);
   const n2 = intervalToNum(int2);
 
@@ -159,11 +179,6 @@ export function intervalCmp(
   });
 
   const diff = loc1 - loc2;
-  if (diff === 0) return 0; // Equal
-
-  if (op === "gt") {
-    return intervalGtDiff(diff) ? 1 : 0;
-  }
-  // op === "lt"
-  return intervalGtDiff(diff) ? 0 : 1;
+  if (diff === 0) return false; // equal: neither gt nor lt
+  return op === "gt" ? intervalGtDiff(diff) : !intervalGtDiff(diff);
 }

@@ -1,7 +1,35 @@
 // Faithful port of HarpLayout::MusicLogic::CircleOfFifths (CircleOfFifths.pm).
 
-export type Key = string;
-export type Interval = string;
+// The 12 harmonica keys and the 12 intervals, as strict unions so typos in
+// tunings/tables are caught at compile time and the interval/key records below
+// are checked for completeness.
+export type Key =
+  | "C"
+  | "Db"
+  | "D"
+  | "Eb"
+  | "E"
+  | "F"
+  | "F#"
+  | "G"
+  | "Ab"
+  | "A"
+  | "Bb"
+  | "B";
+
+export type Interval =
+  | "1"
+  | "b2"
+  | "2"
+  | "b3"
+  | "3"
+  | "4"
+  | "b5"
+  | "5"
+  | "b6"
+  | "6"
+  | "b7"
+  | "7";
 
 // Each key maps to the next fifth up.
 const CO5_NOTES: Record<Key, Key> = {
@@ -36,9 +64,10 @@ const CO5_INTERVALS: Record<Interval, Interval> = {
 };
 
 // Reverse of CO5_NOTES (value -> key), built once. Perl: `my %co5 = reverse %co5_notes`.
-const CO5_NOTES_REVERSED: Record<Key, Key> = Object.fromEntries(
+// The cast is safe: CO5_NOTES is a complete bijection over the 12 keys.
+const CO5_NOTES_REVERSED = Object.fromEntries(
   Object.entries(CO5_NOTES).map(([k, v]) => [v, k]),
-);
+) as Record<Key, Key>;
 
 export function co5Intervals(): Record<Interval, Interval> {
   return CO5_INTERVALS;
@@ -49,23 +78,18 @@ export function co5Notes(): Record<Key, Key> {
 }
 
 // note_from_position: key N positions away via the circle of fifths.
-// `position` may be negative (passed as a string like "-3" in Perl; here a number).
+// `position` is a signed, ~1-based step count: position 1 means "no move", and
+// each step beyond walks one fifth up (positive) or down (negative). So the
+// number of moves is |offset| in the direction of its sign, where
+//   offset = position - 1 (forward) or position + 1 (backward).
+// Note the carried-over Perl asymmetry: position 0 behaves like +1 (one fifth up).
 export function noteFromPosition(note: Key, position: number): Key {
-  let offset = position > 0 ? position - 1 : position + 1;
-
-  if (offset > 0) {
-    while (offset-- > 0) {
-      note = CO5_NOTES[note];
-    }
-    return note;
-  } else if (offset < 0) {
-    while (offset++ < 0) {
-      note = CO5_NOTES_REVERSED[note];
-    }
-    return note;
-  } else {
-    return note;
+  const offset = position > 0 ? position - 1 : position + 1;
+  const next = offset >= 0 ? CO5_NOTES : CO5_NOTES_REVERSED;
+  for (let i = 0; i < Math.abs(offset); i++) {
+    note = next[note];
   }
+  return note;
 }
 
 // position_from_notes: count positions forward from note1 to note2.

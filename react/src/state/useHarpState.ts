@@ -1,5 +1,10 @@
 import { useMemo, useState } from "react";
-import { buildHarp, type Calculate, type HarpLayout } from "../music/harmonica";
+import {
+  buildHarp,
+  type Calculate,
+  type HarpLayout,
+  type Key,
+} from "../music/harmonica";
 
 export interface ViewOptions {
   includeBends: boolean;
@@ -12,8 +17,8 @@ export interface ViewOptions {
 
 interface HarpState extends ViewOptions {
   tuning: string;
-  harpKey: string;
-  songKey: string;
+  harpKey: Key;
+  songKey: Key;
   position: number;
   calculate: Calculate;
 }
@@ -37,9 +42,9 @@ export interface UseHarpState {
   view: ViewOptions;
   // calculators
   setTuning: (t: string) => void;
-  songCalc: { harpKey: (v: string) => void; position: (v: number) => void };
-  harpCalc: { songKey: (v: string) => void; position: (v: number) => void };
-  posCalc: { harpKey: (v: string) => void; songKey: (v: string) => void };
+  songCalc: { harpKey: (v: Key) => void; position: (v: number) => void };
+  harpCalc: { songKey: (v: Key) => void; position: (v: number) => void };
+  posCalc: { harpKey: (v: Key) => void; songKey: (v: Key) => void };
   toggle: (key: keyof ViewOptions) => void;
 }
 

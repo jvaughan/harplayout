@@ -51,12 +51,12 @@ export function intervalEq(a: IntervalBearer, b: IntervalBearer): boolean {
 
 // `>` overload.
 export function intervalGt(a: IntervalBearer, b: IntervalBearer): boolean {
-  return intervalCmp("gt", a.firstPosInterval, b.firstPosInterval) === 1;
+  return intervalCmp("gt", a.firstPosInterval, b.firstPosInterval);
 }
 
 // `<` overload.
 export function intervalLt(a: IntervalBearer, b: IntervalBearer): boolean {
-  return intervalCmp("lt", a.firstPosInterval, b.firstPosInterval) === 1;
+  return intervalCmp("lt", a.firstPosInterval, b.firstPosInterval);
 }
 
 export type { Interval, Key };

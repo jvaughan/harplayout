@@ -47,9 +47,9 @@ describe("add/subtract interval (chromatic ring, 1 step = 1 semitone)", () => {
 
 describe("intervalCmp (windowed gt/lt)", () => {
   it("orders adjacent intervals", () => {
-    expect(intervalCmp("gt", "3", "1")).toBe(1);
-    expect(intervalCmp("lt", "1", "3")).toBe(1);
-    expect(intervalCmp("gt", "1", "1")).toBe(0); // equal
+    expect(intervalCmp("gt", "3", "1")).toBe(true);
+    expect(intervalCmp("lt", "1", "3")).toBe(true);
+    expect(intervalCmp("gt", "1", "1")).toBe(false); // equal
   });
 });
 
