@@ -1,7 +1,17 @@
 // @vitest-environment jsdom
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import { beforeEach, describe, expect, it } from "vitest";
 import App from "../App";
+
+// Extract the body of a CSS rule (the text between { and }) for a selector.
+function cssRule(selector: string): string {
+  const css = readFileSync(resolve(process.cwd(), "src/styles/app.css"), "utf8");
+  const at = css.indexOf(selector);
+  if (at === -1) throw new Error(`selector not found: ${selector}`);
+  return css.slice(css.indexOf("{", at) + 1, css.indexOf("}", at));
+}
 
 // Each test mounts App fresh; reset theme side-effects between tests.
 beforeEach(() => {
@@ -84,6 +94,14 @@ describe("view options (pure render filters)", () => {
       table().querySelectorAll(".cell.blowbend.hidden-note, .cell.drawbend.hidden-note")
         .length,
     ).toBeGreaterThan(0);
+  });
+
+  it("renders hidden notes with no visible border outline", () => {
+    // A hidden note should look as blank as an empty cell — no faint border.
+    const rule = cssRule(".cell.hidden-note {");
+    expect(rule).toMatch(/border-color:\s*transparent/);
+    expect(rule).not.toMatch(/var\(--border\)/);
+    expect(rule).not.toMatch(/dashed/);
   });
 });
 

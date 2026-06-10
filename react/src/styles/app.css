@@ -301,9 +301,8 @@ table.harmonica {
 }
 .cell.hidden-note {
   background: transparent;
-  border-color: var(--border);
-  border-style: dashed;
-  opacity: 0.4;
+  border-color: transparent;
+  border-style: solid;
 }
 
 .holenum {
