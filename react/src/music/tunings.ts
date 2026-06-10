@@ -1,0 +1,118 @@
+// Port of HarpLayout::Harmonica::Tuning (Tuning.pm), including the working-tree
+// "Will Wilde Minor" entry. label_position defaults to 1.
+
+import { type Interval } from "./circleOfFifths";
+
+export interface Tuning {
+  blow: Interval[];
+  draw: Interval[];
+  labelPosition?: number;
+}
+
+export const TUNINGS: Record<string, Tuning> = {
+  // Hole               1   2   3   4   5   6   7   8   9   10
+  Richter: {
+    blow: ["1", "3", "5", "1", "3", "5", "1", "3", "5", "1"],
+    draw: ["2", "5", "7", "2", "4", "6", "7", "2", "4", "6"],
+  },
+
+  "Solo (10 hole)": {
+    blow: ["1", "3", "5", "1", "1", "3", "5", "1", "1", "3"],
+    draw: ["2", "4", "6", "7", "2", "4", "6", "7", "2", "4"],
+  },
+
+  "Solo (12 hole)": {
+    blow: ["1", "3", "5", "1", "1", "3", "5", "1", "1", "3", "5", "1"],
+    draw: ["2", "4", "6", "7", "2", "4", "6", "7", "2", "4", "6", "7"],
+  },
+
+  "Seydel Big Six (blues)": {
+    blow: ["1", "3", "5", "1", "3", "5"],
+    draw: ["2", "5", "7", "2", "4", "6"],
+  },
+
+  "Seydel Big Six (folk)": {
+    blow: ["1", "3", "5", "1", "3", "5"],
+    draw: ["2", "4", "6", "7", "2", "4"],
+  },
+
+  "Seydel Circular": {
+    blow: ["1", "3", "5", "b7", "2", "4", "6", "1", "3", "5"],
+    draw: ["2", "4", "6", "1", "3", "5", "b7", "2", "4", "6"],
+  },
+
+  "Seydel Melodic Maker": {
+    blow: ["1", "3", "6", "1", "3", "5", "1", "3", "5", "1"],
+    draw: ["2", "5", "7", "2", "b5", "6", "7", "2", "b5", "6"],
+    labelPosition: 1,
+  },
+
+  "Seydel Augmented": {
+    blow: ["1", "3", "b6", "1", "3", "b6", "1", "3", "b6", "1"],
+    draw: ["b3", "5", "7", "b3", "5", "7", "b3", "5", "7", "b3"],
+  },
+
+  "Seydel Dorian (labelled in 2nd pos)": {
+    blow: ["1", "3", "5", "1", "3", "5", "1", "3", "5", "1"],
+    draw: ["2", "5", "b7", "2", "4", "6", "b7", "2", "4", "6"],
+    labelPosition: 2,
+  },
+
+  "Paddy Richter": {
+    blow: ["1", "3", "6", "1", "3", "5", "1", "3", "5", "1"],
+    draw: ["2", "5", "7", "2", "4", "6", "7", "2", "4", "6"],
+  },
+
+  Country: {
+    blow: ["1", "3", "5", "1", "3", "5", "1", "3", "5", "1"],
+    draw: ["2", "5", "7", "2", "b5", "6", "7", "2", "4", "6"],
+  },
+
+  "L.O Melody Maker (labelled in 2nd pos)": {
+    blow: ["1", "3", "6", "1", "3", "5", "1", "3", "5", "1"],
+    draw: ["2", "5", "7", "2", "b5", "6", "7", "2", "b5", "6"],
+    labelPosition: 2,
+  },
+
+  "L.O Natural Minor (labelled in 2nd pos)": {
+    blow: ["1", "b3", "5", "1", "b3", "5", "1", "3", "5", "1"],
+    draw: ["2", "5", "b7", "2", "4", "6", "b7", "2", "4", "6"],
+    labelPosition: 2,
+  },
+
+  "Natural Minor (labelled in 1st pos)": {
+    blow: ["1", "b3", "5", "1", "b3", "5", "1", "3", "5", "1"],
+    draw: ["2", "5", "b7", "2", "4", "6", "b7", "2", "4", "6"],
+    labelPosition: 1,
+  },
+
+  "L.O Harmonic Minor": {
+    blow: ["1", "b3", "5", "1", "b3", "5", "1", "b3", "5", "1"],
+    draw: ["2", "5", "7", "2", "4", "b6", "7", "2", "4", "b6"],
+  },
+
+  "Will Wilde": {
+    blow: ["1", "3", "5", "1", "3", "3", "5", "1", "3", "6"],
+    draw: ["2", "5", "7", "2", "4", "5", "7", "2", "5", "1"],
+  },
+
+  "Will Wilde Minor (labelled in 2nd position)": {
+    blow: ["1", "b3", "5", "1", "b3", "b3", "5", "1", "b3", "6"],
+    draw: ["2", "5", "b7", "2", "4", "5", "b7", "2", "5", "1"],
+    labelPosition: 2,
+  },
+};
+
+export function availableTunings(): string[] {
+  return Object.keys(TUNINGS).sort();
+}
+
+export function getTuning(name: string): Tuning {
+  const t = TUNINGS[name];
+  if (!t) throw new Error(`No such tuning '${name}'`);
+  return t;
+}
+
+export function labelPosition(name: string): number {
+  return getTuning(name).labelPosition ?? 1;
+}

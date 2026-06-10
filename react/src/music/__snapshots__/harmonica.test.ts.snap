@@ -1,0 +1,43 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`buildHarp grids (pinned snapshots) > Natural Minor (labelled 2nd pos), C harp, position 2 1`] = `
+"tuning=L.O Natural Minor (labelled in 2nd pos) harp=C song=C pos=2 holes=10
+-- blow (top..bottom) --
+.	.	.	.	.	.	.	.	.	b3/Eb/blowbend
+b6/Ab/unnecessary_overblow	b2/Db/unnecessary_overblow	3/E/overblow	b6/Ab/unnecessary_overblow	7/B/overblow	b3/Eb/unnecessary_overblow	3/E/blowbend	b6/Ab/blowbend	7/B/blowbend	3/E/blowbend
+4/F/natural	b6/Ab/natural	1/C/natural	4/F/natural	b6/Ab/natural	1/C/natural	4/F/natural	6/A/natural	1/C/natural	4/F/natural
+holes: 1	2	3	4	5	6	7	8	9	10
+-- draw (top..bottom) --
+5/G/natural	1/C/natural	b3/Eb/natural	5/G/natural	b7/Bb/natural	2/D/natural	b3/Eb/natural	5/G/natural	b7/Bb/natural	2/D/natural
+b5/Gb/drawbend	7/B/drawbend	2/D/drawbend	b5/Gb/drawbend	6/A/drawbend	b2/Db/drawbend	b5/Gb/overdraw	b7/Bb/unnecessary_overdraw	b2/Db/overdraw	b5/Gb/overdraw
+.	b7/Bb/drawbend	b2/Db/drawbend	.	.	.	.	.	.	.
+.	6/A/drawbend	.	.	.	.	.	.	.	."
+`;
+
+exports[`buildHarp grids (pinned snapshots) > Richter, C harp, 1st position 1`] = `
+"tuning=Richter harp=C song=C pos=1 holes=10
+-- blow (top..bottom) --
+.	.	.	.	.	.	.	.	.	b7/Bb/blowbend
+b3/Eb/overblow	b6/Ab/unnecessary_overblow	1/C/unnecessary_overblow	b3/Eb/overblow	b5/Gb/overblow	b7/Bb/overblow	.	b3/Eb/blowbend	b5/Gb/blowbend	7/B/blowbend
+1/C/natural	3/E/natural	5/G/natural	1/C/natural	3/E/natural	5/G/natural	1/C/natural	3/E/natural	5/G/natural	1/C/natural
+holes: 1	2	3	4	5	6	7	8	9	10
+-- draw (top..bottom) --
+2/D/natural	5/G/natural	7/B/natural	2/D/natural	4/F/natural	6/A/natural	7/B/natural	2/D/natural	4/F/natural	6/A/natural
+b2/Db/drawbend	b5/Gb/drawbend	b7/Bb/drawbend	b2/Db/drawbend	.	b6/Ab/drawbend	b2/Db/overdraw	4/F/unnecessary_overdraw	b6/Ab/overdraw	b2/Db/overdraw
+.	4/F/drawbend	6/A/drawbend	.	.	.	.	.	.	.
+.	.	b6/Ab/drawbend	.	.	.	.	.	.	."
+`;
+
+exports[`buildHarp grids (pinned snapshots) > Richter, C harp, 2nd position 1`] = `
+"tuning=Richter harp=C song=G pos=2 holes=10
+-- blow (top..bottom) --
+.	.	.	.	.	.	.	.	.	b3/Bb/blowbend
+b6/Eb/overblow	b2/Ab/unnecessary_overblow	4/C/unnecessary_overblow	b6/Eb/overblow	7/F#/overblow	b3/Bb/overblow	.	b6/Eb/blowbend	7/F#/blowbend	3/B/blowbend
+4/C/natural	6/E/natural	1/G/natural	4/C/natural	6/E/natural	1/G/natural	4/C/natural	6/E/natural	1/G/natural	4/C/natural
+holes: 1	2	3	4	5	6	7	8	9	10
+-- draw (top..bottom) --
+5/D/natural	1/G/natural	3/B/natural	5/D/natural	b7/F/natural	2/A/natural	3/B/natural	5/D/natural	b7/F/natural	2/A/natural
+b5/Db/drawbend	7/F#/drawbend	b3/Bb/drawbend	b5/Db/drawbend	.	b2/Ab/drawbend	b5/Db/overdraw	b7/F/unnecessary_overdraw	b2/Ab/overdraw	b5/Db/overdraw
+.	b7/F/drawbend	2/A/drawbend	.	.	.	.	.	.	.
+.	.	b2/Ab/drawbend	.	.	.	.	.	.	."
+`;
