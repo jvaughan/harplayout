@@ -103,7 +103,7 @@ my %tunings = (
 		draw => [qw / 2  5  7  2  4  5  7  2  5  1 /],
 	},
 
-	'Will Wilde Minor' => {
+	'Will Wilde Minor (labelled in 2nd position)' => {
 		# Hole        1   2   3   4   5   6   7   8   9   10
 		blow => [qw / 1   b3  5   1   b3  b3  5   1   b3  6 /],
 		draw => [qw / 2   5   b7  2   4   5   b7  2   5   1 /],
