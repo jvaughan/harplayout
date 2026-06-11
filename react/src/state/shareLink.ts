@@ -1,4 +1,4 @@
-import type { Key } from "../music/harmonica";
+import type { Key, Position } from "../music/harmonica";
 import { allKeys } from "../music/musicLogic";
 import { availableTunings } from "../music/tunings";
 
@@ -7,7 +7,7 @@ export interface ShareConfig {
   tuning: string;
   harpKey: Key;
   songKey: Key;
-  position: number;
+  position: Position;
 }
 
 // Short, stable query-param names. Keep these in sync with parseShareParams.
@@ -59,7 +59,7 @@ export function parseShareParams(search: string): Partial<ShareConfig> {
   const position = params.get(PARAM.position);
   if (position && /^\d+$/.test(position)) {
     const n = Number(position);
-    if (n >= 1 && n <= 12) out.position = n;
+    if (n >= 1 && n <= 12) out.position = n as Position;
   }
 
   return out;

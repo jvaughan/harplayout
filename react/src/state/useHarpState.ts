@@ -4,6 +4,7 @@ import {
   type Calculate,
   type HarpLayout,
   type Key,
+  type Position,
 } from "../music/harmonica";
 import { parseShareParams } from "./shareLink";
 
@@ -20,7 +21,7 @@ interface HarpState extends ViewOptions {
   tuning: string;
   harpKey: Key;
   songKey: Key;
-  position: number;
+  position: Position;
   calculate: Calculate;
 }
 
@@ -43,8 +44,8 @@ export interface UseHarpState {
   view: ViewOptions;
   // calculators
   setTuning: (t: string) => void;
-  songCalc: { harpKey: (v: Key) => void; position: (v: number) => void };
-  harpCalc: { songKey: (v: Key) => void; position: (v: number) => void };
+  songCalc: { harpKey: (v: Key) => void; position: (v: Position) => void };
+  harpCalc: { songKey: (v: Key) => void; position: (v: Position) => void };
   posCalc: { harpKey: (v: Key) => void; songKey: (v: Key) => void };
   toggle: (key: keyof ViewOptions) => void;
 }

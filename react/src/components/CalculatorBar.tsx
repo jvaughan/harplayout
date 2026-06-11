@@ -1,10 +1,10 @@
-import type { Key } from "../music/harmonica";
+import type { Key, Position } from "../music/harmonica";
 import { allKeys } from "../music/musicLogic";
 import { availableTunings } from "../music/tunings";
 import type { UseHarpState } from "../state/useHarpState";
 
 const KEYS = allKeys();
-const POSITIONS = Array.from({ length: 12 }, (_, i) => i + 1);
+const POSITIONS = Array.from({ length: 12 }, (_, i) => (i + 1) as Position);
 const TUNINGS = availableTunings();
 
 function KeySelect({
@@ -35,13 +35,17 @@ function PositionSelect({
   value,
   onChange,
 }: {
-  value: number;
-  onChange: (v: number) => void;
+  value: Position;
+  onChange: (v: Position) => void;
 }) {
   return (
     <label className="field">
       <span>Position</span>
-      <select value={value} onChange={(e) => onChange(Number(e.target.value))}>
+      {/* DOM-boundary cast: options are exactly POSITIONS (1..12), all valid. */}
+      <select
+        value={value}
+        onChange={(e) => onChange(Number(e.target.value) as Position)}
+      >
         {POSITIONS.map((p) => (
           <option key={p} value={p}>
             {p}

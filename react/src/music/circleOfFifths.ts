@@ -17,6 +17,24 @@ export type Key =
   | "Bb"
   | "B";
 
+// A harmonica playing position is always one of 1..12 (a step count around the
+// circle of fifths). This is the *domain* value used at the API/UI boundaries.
+// Note: the circle-of-fifths helpers below take a *signed* step count (they get
+// called with negatives, e.g. -steps), so their params stay plain `number`.
+export type Position =
+  | 1
+  | 2
+  | 3
+  | 4
+  | 5
+  | 6
+  | 7
+  | 8
+  | 9
+  | 10
+  | 11
+  | 12;
+
 export type Interval =
   | "1"
   | "b2"

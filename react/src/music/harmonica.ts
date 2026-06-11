@@ -8,6 +8,7 @@ import {
   positionFromNotes,
   type Interval,
   type Key,
+  type Position,
 } from "./circleOfFifths";
 import {
   categoryFromInterval,
@@ -25,7 +26,7 @@ import {
 } from "./note";
 import { getTuning, labelPosition } from "./tunings";
 
-export type { Key };
+export type { Key, Position };
 
 export type Calculate = "harp_key" | "position" | "song_key";
 type Plate = "blow" | "draw";
@@ -33,7 +34,7 @@ type Plate = "blow" | "draw";
 export interface HarpInput {
   tuning: string;
   harpKey: Key;
-  position: number;
+  position: Position;
   songKey: Key;
   calculate: Calculate;
 }
@@ -42,7 +43,7 @@ export interface HarpLayout {
   tuning: string;
   harpKey: Key;
   songKey: Key;
-  position: number;
+  position: Position;
   labelPosition: number;
   numHoles: number;
   // Display rows, each padded to numHoles (null = empty cell).
@@ -77,7 +78,7 @@ function noteType(
 class HarpBuilder {
   tuning: string;
   harpKey: Key;
-  position: number;
+  position: Position;
   songKey: Key;
   calculate: Calculate;
   labelPos: number;
@@ -120,7 +121,8 @@ class HarpBuilder {
         let pos = positionFromNotes(this.harpKey, this.songKey);
         pos += this.labelPos - 1; // into the labelled-position frame
         if (pos > 12) pos -= 12; // wrap around the 12 positions
-        this.position = pos;
+        // The wrap above pins pos to 1..12; the cast records that for the type.
+        this.position = pos as Position;
         break;
       }
       case "song_key": {

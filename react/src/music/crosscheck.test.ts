@@ -6,6 +6,7 @@ import {
   type Calculate,
   type HarpLayout,
   type Key,
+  type Position,
 } from "./harmonica";
 
 // Mirror of dump_grid.pl / scripts/dumpGrid.ts output format.
@@ -31,7 +32,8 @@ interface Case {
   tuning: string;
   harpKey: Key;
   songKey: Key;
-  position: number;
+  // Fixture data is trusted: cases.json only ever carries 1..12.
+  position: Position;
   calculate: Calculate;
 }
 
