@@ -4,6 +4,8 @@ import { join } from "node:path";
 import react from "@vitejs/plugin-react";
 import { defineConfig, type Plugin } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
+import { playwright } from "@vitest/browser-playwright";
+import { configDefaults } from "vitest/config";
 
 // Generate dist/_headers (security headers for the Cloudflare Workers static
 // deploy) after the build. The CSP is strict — the site is fully self-contained,
@@ -126,7 +128,34 @@ export default defineConfig({
   },
   test: {
     globals: true,
-    environment: "node",
     setupFiles: ["./src/test/setup.ts"],
+    // Two projects: the fast node/jsdom unit suite (music engine, cross-check,
+    // component markup) and a real-browser suite for things jsdom can't do —
+    // computed layout and media-query resolution. Browser tests are named
+    // `*.browser.test.tsx`; everything else runs in node. Run just one with
+    // `vitest --project unit` / `--project browser`.
+    projects: [
+      {
+        extends: true,
+        test: {
+          name: "unit",
+          environment: "node",
+          exclude: [...configDefaults.exclude, "**/*.browser.test.{ts,tsx}"],
+        },
+      },
+      {
+        extends: true,
+        test: {
+          name: "browser",
+          include: ["**/*.browser.test.{ts,tsx}"],
+          browser: {
+            enabled: true,
+            provider: playwright(),
+            headless: true,
+            instances: [{ browser: "chromium" }],
+          },
+        },
+      },
+    ],
   },
 });

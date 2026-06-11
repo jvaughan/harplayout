@@ -81,7 +81,9 @@ cd react
 npm install
 npm run dev      # http://localhost:5173
 npm run build    # type-check + static bundle into react/dist/
-npm run test     # Vitest: unit tests + Perl cross-check
+npm run test     # Vitest: all projects (node unit suite + browser suite)
+npm run test:unit    # node/jsdom only — music engine, cross-check, markup
+npm run test:browser # real-browser responsive tests (Playwright/chromium)
 ```
 
 The build output (`react/dist/`) is a static site, deployable to any static host.
@@ -94,8 +96,11 @@ Two deploy paths exist:
 
 - **GitHub integration (primary).** Cloudflare's Workers Builds watches the repo and,
   on push, runs the build and uploads a new *version*. Production is promoted manually.
-  The build command in the Cloudflare dashboard is `npm run build:ci` (lint + test +
-  build), so the deploy is gated by the same checks CI runs.
+  The build command in the Cloudflare dashboard is `npm run build:ci` (lint +
+  `test:unit` + build), so the deploy is gated by the same checks CI runs.
+  `build:ci` deliberately runs only the **node** test project — the browser
+  responsive suite is excluded because Cloudflare's build sandbox can't install
+  Chromium (see [Responsive layout testing](#responsive-layout-testing-browser-mode)).
 - **Wrangler CLI (ad hoc).** From `react/`: `npm run build && npx wrangler versions upload`
   uploads a version without routing production traffic; `npx wrangler versions deploy`
   promotes a version to production.
@@ -112,8 +117,10 @@ uploaded version its own preview URL (production traffic unaffected). Find it by
 - **Dashboard:** Worker → Deployments/Versions → pick a version → Preview URL.
 
 CI ([.github/workflows/react-ci.yml](.github/workflows/react-ci.yml)) runs `build:ci` on
-pushes/PRs touching `react/**`, but is independent of (and does not gate) the Cloudflare
-deploy — Cloudflare's own build command is the gate.
+pushes/PRs touching `react/**`, then installs Chromium and runs `test:browser` as a
+separate step (the browser suite gates **here only**, not in Cloudflare). CI is
+independent of (and does not gate) the Cloudflare deploy — Cloudflare's own build
+command is the gate.
 
 **Security headers / CSP.** The `securityHeaders` Vite plugin in
 [react/vite.config.ts](react/vite.config.ts) writes `dist/_headers` at build time —
@@ -173,6 +180,26 @@ All styles live in one global `src/styles/app.css` (colors are CSS variables; th
 
 - **Media-query tiers are order-dependent.** The harp cell-shrink tiers (`max-width: 600 → 500 → 400`) and overrides like `.calc-card .field.result` rely on **source order** (equal specificity, later wins), so keep each section's base rule and its media queries together and don't reorder them.
 - **Some breakpoints are coupled to layout constants.** The harp shrink points assume the ~10-hole width. The calculator grid (`.calc-grid`) is intentionally **either 3-across or fully stacked, never 2 + 1** — `grid-template-columns` is `1fr` by default and `repeat(3, 1fr)` above `min-width: 600px` (roughly the narrowest viewport where three cards each still fit their two dropdowns). Stacked, all three fields share a line; 3-across, the result drops below its two dropdowns. The harp scroll container also uses the Lea Verou scroll-shadow trick (the `var(--bg)` gradient "covers" must match the page background).
+
+### Responsive layout testing (Browser Mode)
+
+The two invariants above are verified for real (not just by text-matching the CSS) in
+[react/src/components/responsive.browser.test.tsx](react/src/components/responsive.browser.test.tsx),
+which runs under **Vitest Browser Mode** (Playwright/chromium). jsdom can't do this — it has no
+layout engine and doesn't resolve `@media` against a viewport — so these tests render `<App />`
+in a real browser, resize the viewport with `page.viewport()`, and assert *computed* style
+(`grid-template-columns` track count at the 600px boundary; `.cell` `min-width` across the
+600/500/400 shrink tiers). Name any new browser test `*.browser.test.tsx`.
+
+The Vitest config ([react/vite.config.ts](react/vite.config.ts)) defines two `test.projects`:
+`unit` (node/jsdom, excludes `*.browser.test.tsx`) and `browser` (chromium, includes only them).
+`npm run test` runs both; `test:unit` / `test:browser` run one. The browser suite needs the
+Chromium binary (`npx playwright install chromium`) — it's kept out of `build:ci` so the
+Cloudflare deploy gate stays node-only, and runs as its own step in GitHub CI (see [Deploying](#deploying--previewing-cloudflare-workers)).
+
+The text-level check in [react/src/components/ui.test.tsx](react/src/components/ui.test.tsx)
+(reads `app.css` as a string, asserts on rule bodies) stays in the node suite — it's cheap and
+catches deleted rules; the browser suite covers the things only a real layout can.
 
 ### Cross-check against the Perl app
 

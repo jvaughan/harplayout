@@ -36,3 +36,8 @@ jobs:
       - run: npm ci
       # Identical to Cloudflare's build command, so CI tests exactly what deploys.
       - run: npm run build:ci
+      # Real-browser responsive tests (Vitest Browser Mode). Kept out of build:ci
+      # because Cloudflare's build sandbox can't install Chromium — so they gate
+      # here in GitHub CI only, where the binary is cheap to fetch.
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:browser
