@@ -165,6 +165,14 @@ Subtleties that must match Perl exactly: the 12-element chromatic ring built fro
 - `useHarpState.ts` holds form state and derives the grid with `useMemo`. The six view toggles (bends / overbends / unnecessary OBs / note names / intervals / interval categories) are **pure render-time filters** — they never recompute the grid, mirroring the original app's client-side show/hide behavior.
 - `useTheme.ts` + `ThemeToggle.tsx` provide a light/dark switcher; the theme is a `data-theme` attribute on `<html>`, persisted to `localStorage`, defaulting to the OS `prefers-color-scheme`. An inline script in `index.html` sets it before first paint to avoid a flash. All colors are CSS variables in `src/styles/app.css`.
 - Components: `CalculatorBar` (the three key/position calculators), `HarpTable` + `NoteCell`, `ViewOptions`, `Legend`.
+- `NoteCell` shows a portalled tooltip (`NoteTooltip`, rendered to `<body>` so the harp's horizontal scroll can't clip it). It's **hover** on pointer devices and **tap-to-toggle** on touch — chosen via `matchMedia("(hover: none)")` (`TAP_TO_TOGGLE`), resolved once at module load.
+
+### Styling & responsive layout
+
+All styles live in one global `src/styles/app.css` (colors are CSS variables; theming via `data-theme`). Two things to respect when editing it:
+
+- **Media-query tiers are order-dependent.** The harp cell-shrink tiers (`max-width: 600 → 500 → 400`) and overrides like `.calc-card .field.result` rely on **source order** (equal specificity, later wins), so keep each section's base rule and its media queries together and don't reorder them.
+- **Some breakpoints are coupled to layout constants.** The harp shrink points assume the ~10-hole width; the calculator result joins the dropdowns' line only in the single-column grid, gated at `max-width: 495px` — a value derived from `.calc-grid`'s `minmax(220px)` + `gap` + `.app` padding. If you change the grid template, gap, or page padding, re-derive that breakpoint. The harp scroll container also uses the Lea Verou scroll-shadow trick (the `var(--bg)` gradient "covers" must match the page background).
 
 ### Cross-check against the Perl app
 
