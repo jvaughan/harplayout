@@ -88,7 +88,8 @@ body {
   font-weight: 700;
 }
 
-.theme-toggle {
+.theme-toggle,
+.share-button {
   flex: 0 0 auto;
   display: inline-flex;
   align-items: center;
@@ -106,11 +107,13 @@ body {
     border-color 0.15s ease;
 }
 
-.theme-toggle:hover {
+.theme-toggle:hover,
+.share-button:hover {
   border-color: var(--accent);
 }
 
-.theme-toggle:focus-visible {
+.theme-toggle:focus-visible,
+.share-button:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
@@ -219,6 +222,11 @@ select:focus-visible {
 
 .summary-tuning {
   color: var(--muted);
+}
+
+.share-row {
+  display: flex;
+  margin: 0 0 1.25rem;
 }
 
 /* ---- harp layout ---- */

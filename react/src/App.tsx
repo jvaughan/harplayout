@@ -1,6 +1,7 @@
 import { CalculatorBar } from "./components/CalculatorBar";
 import { HarpTable } from "./components/HarpTable";
 import { Legend } from "./components/Legend";
+import { ShareButton } from "./components/ShareButton";
 import { ThemeToggle } from "./components/ThemeToggle";
 import { ViewOptions } from "./components/ViewOptions";
 import { useHarpState } from "./state/useHarpState";
@@ -37,6 +38,10 @@ export default function App() {
         <strong>{harp.songKey}</strong>
         <span className="summary-tuning"> · {harp.tuning} tuning</span>
       </h2>
+
+      <div className="share-row">
+        <ShareButton harp={harp} />
+      </div>
 
       <div className="harp-and-options">
         <HarpTable harp={harp} view={view} />

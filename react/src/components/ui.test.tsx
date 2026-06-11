@@ -2,7 +2,7 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { fireEvent, render, screen, within } from "@testing-library/react";
-import { beforeEach, describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import App from "../App";
 
 // Extract the body of a CSS rule (the text between { and }) for a selector.
@@ -13,10 +13,12 @@ function cssRule(selector: string): string {
   return css.slice(css.indexOf("{", at) + 1, css.indexOf("}", at));
 }
 
-// Each test mounts App fresh; reset theme side-effects between tests.
+// Each test mounts App fresh; reset theme side-effects and the URL (share params
+// are read from it on mount) between tests.
 beforeEach(() => {
   localStorage.clear();
   document.documentElement.removeAttribute("data-theme");
+  window.history.pushState({}, "", "/");
 });
 
 // The <output> in a calculator card holds its computed value.
@@ -148,6 +150,58 @@ describe("harp table", () => {
       target: { value: "Solo (12 hole)" },
     });
     expect(table().querySelectorAll(".holenum").length).toBe(12);
+  });
+});
+
+describe("share button", () => {
+  const writeText = vi.fn().mockResolvedValue(undefined);
+
+  beforeEach(() => {
+    writeText.mockClear();
+    Object.defineProperty(navigator, "clipboard", {
+      value: { writeText },
+      configurable: true,
+    });
+  });
+
+  it("copies a link encoding the current layout and confirms", async () => {
+    render(<App />);
+    // C harp, 2nd position -> song key G.
+    fireEvent.change(within(card("Get song key")).getByLabelText("Position"), {
+      target: { value: "2" },
+    });
+
+    fireEvent.click(screen.getByRole("button", { name: /Share this layout/ }));
+
+    // Button confirms once the async clipboard write resolves.
+    await screen.findByRole("button", { name: /Copied/ });
+    expect(writeText).toHaveBeenCalledTimes(1);
+    const url = writeText.mock.calls[0][0] as string;
+    expect(url).toContain("t=Richter");
+    expect(url).toContain("hk=C");
+    expect(url).toContain("sk=G");
+    expect(url).toContain("pos=2");
+  });
+
+  it("restores the layout from share params in the URL on load", () => {
+    window.history.pushState({}, "", "/?t=Paddy+Richter&hk=A&sk=E&pos=2");
+    render(<App />);
+
+    const summary = document.querySelector(".summary")!.textContent ?? "";
+    expect(summary).toContain("2nd position");
+    expect(summary).toContain("Paddy Richter");
+    expect(summary).toContain("A"); // harp key
+    expect(summary).toContain("E"); // song key
+  });
+
+  it("ignores invalid share params and falls back to defaults", () => {
+    window.history.pushState({}, "", "/?t=Bogus&hk=H&pos=99");
+    render(<App />);
+
+    const summary = document.querySelector(".summary")!.textContent ?? "";
+    expect(summary).toContain("1st position");
+    expect(summary).toContain("Richter");
+    expect(summary).not.toContain("Bogus");
   });
 });
 

@@ -5,6 +5,7 @@ import {
   type HarpLayout,
   type Key,
 } from "../music/harmonica";
+import { parseShareParams } from "./shareLink";
 
 export interface ViewOptions {
   includeBends: boolean;
@@ -48,8 +49,15 @@ export interface UseHarpState {
   toggle: (key: keyof ViewOptions) => void;
 }
 
+// Build the starting state, overlaying any config carried by a share link in the
+// URL over the defaults. The lazy initializer runs once on mount.
+function getInitialState(): HarpState {
+  if (typeof window === "undefined") return INITIAL; // SSR / tests
+  return { ...INITIAL, ...parseShareParams(window.location.search) };
+}
+
 export function useHarpState(): UseHarpState {
-  const [state, setState] = useState<HarpState>(INITIAL);
+  const [state, setState] = useState<HarpState>(getInitialState);
 
   const harp = useMemo(
     () =>
