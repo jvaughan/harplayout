@@ -158,7 +158,7 @@ select:focus-visible {
 
 .calc-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: 1fr; /* stacked by default; 3-across above 600px */
   gap: 1rem;
 }
 
@@ -180,28 +180,27 @@ select:focus-visible {
   font-weight: 600;
 }
 
-/* Two input fields share a row beneath the heading; the result normally sits
-   full-width below them. Basis kept small so two fit in a min-width (220px)
-   grid card. (When the grid collapses to one column the result joins their
-   line — see the media query below.) */
+/* All three fields (two dropdowns + result) flow on one line by default — the
+   stacked, full-width-card layout. Basis kept small so they share the line. */
 .calc-card .field {
   flex: 1 1 4rem;
-}
-.calc-card .field.result {
-  flex-basis: 100%;
 }
 .calc-card select,
 .calc-card output {
   width: 100%;
 }
 
-/* Only when the calculator grid collapses to a single column (container < 456px,
-   ~495px viewport) are the cards full-width with room to put the result on the
-   same line as the two dropdowns. Above this they sit side by side, so the
-   result stays below to avoid cramming three fields into a narrow card. */
-@media (max-width: 495px) {
+/* The calculator grid is deliberately either 3-across or fully stacked, never
+   2 + 1. 600px is roughly the narrowest viewport where three cards each still
+   fit their two dropdowns side by side. In the 3-across layout the cards are
+   narrow, so the result drops below its two dropdowns; stacked (below 600px)
+   all three share one line. */
+@media (min-width: 600px) {
+  .calc-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
   .calc-card .field.result {
-    flex-basis: 4rem;
+    flex-basis: 100%;
   }
 }
 
