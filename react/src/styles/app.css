@@ -180,9 +180,10 @@ select:focus-visible {
   font-weight: 600;
 }
 
-/* The two input fields share a row; the result sits full-width below them.
-   Basis kept small so two fit even in a minimum-width (220px) grid card —
-   a larger basis wraps the second input at the grid's column-change points. */
+/* Two input fields share a row beneath the heading; the result normally sits
+   full-width below them. Basis kept small so two fit in a min-width (220px)
+   grid card. (When the grid collapses to one column the result joins their
+   line — see the media query below.) */
 .calc-card .field {
   flex: 1 1 4rem;
 }
@@ -192,6 +193,16 @@ select:focus-visible {
 .calc-card select,
 .calc-card output {
   width: 100%;
+}
+
+/* Only when the calculator grid collapses to a single column (container < 456px,
+   ~495px viewport) are the cards full-width with room to put the result on the
+   same line as the two dropdowns. Above this they sit side by side, so the
+   result stays below to avoid cramming three fields into a narrow card. */
+@media (max-width: 495px) {
+  .calc-card .field.result {
+    flex-basis: 4rem;
+  }
 }
 
 .result output {
