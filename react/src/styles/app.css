@@ -168,14 +168,30 @@ select:focus-visible {
   border-radius: 12px;
   padding: 1rem;
   display: flex;
-  flex-direction: column;
-  gap: 0.7rem;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 0.6rem 0.8rem;
 }
 
 .calc-card h3 {
   margin: 0;
+  flex-basis: 100%;
   font-size: 0.95rem;
   font-weight: 600;
+}
+
+/* The two input fields share a row; the result sits full-width below them.
+   Basis kept small so two fit even in a minimum-width (220px) grid card —
+   a larger basis wraps the second input at the grid's column-change points. */
+.calc-card .field {
+  flex: 1 1 4rem;
+}
+.calc-card .field.result {
+  flex-basis: 100%;
+}
+.calc-card select,
+.calc-card output {
+  width: 100%;
 }
 
 .result output {
