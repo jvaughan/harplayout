@@ -172,7 +172,7 @@ Subtleties that must match Perl exactly: the 12-element chromatic ring built fro
 All styles live in one global `src/styles/app.css` (colors are CSS variables; theming via `data-theme`). Two things to respect when editing it:
 
 - **Media-query tiers are order-dependent.** The harp cell-shrink tiers (`max-width: 600 → 500 → 400`) and overrides like `.calc-card .field.result` rely on **source order** (equal specificity, later wins), so keep each section's base rule and its media queries together and don't reorder them.
-- **Some breakpoints are coupled to layout constants.** The harp shrink points assume the ~10-hole width; the calculator result joins the dropdowns' line only in the single-column grid, gated at `max-width: 495px` — a value derived from `.calc-grid`'s `minmax(220px)` + `gap` + `.app` padding. If you change the grid template, gap, or page padding, re-derive that breakpoint. The harp scroll container also uses the Lea Verou scroll-shadow trick (the `var(--bg)` gradient "covers" must match the page background).
+- **Some breakpoints are coupled to layout constants.** The harp shrink points assume the ~10-hole width. The calculator grid (`.calc-grid`) is intentionally **either 3-across or fully stacked, never 2 + 1** — `grid-template-columns` is `1fr` by default and `repeat(3, 1fr)` above `min-width: 600px` (roughly the narrowest viewport where three cards each still fit their two dropdowns). Stacked, all three fields share a line; 3-across, the result drops below its two dropdowns. The harp scroll container also uses the Lea Verou scroll-shadow trick (the `var(--bg)` gradient "covers" must match the page background).
 
 ### Cross-check against the Perl app
 
