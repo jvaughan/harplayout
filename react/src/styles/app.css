@@ -168,14 +168,41 @@ select:focus-visible {
   border-radius: 12px;
   padding: 1rem;
   display: flex;
-  flex-direction: column;
-  gap: 0.7rem;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 0.6rem 0.8rem;
 }
 
 .calc-card h3 {
   margin: 0;
+  flex-basis: 100%;
   font-size: 0.95rem;
   font-weight: 600;
+}
+
+/* Two input fields share a row beneath the heading; the result normally sits
+   full-width below them. Basis kept small so two fit in a min-width (220px)
+   grid card. (When the grid collapses to one column the result joins their
+   line — see the media query below.) */
+.calc-card .field {
+  flex: 1 1 4rem;
+}
+.calc-card .field.result {
+  flex-basis: 100%;
+}
+.calc-card select,
+.calc-card output {
+  width: 100%;
+}
+
+/* Only when the calculator grid collapses to a single column (container < 456px,
+   ~495px viewport) are the cards full-width with room to put the result on the
+   same line as the two dropdowns. Above this they sit side by side, so the
+   result stays below to avoid cramming three fields into a narrow card. */
+@media (max-width: 495px) {
+  .calc-card .field.result {
+    flex-basis: 4rem;
+  }
 }
 
 .result output {
@@ -206,6 +233,20 @@ select:focus-visible {
 .harp-wrap {
   overflow-x: auto;
   flex: 1 1 480px;
+  -webkit-overflow-scrolling: touch;
+  /* Scroll shadows (Lea Verou technique): edge shadows that appear only when
+     there's more harp to scroll to, and hide at the ends. The var(--bg) "cover"
+     gradients scroll with the content; the shadows stay pinned to the edges. */
+  background:
+    linear-gradient(to right, var(--bg) 30%, transparent) left / 28px 100%
+      no-repeat,
+    linear-gradient(to left, var(--bg) 30%, transparent) right / 28px 100%
+      no-repeat,
+    radial-gradient(farthest-side at 0 50%, rgba(0, 0, 0, 0.28), transparent)
+      left / 12px 100% no-repeat,
+    radial-gradient(farthest-side at 100% 50%, rgba(0, 0, 0, 0.28), transparent)
+      right / 12px 100% no-repeat;
+  background-attachment: local, local, scroll, scroll;
 }
 
 table.harmonica {
@@ -388,12 +429,110 @@ table.harmonica {
   min-width: 2.9rem;
 }
 
+/* ---- narrow screens: shrink the harp so more holes fit before scrolling.
+   Cell content is kept (note + interval + category); only the cells get
+   smaller, so the grid stays horizontal and the tap tooltip still has detail.
+   Moderate shrink — cells stay fairly large since the options panel has already
+   dropped below (at 880px) and freed up width. */
+@media (max-width: 600px) {
+  table.harmonica {
+    border-spacing: 3px;
+  }
+  .cell,
+  .holenum {
+    min-width: 2.4rem;
+  }
+  .note-inner {
+    padding: 0.26rem 0.28rem;
+  }
+  .interval {
+    font-size: 0.64rem;
+  }
+  .note-name {
+    font-size: 0.88rem;
+  }
+  .cat-dot {
+    font-size: 0.62rem;
+  }
+  .row-heading {
+    font-size: 0.74rem;
+    padding-right: 0.3rem;
+  }
+}
+
+/* Mid tier (~400–500px): bridges the moderate and phone sizes so the 10-hole
+   harp keeps fitting without scrolling through this range. */
+@media (max-width: 500px) {
+  table.harmonica {
+    border-spacing: 2px;
+  }
+  .cell,
+  .holenum {
+    min-width: 2rem;
+  }
+  .note-inner {
+    padding: 0.22rem 0.16rem;
+  }
+  .interval {
+    font-size: 0.6rem;
+  }
+  .note-name {
+    font-size: 0.82rem;
+  }
+  .cat-dot {
+    font-size: 0.58rem;
+  }
+  .row-heading {
+    font-size: 0.7rem;
+    padding-right: 0.2rem;
+  }
+}
+
+/* Tighter layer for phones: aims to fit a 10-hole harp without scrolling down
+   to ~375–390px wide (covers the common iPhone/Android median). Wider tunings
+   (12 holes) still scroll, but the sticky labels + scroll shadows handle that. */
+@media (max-width: 400px) {
+  table.harmonica {
+    border-spacing: 2px;
+  }
+  .cell,
+  .holenum {
+    min-width: 1.75rem;
+  }
+  .note-inner {
+    padding: 0.2rem 0.12rem;
+  }
+  .interval {
+    font-size: 0.56rem;
+  }
+  .note-name {
+    font-size: 0.76rem;
+  }
+  .cat-dot {
+    font-size: 0.54rem;
+  }
+  .row-heading {
+    font-size: 0.64rem;
+    padding-right: 0.15rem;
+  }
+}
+
 /* ---- options panel ---- */
 .options-panel {
   flex: 0 0 240px;
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
+}
+
+/* Below this width the harp + options no longer fit side by side, so push the
+   options onto their own line (the harp is a scroll container, so flex won't
+   wrap them on its own — it just shrinks the harp and makes it scroll). Placed
+   after the base rule so the flex-basis override wins. */
+@media (max-width: 880px) {
+  .options-panel {
+    flex-basis: 100%;
+  }
 }
 
 .view-options fieldset {
