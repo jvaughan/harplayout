@@ -481,9 +481,11 @@ table.harmonica {
   .cat-dot {
     font-size: 0.58rem;
   }
+  /* Drop the Blow/Hole/Draw labels to reclaim the whole left column — at this
+     width a 10-hole harp needs every pixel, and blow=top / draw=bottom over
+     numbered holes reads fine without them. */
   .row-heading {
-    font-size: 0.7rem;
-    padding-right: 0.2rem;
+    display: none;
   }
 }
 
@@ -509,10 +511,6 @@ table.harmonica {
   }
   .cat-dot {
     font-size: 0.54rem;
-  }
-  .row-heading {
-    font-size: 0.64rem;
-    padding-right: 0.15rem;
   }
 }
 
