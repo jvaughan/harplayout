@@ -1,12 +1,12 @@
 // Port of HarpLayout::Harmonica::Tuning (Tuning.pm), including the working-tree
 // "Will Wilde Minor" entry. label_position defaults to 1.
 
-import { type Interval } from "./circleOfFifths";
+import { type Interval, type Position } from "./circleOfFifths";
 
 export interface Tuning {
   blow: Interval[];
   draw: Interval[];
-  labelPosition?: number;
+  labelPosition?: Position;
 }
 
 export const TUNINGS: Record<string, Tuning> = {
@@ -117,6 +117,6 @@ export function getTuning(name: string): Tuning {
   return t;
 }
 
-export function labelPosition(name: string): number {
+export function labelPosition(name: string): Position {
   return getTuning(name).labelPosition ?? 1;
 }

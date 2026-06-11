@@ -44,7 +44,7 @@ export interface HarpLayout {
   harpKey: Key;
   songKey: Key;
   position: Position;
-  labelPosition: number;
+  labelPosition: Position;
   numHoles: number;
   // Display rows, each padded to numHoles (null = empty cell).
   // blowRows are top-to-bottom (highest bend at top, natural at bottom).
@@ -81,7 +81,7 @@ class HarpBuilder {
   position: Position;
   songKey: Key;
   calculate: Calculate;
-  labelPos: number;
+  labelPos: Position;
 
   // grid[plate][reedIndex][bendstep] = Note
   grid: Record<Plate, Note[][]> = { blow: [], draw: [] };
