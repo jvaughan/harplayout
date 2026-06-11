@@ -251,6 +251,25 @@ select:focus-visible {
 table.harmonica {
   border-collapse: separate;
   border-spacing: 4px;
+  /* Replays on remount (keyed on the grid signature in HarpTable) — a subtle
+     fade + rise when the tuning/key/position changes. */
+  animation: harp-change 0.22s ease-out;
+}
+
+@keyframes harp-change {
+  from {
+    opacity: 0;
+    /* Scale-in (not translate): the table only ever shrinks *within* its layout
+       box, so the animation never enlarges the page's scrollable area — a
+       translate would, flashing a scrollbar in Firefox (classic scrollbars). */
+    transform: scale(0.99);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  table.harmonica {
+    animation: none;
+  }
 }
 
 .row-heading {

@@ -30,9 +30,13 @@ export function HarpTable({
   view: ViewOptions;
 }) {
   const blowLast = harp.blowRows.length - 1; // natural row sits at the bottom
+  // Remount the table (not the scroll container) whenever the grid's identity
+  // changes, replaying the subtle .harmonica fade-in. View toggles aren't part
+  // of the signature, so they stay instant.
+  const signature = `${harp.tuning}|${harp.harpKey}|${harp.songKey}|${harp.position}`;
   return (
     <div className="harp-wrap">
-      <table className="harmonica">
+      <table key={signature} className="harmonica">
         <tbody>
           {harp.blowRows.map((row, i) => (
             <NoteRow
