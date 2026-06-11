@@ -47,9 +47,8 @@ export default function App() {
       </div>
 
       <footer className="app-footer">
-        <p>
-          Reimagined React build of HarpLayout. Bends, overbends and interval
-          categories are computed entirely in the browser.
+        <p id="copyright">
+          © <a href="mailto:jon-web@harplayout.com">Jon Vaughan</a>
         </p>
       </footer>
     </div>
