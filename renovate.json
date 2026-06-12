@@ -1,0 +1,71 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":dependencyDashboard",
+    ":semanticCommits"
+  ],
+  "timezone": "Europe/London",
+  "schedule": ["after 12pm and before 2pm on friday"],
+  "prHourlyLimit": 0,
+  "prConcurrentLimit": 6,
+  "labels": ["dependencies"],
+  "platformAutomerge": true,
+  "lockFileMaintenance": {
+    "enabled": true,
+    "automerge": true,
+    "schedule": ["after 12pm and before 2pm on friday"]
+  },
+  "packageRules": [
+    {
+      "description": "Auto-merge dev-dependency minor/patch once CI is green",
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true
+    },
+    {
+      "description": "Auto-merge all transitive (indirect) updates",
+      "matchDepTypes": ["dependencies", "devDependencies"],
+      "matchUpdateTypes": ["pin", "digest", "lockFileMaintenance"],
+      "automerge": true
+    },
+    {
+      "description": "Runtime deps: always review, never auto-merge",
+      "matchPackageNames": ["react", "react-dom"],
+      "addLabels": ["runtime"],
+      "automerge": false,
+      "groupName": "React"
+    },
+    {
+      "description": "Group the ESLint ecosystem into one PR",
+      "matchPackageNames": [
+        "eslint",
+        "@eslint/js",
+        "typescript-eslint",
+        "eslint-plugin-react-hooks",
+        "eslint-plugin-react-refresh"
+      ],
+      "groupName": "ESLint"
+    },
+    {
+      "description": "Group the Vitest / testing ecosystem into one PR",
+      "matchPackageNames": [
+        "vitest",
+        "@vitest/browser",
+        "@vitest/browser-playwright",
+        "@testing-library/react",
+        "@testing-library/user-event",
+        "playwright",
+        "jsdom"
+      ],
+      "groupName": "Vitest & testing"
+    },
+    {
+      "description": "Build-critical tooling: review majors manually",
+      "matchPackageNames": ["vite", "typescript", "wrangler", "@vitejs/plugin-react", "vite-plugin-pwa"],
+      "matchUpdateTypes": ["major"],
+      "automerge": false,
+      "addLabels": ["review-major"]
+    }
+  ]
+}
