@@ -6,6 +6,7 @@
     ":semanticCommits"
   ],
   "timezone": "Europe/London",
+  "includePaths": ["react/**", ".github/workflows/react-ci.yml"],
   "schedule": ["after 12pm and before 2pm on friday"],
   "prHourlyLimit": 0,
   "prConcurrentLimit": 6,
