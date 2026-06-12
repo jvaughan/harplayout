@@ -657,3 +657,146 @@ table.harmonica {
 .app-footer a:hover {
   text-decoration: underline;
 }
+
+/* ===================================================================
+   Legacy theme — a faithful reproduction of the original Perl
+   HarpLayout design (see nginx/css/earthy.css + screen_layout.css).
+
+   Two parts: (a) a variable override that recolours everything the
+   variables already drive (cells, dots, swatches, tooltip, legend),
+   and (b) chrome overrides (fonts, square corners, header/footer
+   bars, section bars) that don't reduce to variable swaps.
+
+   The whole block is attribute-scoped (:root[data-theme="legacy"] …),
+   so it wins on specificity wherever it lands and never disturbs the
+   source-order-dependent responsive tiers above.
+   =================================================================== */
+
+:root[data-theme="legacy"] {
+  --bg: #ffffff;
+  --panel: #ffffe0; /* pale yellow key/option boxes */
+  --panel-2: #e7d9bd; /* section-bar / footer tan */
+  --border: #777777;
+  --text: #333333;
+  --muted: #685c45; /* brown headings / labels */
+  --accent: #685c45;
+
+  /* note type colours */
+  --natural-bg: #ffffe0;
+  --natural-edge: #777777;
+  --bend-bg: #e6e6fa; /* lavender */
+  --bend-edge: #777777;
+  --over-bg: #ffb6c1; /* pink */
+  --over-edge: #777777;
+
+  /* interval categories */
+  --chord: green;
+  --blue: #464fa3;
+  --passing: #f58e25;
+  --danger: #e22828;
+
+  color-scheme: light;
+}
+
+/* ---- chrome ---- */
+:root[data-theme="legacy"] body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+:root[data-theme="legacy"] h1,
+:root[data-theme="legacy"] h2,
+:root[data-theme="legacy"] h3,
+:root[data-theme="legacy"] h4 {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  font-weight: normal;
+}
+
+/* Tan header bar with the original ">>>" title suffix. */
+:root[data-theme="legacy"] .app-header {
+  background: #cbb58a;
+  border-bottom: 1px solid #ae976a;
+  padding: 0.8em 1em;
+  align-items: center;
+}
+
+:root[data-theme="legacy"] .app-header h1 {
+  letter-spacing: 3px;
+  color: #685c45;
+}
+
+:root[data-theme="legacy"] .app-header h1::after {
+  content: " >>>";
+  letter-spacing: -2px;
+  color: #ffffe0;
+}
+
+:root[data-theme="legacy"] .tagline {
+  color: #685c45;
+}
+
+/* Square corners everywhere — the original used flat rectangles. */
+:root[data-theme="legacy"] .cell,
+:root[data-theme="legacy"] .holenum,
+:root[data-theme="legacy"] .calc-card,
+:root[data-theme="legacy"] .legend,
+:root[data-theme="legacy"] .view-options fieldset,
+:root[data-theme="legacy"] select,
+:root[data-theme="legacy"] output,
+:root[data-theme="legacy"] .theme-toggle,
+:root[data-theme="legacy"] .share-button,
+:root[data-theme="legacy"] .note-tooltip,
+:root[data-theme="legacy"] .note-tooltip .tt-header,
+:root[data-theme="legacy"] .swatch {
+  border-radius: 0;
+}
+
+/* Hole-number row: dark strip with white numerals, as in the original. */
+:root[data-theme="legacy"] .holenum {
+  background: #444444;
+  color: #ffffff;
+  border-color: #444444;
+}
+
+/* Section heading bars (closest React analogue of the Perl
+   "Tuning / Include Notes / Display / Legend" h3 bars). */
+:root[data-theme="legacy"] .view-options legend,
+:root[data-theme="legacy"] .legend h4,
+:root[data-theme="legacy"] .tuning > span {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  background: #e7d9bd;
+  border-bottom: 1px solid #cbb58a;
+  color: #333333;
+  text-transform: none;
+  letter-spacing: 1px;
+  font-size: 1em;
+  padding: 2px 0 2px 6px;
+  margin: 0 0 0.5rem;
+}
+
+:root[data-theme="legacy"] .view-options legend::before,
+:root[data-theme="legacy"] .legend h4::before,
+:root[data-theme="legacy"] .tuning > span::before {
+  content: ">";
+  margin: 0 4px 0 0;
+}
+
+/* Fieldsets become flat-bordered blocks so the bar sits flush on top. */
+:root[data-theme="legacy"] .view-options fieldset {
+  border-color: #c0c0c0;
+  padding-top: 0;
+}
+
+/* Tan footer bar with brown links. */
+:root[data-theme="legacy"] .app-footer {
+  background: #e7d9bd;
+  border-top: 1px solid #ae976a;
+  padding: 1em;
+  margin-top: 2.5rem;
+}
+
+:root[data-theme="legacy"] .app-footer a,
+:root[data-theme="legacy"] .result output {
+  color: #685c45;
+}

@@ -34,17 +34,22 @@ function result(headingText: string): string {
 const table = () => document.querySelector("table.harmonica") as HTMLElement;
 
 describe("theme switcher", () => {
-  it("defaults to dark and toggles to light, persisting the choice", () => {
+  it("cycles dark → light → legacy → dark, persisting each choice", () => {
     render(<App />);
-    const btn = screen.getByRole("button", { name: /Light|Dark/ });
+    const btn = screen.getByRole("button", { name: /Switch to .* theme/i });
 
     // Default (no stored pref, no matchMedia in jsdom) is dark.
     expect(document.documentElement.dataset.theme).toBe("dark");
-    expect(btn.textContent).toContain("Light"); // offers the opposite
+    expect(btn.textContent).toContain("Light"); // offers the next theme
 
     fireEvent.click(btn);
     expect(document.documentElement.dataset.theme).toBe("light");
     expect(localStorage.getItem("harplayout-theme")).toBe("light");
+    expect(btn.textContent).toContain("Legacy");
+
+    fireEvent.click(btn);
+    expect(document.documentElement.dataset.theme).toBe("legacy");
+    expect(localStorage.getItem("harplayout-theme")).toBe("legacy");
     expect(btn.textContent).toContain("Dark");
 
     fireEvent.click(btn);
@@ -52,10 +57,10 @@ describe("theme switcher", () => {
     expect(localStorage.getItem("harplayout-theme")).toBe("dark");
   });
 
-  it("restores a stored theme on mount", () => {
-    localStorage.setItem("harplayout-theme", "light");
+  it("restores a stored theme on mount (including legacy)", () => {
+    localStorage.setItem("harplayout-theme", "legacy");
     render(<App />);
-    expect(document.documentElement.dataset.theme).toBe("light");
+    expect(document.documentElement.dataset.theme).toBe("legacy");
   });
 });
 

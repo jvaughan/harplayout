@@ -14,7 +14,7 @@
       // Set the theme before first paint to avoid a flash.
       try {
         var t = localStorage.getItem("harplayout-theme");
-        if (t !== "light" && t !== "dark") {
+        if (t !== "light" && t !== "dark" && t !== "legacy") {
           t = matchMedia("(prefers-color-scheme: light)").matches
             ? "light"
             : "dark";

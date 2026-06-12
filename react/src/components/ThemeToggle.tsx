@@ -1,5 +1,13 @@
 import type { Theme } from "../state/useTheme";
 
+// What each theme switches *to* on the next click (dark → light → legacy → dark),
+// and the icon/label to show for that next theme.
+const NEXT: Record<Theme, { theme: Theme; icon: string; label: string }> = {
+  dark: { theme: "light", icon: "☀️", label: "Light" },
+  light: { theme: "legacy", icon: "🎵", label: "Legacy" },
+  legacy: { theme: "dark", icon: "🌙", label: "Dark" },
+};
+
 export function ThemeToggle({
   theme,
   toggle,
@@ -7,17 +15,17 @@ export function ThemeToggle({
   theme: Theme;
   toggle: () => void;
 }) {
-  const isDark = theme === "dark";
+  const next = NEXT[theme];
   return (
     <button
       type="button"
       className="theme-toggle"
       onClick={toggle}
-      aria-pressed={isDark}
-      title={`Switch to ${isDark ? "light" : "dark"} theme`}
+      aria-label={`Switch to ${next.label.toLowerCase()} theme`}
+      title={`Switch to ${next.label} theme`}
     >
-      <span aria-hidden>{isDark ? "☀️" : "🌙"}</span>
-      <span>{isDark ? "Light" : "Dark"}</span>
+      <span aria-hidden>{next.icon}</span>
+      <span>{next.label}</span>
     </button>
   );
 }

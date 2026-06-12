@@ -1,19 +1,26 @@
 import { useEffect, useState } from "react";
 
-export type Theme = "light" | "dark";
+export type Theme = "light" | "dark" | "legacy";
 
 const STORAGE_KEY = "harplayout-theme";
+
+// The cycle order of the switcher button: dark → light → legacy → dark.
+const CYCLE: Theme[] = ["dark", "light", "legacy"];
+
+function isTheme(v: string | null | undefined): v is Theme {
+  return v === "light" || v === "dark" || v === "legacy";
+}
 
 function getInitial(): Theme {
   // The inline script in index.html sets this before paint; trust it first.
   if (typeof document !== "undefined") {
     const d = document.documentElement.dataset.theme;
-    if (d === "light" || d === "dark") return d;
+    if (isTheme(d)) return d;
   }
   if (typeof window === "undefined") return "dark"; // SSR / tests
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved === "light" || saved === "dark") return saved;
+    if (isTheme(saved)) return saved;
     return window.matchMedia?.("(prefers-color-scheme: light)").matches
       ? "light"
       : "dark";
@@ -35,7 +42,7 @@ export function useTheme() {
   }, [theme]);
 
   const toggle = () =>
-    setTheme((t) => (t === "dark" ? "light" : "dark"));
+    setTheme((t) => CYCLE[(CYCLE.indexOf(t) + 1) % CYCLE.length]);
 
   return { theme, toggle };
 }
