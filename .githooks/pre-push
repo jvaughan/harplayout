@@ -1,0 +1,14 @@
+#!/bin/sh
+# Pre-push hook: run the React test suite before allowing a push.
+# Runs the full `npm test` (unit + real-browser responsive suite); the browser
+# project needs the Playwright Chromium binary (`npx playwright install chromium`).
+#
+# Installed via core.hooksPath (see .githooks). To skip in a pinch: `git push --no-verify`.
+
+set -e
+
+repo_root=$(git rev-parse --show-toplevel)
+cd "$repo_root/react"
+
+echo "pre-push: running npm test in react/ ..."
+npm test
