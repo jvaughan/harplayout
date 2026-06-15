@@ -2,60 +2,44 @@ package HarpLayout::Harmonica::Tuning;
 use strict;
 
 my %tunings = (
+	# Richter is the standard/default tuning, so it leads; the rest are alphabetical.
         'Richter' => {
 		# Hole        1  2  3  4  5  6  7  8  9  10
 		blow => [qw / 1  3  5  1  3  5  1  3  5  1 /],
 		draw => [qw / 2  5  7  2  4  6  7  2  4  6 /],
         },
 
-	'Solo (10 hole)' => {
+	'Country' => {
 		# Hole        1  2  3  4  5  6  7  8  9 10
-		blow => [qw / 1  3  5  1  1  3  5  1  1  3 /],
-		draw => [qw / 2  4  6  7  2  4  6  7  2  4 /],
-	},
-	
-	'Solo (12 hole)' => {
-		# Hole        1  2  3  4  5  6  7  8  9 10 11 12
-		blow => [qw / 1  3  5  1  1  3  5  1  1  3  5  1/],
-		draw => [qw / 2  4  6  7  2  4  6  7  2  4  6  7/],
+		blow => [qw / 1  3  5  1  3  5  1  3  5  1 /],
+		draw => [qw / 2  5  7  2 b5  6  7  2  4  6 /],
 	},
 
-	'Seydel Big Six (blues)' => {
-		# Hole        1  2  3  4  5  6
-		blow => [qw / 1  3  5  1  3  5 /],
-		draw => [qw / 2  5  7  2  4  6 /],
-	},
-	
-	'Seydel Big Six (folk)' => {
-		# Hole        1  2  3  4  5  6
-		blow => [qw / 1  3  5  1  3  5 /],
-		draw => [qw / 2  4  6  7  2  4 /],
-	},
-	
-	'Seydel Circular' => {
+	'L.O Harmonic Minor' => {
 		# Hole        1  2  3  4  5  6  7  8  9 10
-		blow => [qw / 1  3  5 b7  2  4  6  1  3  5 /],
-		draw => [qw / 2  4  6  1  3  5 b7  2  4  6  /],
+		blow => [qw / 1 b3  5  1 b3  5  1 b3  5  1 /],
+		draw => [qw / 2  5  7  2  4 b6  7  2  4 b6 /],
 	},
-	
-	'Seydel Melodic Maker' => {
+
+	'L.O Melody Maker (labelled in 2nd pos)' => {
 		# Hole        1  2  3  4  5  6  7  8  9 10
 		blow => [qw / 1  3  6  1  3  5  1  3  5  1 /],
 		draw => [qw / 2  5  7  2 b5  6  7  2 b5  6 /],
-		label_position	=> 1,
+		label_position	=> 2,
 	},
-	
-	'Seydel Augmented' => {
+
+	'L.O Natural Minor (labelled in 2nd pos)' => {
 		# Hole        1  2  3  4  5  6  7  8  9 10
-		blow => [qw/  1  3 b6  1  3 b6  1  3 b6  1 /],
-		draw => [qw/ b3  5  7 b3  5  7 b3  5  7 b3 /],
-	},
-	
-	'Seydel Dorian (labelled in 2nd pos)' => {
-		# Hole        1  2  3  4  5  6  7  8  9 10
-		blow => [qw / 1  3  5  1  3  5  1  3  5  1 /],
+		blow => [qw / 1 b3  5  1 b3  5  1  3  5  1 /],
 		draw => [qw / 2  5 b7  2  4  6 b7  2  4  6 /],
 		label_position	=> 2,
+	},
+
+	'Natural Minor (labelled in 1st pos)' => {
+		# Hole        1  2  3  4  5  6  7  8  9 10
+		blow => [qw / 1 b3  5  1 b3  5  1  3  5  1 /],
+		draw => [qw / 2  5 b7  2  4  6 b7  2  4  6 /],
+		label_position	=> 1,
 	},
 
 	'Paddy Richter' => {
@@ -63,38 +47,55 @@ my %tunings = (
 		blow => [qw / 1  3  6  1  3  5  1  3  5  1 /],
 		draw => [qw / 2  5  7  2  4  6  7  2  4  6 /],
 	},
-	
-	'Country' => {
+
+	'Seydel Augmented' => {
+		# Hole        1  2  3  4  5  6  7  8  9 10
+		blow => [qw/  1  3 b6  1  3 b6  1  3 b6  1 /],
+		draw => [qw/ b3  5  7 b3  5  7 b3  5  7 b3 /],
+	},
+
+	'Seydel Big Six (blues)' => {
+		# Hole        1  2  3  4  5  6
+		blow => [qw / 1  3  5  1  3  5 /],
+		draw => [qw / 2  5  7  2  4  6 /],
+	},
+
+	'Seydel Big Six (folk)' => {
+		# Hole        1  2  3  4  5  6
+		blow => [qw / 1  3  5  1  3  5 /],
+		draw => [qw / 2  4  6  7  2  4 /],
+	},
+
+	'Seydel Circular' => {
+		# Hole        1  2  3  4  5  6  7  8  9 10
+		blow => [qw / 1  3  5 b7  2  4  6  1  3  5 /],
+		draw => [qw / 2  4  6  1  3  5 b7  2  4  6  /],
+	},
+
+	'Seydel Dorian (labelled in 2nd pos)' => {
 		# Hole        1  2  3  4  5  6  7  8  9 10
 		blow => [qw / 1  3  5  1  3  5  1  3  5  1 /],
-		draw => [qw / 2  5  7  2 b5  6  7  2  4  6 /],
+		draw => [qw / 2  5 b7  2  4  6 b7  2  4  6 /],
+		label_position	=> 2,
 	},
-	
-	'L.O Melody Maker (labelled in 2nd pos)' => {
+
+	'Seydel Melodic Maker' => {
 		# Hole        1  2  3  4  5  6  7  8  9 10
 		blow => [qw / 1  3  6  1  3  5  1  3  5  1 /],
 		draw => [qw / 2  5  7  2 b5  6  7  2 b5  6 /],
-		label_position	=> 2,
-	},
-	
-	'L.O Natural Minor (labelled in 2nd pos)' => {
-		# Hole        1  2  3  4  5  6  7  8  9 10
-		blow => [qw / 1 b3  5  1 b3  5  1  3  5  1 /],
-		draw => [qw / 2  5 b7  2  4  6 b7  2  4  6 /],
-		label_position	=> 2,
-	},
-	
-	'Natural Minor (labelled in 1st pos)' => {
-		# Hole        1  2  3  4  5  6  7  8  9 10
-		blow => [qw / 1 b3  5  1 b3  5  1  3  5  1 /],
-		draw => [qw / 2  5 b7  2  4  6 b7  2  4  6 /],
 		label_position	=> 1,
 	},
-	
-	'L.O Harmonic Minor' => {
+
+	'Solo (10 hole)' => {
 		# Hole        1  2  3  4  5  6  7  8  9 10
-		blow => [qw / 1 b3  5  1 b3  5  1 b3  5  1 /],
-		draw => [qw / 2  5  7  2  4 b6  7  2  4 b6 /],
+		blow => [qw / 1  3  5  1  1  3  5  1  1  3 /],
+		draw => [qw / 2  4  6  7  2  4  6  7  2  4 /],
+	},
+
+	'Solo (12 hole)' => {
+		# Hole        1  2  3  4  5  6  7  8  9 10 11 12
+		blow => [qw / 1  3  5  1  1  3  5  1  1  3  5  1/],
+		draw => [qw / 2  4  6  7  2  4  6  7  2  4  6  7/],
 	},
 
 	'Will Wilde' => {
