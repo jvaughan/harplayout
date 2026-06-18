@@ -12,7 +12,10 @@ import type { UseHarpState } from "../state/useHarpState";
 const LABEL_POSITIONS = Array.from({ length: 12 }, (_, i) => (i + 1) as Position);
 
 export function TuningEditor({ store }: { store: UseHarpState }) {
-  const { harp, customTuning, editTuning, setTuning } = store;
+  const { harp, customTuning, customName, editTuning, discardCustom } = store;
+
+  // Whether the selected tuning is the (stored) custom one.
+  const isCustom = customTuning !== undefined && harp.tuning === customName;
 
   // The registry tuning this edit session started from (for "Reset"). Captured
   // once when the editor mounts; falls back to Richter if we opened on a custom
@@ -23,14 +26,13 @@ export function TuningEditor({ store }: { store: UseHarpState }) {
 
   // Working definition: the active custom edit, or the named tuning we started
   // from. Registry arrays are never mutated — every edit produces fresh arrays.
-  const working: Tuning = customTuning ?? getTuning(harp.tuning);
+  const working: Tuning = isCustom ? customTuning! : getTuning(harp.tuning);
   const { blow, draw, labelPosition } = working;
   const holes = blow.length;
 
   // Name field. Empty (placeholder "Custom") until the tuning is customised;
   // the draft tracks raw keystrokes so an invalid name stays visible with its
   // error, while only valid names are committed to state.
-  const isCustom = !!customTuning;
   const [nameDraft, setNameDraft] = useState(isCustom ? harp.tuning : "");
   const [nameError, setNameError] = useState<string | null>(null);
   // Re-sync the field during render when the committed name changes from outside
@@ -177,9 +179,9 @@ export function TuningEditor({ store }: { store: UseHarpState }) {
         <button
           type="button"
           className="te-reset"
-          onClick={() => setTuning(baseName)}
+          onClick={() => discardCustom(baseName)}
         >
-          Reset to {baseName}
+          Discard &amp; reset to {baseName}
         </button>
       </div>
     </div>

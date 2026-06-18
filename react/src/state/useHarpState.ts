@@ -19,9 +19,13 @@ export interface ViewOptions {
 }
 
 interface HarpState extends ViewOptions {
+  // The selected tuning's name — either a registry name or `customName`.
   tuning: string;
-  // Set when the user has edited the natural notes; overrides the named tuning.
+  // The user's edited tuning, kept around even while a registry tuning is
+  // selected so it stays available in the dropdown. Active only when
+  // `tuning === customName`.
   customTuning?: Tuning;
+  customName?: string;
   harpKey: Key;
   songKey: Key;
   position: Position;
@@ -45,13 +49,15 @@ const INITIAL: HarpState = {
 export interface UseHarpState {
   harp: HarpLayout;
   view: ViewOptions;
-  // The currently active tuning definition (custom edit or named registry entry),
-  // and the config a share link should carry.
+  // The stored custom tuning and its name (present whenever one has been created,
+  // even if a registry tuning is currently selected), plus the share-link config.
   customTuning?: Tuning;
+  customName?: string;
   shareConfig: ShareConfig;
   // calculators
   setTuning: (t: string) => void;
   editTuning: (def: Tuning, name?: string) => void;
+  discardCustom: (selectTuning: string) => void;
   songCalc: { harpKey: (v: Key) => void; position: (v: Position) => void };
   harpCalc: { songKey: (v: Key) => void; position: (v: Position) => void };
   posCalc: { harpKey: (v: Key) => void; songKey: (v: Key) => void };
@@ -62,17 +68,26 @@ export interface UseHarpState {
 // URL over the defaults. The lazy initializer runs once on mount.
 function getInitialState(): HarpState {
   if (typeof window === "undefined") return INITIAL; // SSR / tests
-  return { ...INITIAL, ...parseShareParams(window.location.search) };
+  const parsed = parseShareParams(window.location.search);
+  const state = { ...INITIAL, ...parsed };
+  // A shared custom tuning is named by its `tuning` param; record that name so
+  // it counts as the active custom tuning.
+  if (parsed.customTuning) state.customName = parsed.tuning;
+  return state;
 }
 
 export function useHarpState(): UseHarpState {
   const [state, setState] = useState<HarpState>(getInitialState);
 
+  // The custom tuning drives the layout only while it is the selected tuning.
+  const customActive =
+    state.customTuning !== undefined && state.tuning === state.customName;
+
   const harp = useMemo(
     () =>
       buildHarp({
         tuning: state.tuning,
-        tuningDef: state.customTuning,
+        tuningDef: customActive ? state.customTuning : undefined,
         harpKey: state.harpKey,
         songKey: state.songKey,
         position: state.position,
@@ -80,6 +95,7 @@ export function useHarpState(): UseHarpState {
       }),
     [
       state.tuning,
+      customActive,
       state.customTuning,
       state.harpKey,
       state.songKey,
@@ -110,21 +126,32 @@ export function useHarpState(): UseHarpState {
       showIntervalCategories: state.showIntervalCategories,
     },
     customTuning: state.customTuning,
+    customName: state.customName,
     shareConfig: {
       tuning: harp.tuning,
       harpKey: harp.harpKey,
       songKey: harp.songKey,
       position: harp.position,
-      customTuning: state.customTuning,
+      // Only share the custom notes when the custom tuning is the one on screen.
+      customTuning: customActive ? state.customTuning : undefined,
     },
-    // Selecting a named tuning leaves custom-edit mode.
-    setTuning: (t) => update({ tuning: t, customTuning: undefined }),
+    // Selecting a tuning by name just changes the selection; the stored custom
+    // tuning is retained so it remains available in the dropdown.
+    setTuning: (t) => update({ tuning: t }),
     // A custom edit keeps the current custom name (or "Custom" when first
-    // entering custom mode), unless an explicit new name is supplied.
-    editTuning: (def, name) =>
+    // entering custom mode), unless an explicit new name is supplied. The def is
+    // stored and selected.
+    editTuning: (def, name) => {
+      const newName =
+        name ?? (customActive ? state.customName! : "Custom");
+      update({ tuning: newName, customTuning: def, customName: newName });
+    },
+    // Drop the custom tuning entirely and select the given (registry) tuning.
+    discardCustom: (selectTuning) =>
       update({
-        tuning: name ?? (state.customTuning ? state.tuning : "Custom"),
-        customTuning: def,
+        tuning: selectTuning,
+        customTuning: undefined,
+        customName: undefined,
       }),
     songCalc: {
       harpKey: (v) => update({ calculate: "song_key", harpKey: v }),

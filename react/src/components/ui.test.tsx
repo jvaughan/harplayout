@@ -214,6 +214,40 @@ describe("tuning editor", () => {
     );
   });
 
+  it("keeps a named custom tuning in the dropdown after switching away", () => {
+    render(<App />);
+    openEditor();
+    fireEvent.change(screen.getByLabelText("Name"), {
+      target: { value: "My Tuning" },
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Done editing" }));
+
+    const select = screen.getByLabelText("Tuning") as HTMLSelectElement;
+    // Switch to a registry tuning...
+    fireEvent.change(select, { target: { value: "Country" } });
+    expect(document.querySelector(".summary")!.textContent).toContain("Country");
+    // ...the custom tuning is still selectable...
+    expect([...select.options].map((o) => o.value)).toContain("My Tuning");
+    // ...and selecting it restores the custom layout.
+    fireEvent.change(select, { target: { value: "My Tuning" } });
+    expect(document.querySelector(".summary")!.textContent).toContain(
+      "My Tuning",
+    );
+  });
+
+  it("discard removes the custom tuning from the dropdown", () => {
+    render(<App />);
+    openEditor();
+    fireEvent.change(screen.getByLabelText("Name"), {
+      target: { value: "My Tuning" },
+    });
+    fireEvent.click(screen.getByRole("button", { name: /Discard/ }));
+
+    const select = screen.getByLabelText("Tuning") as HTMLSelectElement;
+    expect([...select.options].map((o) => o.value)).not.toContain("My Tuning");
+    expect(document.querySelector(".summary")!.textContent).toContain("Richter");
+  });
+
   it("reset returns to the base registry tuning", () => {
     render(<App />);
     openEditor();
@@ -221,7 +255,7 @@ describe("tuning editor", () => {
       target: { value: "b7" },
     });
     expect(document.querySelector(".summary")!.textContent).toContain("Custom");
-    fireEvent.click(screen.getByRole("button", { name: /Reset to Richter/ }));
+    fireEvent.click(screen.getByRole("button", { name: /reset to Richter/i }));
     expect(document.querySelector(".summary")!.textContent).toContain("Richter");
   });
 });

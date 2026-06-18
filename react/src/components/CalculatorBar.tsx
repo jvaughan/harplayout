@@ -68,9 +68,8 @@ function Result({ label, value }: { label: string; value: string | number }) {
 }
 
 export function CalculatorBar({ store }: { store: UseHarpState }) {
-  const { harp, customTuning, setTuning, songCalc, harpCalc, posCalc } = store;
+  const { harp, customName, setTuning, songCalc, harpCalc, posCalc } = store;
   const [editing, setEditing] = useState(false);
-  const isCustom = !!customTuning;
 
   return (
     <section className="calculators">
@@ -78,7 +77,7 @@ export function CalculatorBar({ store }: { store: UseHarpState }) {
         <label className="field tuning">
           <span>Tuning</span>
           <select value={harp.tuning} onChange={(e) => setTuning(e.target.value)}>
-            {isCustom && <option value={harp.tuning}>{harp.tuning}</option>}
+            {customName && <option value={customName}>{customName}</option>}
             {TUNINGS.map((t) => (
               <option key={t} value={t}>
                 {t}
