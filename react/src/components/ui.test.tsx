@@ -193,12 +193,15 @@ describe("tuning editor", () => {
     fireEvent.change(screen.getByLabelText("Name"), {
       target: { value: "My Tuning" },
     });
+    // Display surfaces flag a user-named custom tuning with " (custom)".
     expect(document.querySelector(".summary")!.textContent).toContain(
-      "My Tuning",
+      "My Tuning (custom)",
     );
-    // The main tuning dropdown gains the custom name as its selected option.
+    // The dropdown option's value stays the raw name; its label gets the suffix.
     const select = screen.getByLabelText("Tuning") as HTMLSelectElement;
     expect(select.value).toBe("My Tuning");
+    const opt = [...select.options].find((o) => o.value === "My Tuning")!;
+    expect(opt.textContent).toContain("My Tuning (custom)");
   });
 
   it("rejects a name that clashes with a registry tuning", () => {

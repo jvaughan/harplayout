@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { Key, Position } from "../music/harmonica";
 import { allKeys } from "../music/musicLogic";
-import { availableTunings } from "../music/tunings";
+import { availableTunings, customTuningLabel } from "../music/tunings";
 import type { UseHarpState } from "../state/useHarpState";
 import { TuningEditor } from "./TuningEditor";
 
@@ -77,7 +77,11 @@ export function CalculatorBar({ store }: { store: UseHarpState }) {
         <label className="field tuning">
           <span>Tuning</span>
           <select value={harp.tuning} onChange={(e) => setTuning(e.target.value)}>
-            {customName && <option value={customName}>{customName}</option>}
+            {customName && (
+              <option value={customName}>
+                {customTuningLabel(customName)}
+              </option>
+            )}
             {TUNINGS.map((t) => (
               <option key={t} value={t}>
                 {t}

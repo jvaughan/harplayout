@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { availableTunings, TUNINGS } from "./tunings";
+import {
+  availableTunings,
+  customTuningLabel,
+  isRegistryTuningName,
+  TUNINGS,
+} from "./tunings";
 
 describe("availableTunings", () => {
   it("lists Richter first, then the rest alphabetically", () => {
@@ -16,6 +21,28 @@ describe("availableTunings", () => {
     const list = availableTunings();
     expect([...list].sort()).toEqual(Object.keys(TUNINGS).sort());
     expect(new Set(list).size).toBe(list.length);
+  });
+});
+
+describe("customTuningLabel", () => {
+  it("appends ' (custom)' to a user-given name", () => {
+    expect(customTuningLabel("My Tuning")).toBe("My Tuning (custom)");
+  });
+
+  it("leaves the default 'Custom' name unsuffixed", () => {
+    expect(customTuningLabel("Custom")).toBe("Custom");
+  });
+});
+
+describe("isRegistryTuningName", () => {
+  it("matches built-in names case-insensitively", () => {
+    expect(isRegistryTuningName("richter")).toBe(true);
+    expect(isRegistryTuningName("  Country  ")).toBe(true);
+  });
+
+  it("does not match novel names", () => {
+    expect(isRegistryTuningName("My Tuning")).toBe(false);
+    expect(isRegistryTuningName("Custom")).toBe(false);
   });
 });
 
