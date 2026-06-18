@@ -73,12 +73,15 @@ describe("custom tunings", () => {
     expect(parseShareParams(encodeShareParams(CUSTOM))).toEqual(CUSTOM);
   });
 
-  it("encodes the natural notes as cb/cd/clp", () => {
+  it("encodes the natural notes as compact base-12 cb/cd plus clp", () => {
     const params = new URLSearchParams(encodeShareParams(CUSTOM));
-    expect(params.get("cb")).toBe("1,3,5,1");
-    expect(params.get("cd")).toBe("2,5,7,2");
+    // 1->0, 3->4, 5->7, 7->b (chromatic index in base 12); no separators.
+    expect(params.get("cb")).toBe("0470");
+    expect(params.get("cd")).toBe("27b2");
     expect(params.get("clp")).toBe("2");
     expect(params.get("t")).toBe("Custom");
+    // No percent-encoded commas clutter the string.
+    expect(encodeShareParams(CUSTOM)).not.toContain("%2C");
   });
 
   it("omits clp when the custom tuning has no label position", () => {
@@ -92,28 +95,29 @@ describe("custom tunings", () => {
     expect(out.customTuning).toEqual(blowDraw);
   });
 
-  it("rejects an invalid interval token", () => {
-    const out = parseShareParams("?cb=1,3,X,1&cd=2,5,7,2");
+  it("rejects an out-of-range note character", () => {
+    // 'x' is not a base-12 digit (valid range 0-b).
+    const out = parseShareParams("?cb=047x&cd=27b2");
     expect(out.customTuning).toBeUndefined();
     expect(out.tuning).toBeUndefined();
   });
 
   it("rejects mismatched blow/draw lengths", () => {
-    const out = parseShareParams("?cb=1,3,5&cd=2,5,7,2");
+    const out = parseShareParams("?cb=047&cd=27b2");
     expect(out.customTuning).toBeUndefined();
   });
 
-  it("rejects empty interval lists", () => {
+  it("rejects empty note strings", () => {
     expect(parseShareParams("?cb=&cd=").customTuning).toBeUndefined();
   });
 
   it("rejects when only one of cb/cd is present", () => {
-    expect(parseShareParams("?cb=1,3,5").customTuning).toBeUndefined();
-    expect(parseShareParams("?cd=2,5,7").customTuning).toBeUndefined();
+    expect(parseShareParams("?cb=047").customTuning).toBeUndefined();
+    expect(parseShareParams("?cd=27b").customTuning).toBeUndefined();
   });
 
   it("ignores an out-of-range label position but keeps the notes", () => {
-    const out = parseShareParams("?cb=1,3&cd=2,5&clp=99");
+    const out = parseShareParams("?cb=04&cd=27&clp=99");
     expect(out.customTuning).toEqual({ blow: ["1", "3"], draw: ["2", "5"] });
   });
 
@@ -132,7 +136,7 @@ describe("custom tunings", () => {
 
   it("relabels a custom tuning that borrows a registry name to 'Custom'", () => {
     // A forged/stale link: custom notes but t=Richter (case-insensitive).
-    const out = parseShareParams("?t=richter&cb=1,3,5,1&cd=2,5,7,2");
+    const out = parseShareParams("?t=richter&cb=0470&cd=27b2");
     expect(out.customTuning).toBeDefined();
     expect(out.tuning).toBe("Custom");
   });

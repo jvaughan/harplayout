@@ -1,5 +1,10 @@
+import type { Interval } from "../music/circleOfFifths";
 import type { Key, Position } from "../music/harmonica";
-import { allKeys, isInterval } from "../music/musicLogic";
+import {
+  allKeys,
+  mapIntervalToChromIdx,
+  VALID_INTERVALS,
+} from "../music/musicLogic";
 import {
   availableTunings,
   isRegistryTuningName,
@@ -28,12 +33,32 @@ const PARAM = {
   customLabelPos: "clp",
 } as const;
 
+// Encode each natural note as a single base-12 digit (its chromatic index 0-11
+// -> "0".."9","a","b"), so a tuning's notes are a compact separator-free string
+// like "0470470470" — no comma escaping clutters the URL.
+function encodeNotes(intervals: Interval[]): string {
+  return intervals.map((iv) => mapIntervalToChromIdx(iv).toString(12)).join("");
+}
+
+// Decode the base-12 note string back to intervals, returning null if it is
+// empty or contains any character outside the 0-b range.
+function decodeNotes(raw: string): Interval[] | null {
+  if (!raw) return null;
+  const out: Interval[] = [];
+  for (const ch of raw) {
+    const idx = parseInt(ch, 12);
+    if (Number.isNaN(idx) || idx < 0 || idx > 11) return null;
+    out.push(VALID_INTERVALS[idx]);
+  }
+  return out;
+}
+
 /**
  * Encode a layout config as a URL search string (e.g. "?t=Richter&hk=C&sk=G&pos=2").
  * `calculate` and the view toggles are deliberately excluded — the three resolved
  * key/position values fully pin the displayed layout on their own. A custom tuning
- * adds its natural notes as comma-joined interval lists (cb/cd) plus an optional
- * label position (clp).
+ * adds its natural notes as compact base-12 strings (cb/cd) plus an optional label
+ * position (clp).
  */
 export function encodeShareParams(config: ShareConfig): string {
   const params = new URLSearchParams();
@@ -42,21 +67,13 @@ export function encodeShareParams(config: ShareConfig): string {
   params.set(PARAM.songKey, config.songKey);
   params.set(PARAM.position, String(config.position));
   if (config.customTuning) {
-    params.set(PARAM.customBlow, config.customTuning.blow.join(","));
-    params.set(PARAM.customDraw, config.customTuning.draw.join(","));
+    params.set(PARAM.customBlow, encodeNotes(config.customTuning.blow));
+    params.set(PARAM.customDraw, encodeNotes(config.customTuning.draw));
     if (config.customTuning.labelPosition !== undefined) {
       params.set(PARAM.customLabelPos, String(config.customTuning.labelPosition));
     }
   }
   return `?${params.toString()}`;
-}
-
-// Parse a comma-joined interval list, returning null if any token is not a valid
-// interval or the list is empty.
-function parseIntervalList(raw: string): Tuning["blow"] | null {
-  const tokens = raw.split(",");
-  if (tokens.length === 0 || tokens.some((t) => !isInterval(t))) return null;
-  return tokens.filter(isInterval);
 }
 
 /**
@@ -74,8 +91,8 @@ export function parseShareParams(search: string): Partial<ShareConfig> {
   const cb = params.get(PARAM.customBlow);
   const cd = params.get(PARAM.customDraw);
   if (cb && cd) {
-    const blow = parseIntervalList(cb);
-    const draw = parseIntervalList(cd);
+    const blow = decodeNotes(cb);
+    const draw = decodeNotes(cd);
     if (blow && draw && blow.length === draw.length) {
       const custom: Tuning = { blow, draw };
       const clp = params.get(PARAM.customLabelPos);

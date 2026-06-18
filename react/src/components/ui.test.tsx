@@ -313,7 +313,8 @@ describe("share button", () => {
     window.history.pushState(
       {},
       "",
-      "/?t=Custom&hk=C&sk=C&pos=1&cb=1,3,5,1,3,5&cd=2,5,7,2,4,6",
+      // base-12 note strings: blow 1,3,5,1,3,5 -> 047047; draw 2,5,7,2,4,6 -> 27b259
+      "/?t=Custom&hk=C&sk=C&pos=1&cb=047047&cd=27b259",
     );
     render(<App />);
     expect(document.querySelector(".summary")!.textContent).toContain("Custom");
