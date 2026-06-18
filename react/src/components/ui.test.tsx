@@ -187,6 +187,33 @@ describe("tuning editor", () => {
     expect(table().querySelectorAll(".holenum").length).toBe(9);
   });
 
+  it("names a custom tuning, showing the name in the summary and dropdown", () => {
+    render(<App />);
+    openEditor();
+    fireEvent.change(screen.getByLabelText("Name"), {
+      target: { value: "My Tuning" },
+    });
+    expect(document.querySelector(".summary")!.textContent).toContain(
+      "My Tuning",
+    );
+    // The main tuning dropdown gains the custom name as its selected option.
+    const select = screen.getByLabelText("Tuning") as HTMLSelectElement;
+    expect(select.value).toBe("My Tuning");
+  });
+
+  it("rejects a name that clashes with a registry tuning", () => {
+    render(<App />);
+    openEditor();
+    fireEvent.change(screen.getByLabelText("Name"), {
+      target: { value: "Country" },
+    });
+    expect(screen.getByRole("alert").textContent).toMatch(/already a tuning/i);
+    // The clashing name is not committed.
+    expect(document.querySelector(".summary")!.textContent).not.toContain(
+      "Country",
+    );
+  });
+
   it("reset returns to the base registry tuning", () => {
     render(<App />);
     openEditor();

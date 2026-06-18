@@ -171,3 +171,10 @@ export function getTuning(name: string): Tuning {
 export function labelPosition(name: string): Position {
   return getTuning(name).labelPosition ?? 1;
 }
+
+// True if `name` collides with a built-in tuning (case-insensitive, trimmed).
+// Used to keep user-named custom tunings from masquerading as registry ones.
+export function isRegistryTuningName(name: string): boolean {
+  const lower = name.trim().toLowerCase();
+  return Object.keys(TUNINGS).some((n) => n.toLowerCase() === lower);
+}

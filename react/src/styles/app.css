@@ -208,6 +208,30 @@ select:focus-visible {
   color: var(--muted);
 }
 
+.te-name {
+  max-width: 18rem;
+  margin-bottom: 0.85rem;
+}
+.te-name input {
+  background: var(--panel-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.4rem 0.5rem;
+  font-size: 0.95rem;
+}
+.te-name input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+.te-name input[aria-invalid="true"] {
+  border-color: var(--danger, #e5534b);
+}
+.te-name-error {
+  color: var(--danger, #e5534b);
+  font-size: 0.8rem;
+}
+
 /* Two rows of selects with a leading row-label column; scrolls horizontally
    when a custom tuning has more holes than fit. */
 .tuning-editor-grid {

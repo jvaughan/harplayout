@@ -1,6 +1,10 @@
 import type { Key, Position } from "../music/harmonica";
 import { allKeys, isInterval } from "../music/musicLogic";
-import { availableTunings, type Tuning } from "../music/tunings";
+import {
+  availableTunings,
+  isRegistryTuningName,
+  type Tuning,
+} from "../music/tunings";
 
 /** The core layout config carried by a share link. */
 export interface ShareConfig {
@@ -80,7 +84,9 @@ export function parseShareParams(search: string): Partial<ShareConfig> {
         if (n >= 1 && n <= 12) custom.labelPosition = n as Position;
       }
       out.customTuning = custom;
-      out.tuning = tuning || "Custom";
+      // Honour a user-given name, but never let a custom tuning borrow a
+      // registry name (a forged/stale link) — fall back to "Custom".
+      out.tuning = tuning && !isRegistryTuningName(tuning) ? tuning : "Custom";
     }
   }
 

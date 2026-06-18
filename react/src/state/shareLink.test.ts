@@ -122,4 +122,18 @@ describe("custom tunings", () => {
     expect(out.customTuning).toBeUndefined();
     expect(out.tuning).toBe("Country");
   });
+
+  it("round-trips a user-given custom name", () => {
+    const named: ShareConfig = { ...CUSTOM, tuning: "My Tuning" };
+    const out = parseShareParams(encodeShareParams(named));
+    expect(out.tuning).toBe("My Tuning");
+    expect(out.customTuning).toEqual(CUSTOM.customTuning);
+  });
+
+  it("relabels a custom tuning that borrows a registry name to 'Custom'", () => {
+    // A forged/stale link: custom notes but t=Richter (case-insensitive).
+    const out = parseShareParams("?t=richter&cb=1,3,5,1&cd=2,5,7,2");
+    expect(out.customTuning).toBeDefined();
+    expect(out.tuning).toBe("Custom");
+  });
 });

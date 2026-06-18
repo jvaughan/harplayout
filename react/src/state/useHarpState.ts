@@ -51,7 +51,7 @@ export interface UseHarpState {
   shareConfig: ShareConfig;
   // calculators
   setTuning: (t: string) => void;
-  editTuning: (def: Tuning) => void;
+  editTuning: (def: Tuning, name?: string) => void;
   songCalc: { harpKey: (v: Key) => void; position: (v: Position) => void };
   harpCalc: { songKey: (v: Key) => void; position: (v: Position) => void };
   posCalc: { harpKey: (v: Key) => void; songKey: (v: Key) => void };
@@ -119,7 +119,13 @@ export function useHarpState(): UseHarpState {
     },
     // Selecting a named tuning leaves custom-edit mode.
     setTuning: (t) => update({ tuning: t, customTuning: undefined }),
-    editTuning: (def) => update({ tuning: "Custom", customTuning: def }),
+    // A custom edit keeps the current custom name (or "Custom" when first
+    // entering custom mode), unless an explicit new name is supplied.
+    editTuning: (def, name) =>
+      update({
+        tuning: name ?? (state.customTuning ? state.tuning : "Custom"),
+        customTuning: def,
+      }),
     songCalc: {
       harpKey: (v) => update({ calculate: "song_key", harpKey: v }),
       position: (v) => update({ calculate: "song_key", position: v }),

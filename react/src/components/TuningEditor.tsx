@@ -1,7 +1,12 @@
 import { useState } from "react";
 import type { Interval, Position } from "../music/circleOfFifths";
 import { noteFromKeyInterval, VALID_INTERVALS } from "../music/musicLogic";
-import { getTuning, TUNINGS, type Tuning } from "../music/tunings";
+import {
+  getTuning,
+  isRegistryTuningName,
+  TUNINGS,
+  type Tuning,
+} from "../music/tunings";
 import type { UseHarpState } from "../state/useHarpState";
 
 const LABEL_POSITIONS = Array.from({ length: 12 }, (_, i) => (i + 1) as Position);
@@ -22,12 +27,45 @@ export function TuningEditor({ store }: { store: UseHarpState }) {
   const { blow, draw, labelPosition } = working;
   const holes = blow.length;
 
-  const apply = (patch: Partial<Tuning>) =>
-    editTuning({
-      blow: patch.blow ?? blow.slice(),
-      draw: patch.draw ?? draw.slice(),
-      labelPosition: patch.labelPosition ?? labelPosition,
-    });
+  // Name field. Empty (placeholder "Custom") until the tuning is customised;
+  // the draft tracks raw keystrokes so an invalid name stays visible with its
+  // error, while only valid names are committed to state.
+  const isCustom = !!customTuning;
+  const [nameDraft, setNameDraft] = useState(isCustom ? harp.tuning : "");
+  const [nameError, setNameError] = useState<string | null>(null);
+  // Re-sync the field during render when the committed name changes from outside
+  // it (reset, selecting another tuning, a note edit that defaults to "Custom").
+  const [syncedName, setSyncedName] = useState(harp.tuning);
+  if (harp.tuning !== syncedName) {
+    setSyncedName(harp.tuning);
+    setNameDraft(isCustom ? harp.tuning : "");
+    setNameError(null);
+  }
+
+  const apply = (patch: Partial<Tuning>, name?: string) =>
+    editTuning(
+      {
+        blow: patch.blow ?? blow.slice(),
+        draw: patch.draw ?? draw.slice(),
+        labelPosition: patch.labelPosition ?? labelPosition,
+      },
+      name,
+    );
+
+  const onNameChange = (value: string) => {
+    setNameDraft(value);
+    const trimmed = value.trim();
+    if (!trimmed) {
+      setNameError(null); // empty → falls back to the default "Custom"
+      return;
+    }
+    if (isRegistryTuningName(trimmed)) {
+      setNameError(`"${trimmed}" is already a tuning name`);
+      return;
+    }
+    setNameError(null);
+    apply({}, trimmed);
+  };
 
   const setCell = (plate: "blow" | "draw", i: number, value: Interval) => {
     const next = (plate === "blow" ? blow : draw).slice();
@@ -69,6 +107,23 @@ export function TuningEditor({ store }: { store: UseHarpState }) {
         current harp key <strong>{harp.harpKey}</strong>. Bends and overbends
         recalculate automatically.
       </p>
+
+      <label className="field te-name">
+        <span>Name</span>
+        <input
+          type="text"
+          value={nameDraft}
+          placeholder="Custom"
+          aria-invalid={nameError ? true : undefined}
+          aria-describedby={nameError ? "te-name-error" : undefined}
+          onChange={(e) => onNameChange(e.target.value)}
+        />
+        {nameError && (
+          <span id="te-name-error" className="te-name-error" role="alert">
+            {nameError}
+          </span>
+        )}
+      </label>
 
       <div className="tuning-editor-grid" role="group" aria-label="Tuning notes">
         <div className="te-row te-head">
