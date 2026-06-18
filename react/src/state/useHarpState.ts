@@ -6,7 +6,8 @@ import {
   type Key,
   type Position,
 } from "../music/harmonica";
-import { parseShareParams } from "./shareLink";
+import type { Tuning } from "../music/tunings";
+import { parseShareParams, type ShareConfig } from "./shareLink";
 
 export interface ViewOptions {
   includeBends: boolean;
@@ -19,6 +20,8 @@ export interface ViewOptions {
 
 interface HarpState extends ViewOptions {
   tuning: string;
+  // Set when the user has edited the natural notes; overrides the named tuning.
+  customTuning?: Tuning;
   harpKey: Key;
   songKey: Key;
   position: Position;
@@ -42,8 +45,13 @@ const INITIAL: HarpState = {
 export interface UseHarpState {
   harp: HarpLayout;
   view: ViewOptions;
+  // The currently active tuning definition (custom edit or named registry entry),
+  // and the config a share link should carry.
+  customTuning?: Tuning;
+  shareConfig: ShareConfig;
   // calculators
   setTuning: (t: string) => void;
+  editTuning: (def: Tuning) => void;
   songCalc: { harpKey: (v: Key) => void; position: (v: Position) => void };
   harpCalc: { songKey: (v: Key) => void; position: (v: Position) => void };
   posCalc: { harpKey: (v: Key) => void; songKey: (v: Key) => void };
@@ -64,12 +72,20 @@ export function useHarpState(): UseHarpState {
     () =>
       buildHarp({
         tuning: state.tuning,
+        tuningDef: state.customTuning,
         harpKey: state.harpKey,
         songKey: state.songKey,
         position: state.position,
         calculate: state.calculate,
       }),
-    [state.tuning, state.harpKey, state.songKey, state.position, state.calculate],
+    [
+      state.tuning,
+      state.customTuning,
+      state.harpKey,
+      state.songKey,
+      state.position,
+      state.calculate,
+    ],
   );
 
   // Apply a patch, rebasing the key/position inputs to the currently resolved
@@ -93,7 +109,17 @@ export function useHarpState(): UseHarpState {
       showIntervals: state.showIntervals,
       showIntervalCategories: state.showIntervalCategories,
     },
-    setTuning: (t) => update({ tuning: t }),
+    customTuning: state.customTuning,
+    shareConfig: {
+      tuning: harp.tuning,
+      harpKey: harp.harpKey,
+      songKey: harp.songKey,
+      position: harp.position,
+      customTuning: state.customTuning,
+    },
+    // Selecting a named tuning leaves custom-edit mode.
+    setTuning: (t) => update({ tuning: t, customTuning: undefined }),
+    editTuning: (def) => update({ tuning: "Custom", customTuning: def }),
     songCalc: {
       harpKey: (v) => update({ calculate: "song_key", harpKey: v }),
       position: (v) => update({ calculate: "song_key", position: v }),

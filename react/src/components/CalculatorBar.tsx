@@ -1,7 +1,9 @@
+import { useState } from "react";
 import type { Key, Position } from "../music/harmonica";
 import { allKeys } from "../music/musicLogic";
 import { availableTunings } from "../music/tunings";
 import type { UseHarpState } from "../state/useHarpState";
+import { TuningEditor } from "./TuningEditor";
 
 const KEYS = allKeys();
 const POSITIONS = Array.from({ length: 12 }, (_, i) => (i + 1) as Position);
@@ -67,22 +69,34 @@ function Result({ label, value }: { label: string; value: string | number }) {
 
 export function CalculatorBar({ store }: { store: UseHarpState }) {
   const { harp, setTuning, songCalc, harpCalc, posCalc } = store;
+  const [editing, setEditing] = useState(false);
+  const isCustom = harp.tuning === "Custom";
 
   return (
     <section className="calculators">
-      <label className="field tuning">
-        <span>Tuning</span>
-        <select
-          value={harp.tuning}
-          onChange={(e) => setTuning(e.target.value)}
+      <div className="tuning-row">
+        <label className="field tuning">
+          <span>Tuning</span>
+          <select value={harp.tuning} onChange={(e) => setTuning(e.target.value)}>
+            {isCustom && <option value="Custom">Custom</option>}
+            {TUNINGS.map((t) => (
+              <option key={t} value={t}>
+                {t}
+              </option>
+            ))}
+          </select>
+        </label>
+        <button
+          type="button"
+          className="edit-tuning-toggle"
+          aria-expanded={editing}
+          onClick={() => setEditing((v) => !v)}
         >
-          {TUNINGS.map((t) => (
-            <option key={t} value={t}>
-              {t}
-            </option>
-          ))}
-        </select>
-      </label>
+          {editing ? "Done editing" : "Edit tuning"}
+        </button>
+      </div>
+
+      {editing && <TuningEditor store={store} />}
 
       <div className="calc-grid">
         <div className="calc-card">

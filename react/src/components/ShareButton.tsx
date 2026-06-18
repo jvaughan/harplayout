@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import type { HarpLayout } from "../music/harmonica";
-import { encodeShareParams } from "../state/shareLink";
+import { encodeShareParams, type ShareConfig } from "../state/shareLink";
 
 type Status = "idle" | "copied" | "failed";
 
@@ -10,7 +9,7 @@ const LABEL: Record<Status, { icon: string; text: string }> = {
   failed: { icon: "⚠️", text: "Copy failed" },
 };
 
-export function ShareButton({ harp }: { harp: HarpLayout }) {
+export function ShareButton({ config }: { config: ShareConfig }) {
   const [status, setStatus] = useState<Status>("idle");
   const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
@@ -18,7 +17,7 @@ export function ShareButton({ harp }: { harp: HarpLayout }) {
 
   const share = async () => {
     const { origin, pathname } = window.location;
-    const url = origin + pathname + encodeShareParams(harp);
+    const url = origin + pathname + encodeShareParams(config);
     try {
       await navigator.clipboard.writeText(url);
       setStatus("copied");

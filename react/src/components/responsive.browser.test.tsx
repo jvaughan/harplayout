@@ -8,6 +8,7 @@
 import { cleanup, render } from "@testing-library/react";
 import { page } from "vitest/browser";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { fireEvent, screen } from "@testing-library/react";
 import App from "../App";
 import "../styles/app.css";
 
@@ -89,5 +90,23 @@ describe("harp cell min-width shrinks across the 600/500/400 tiers", () => {
     for (let i = 1; i < widthsToMin.length; i++) {
       expect(widthsToMin[i]).toBeLessThan(widthsToMin[i - 1]);
     }
+  });
+});
+
+// The plan accepts that a custom tuning wider than the viewport scrolls rather
+// than getting its own breakpoints — but the editor grid must actually be a
+// scroll container (overflow-x), which only a real layout can confirm.
+describe("tuning editor grid scrolls horizontally when it overflows", () => {
+  it("overflows its content (scrollWidth > clientWidth) at a narrow width", async () => {
+    await setViewport(400);
+    fireEvent.click(screen.getByRole("button", { name: "Edit tuning" }));
+    // Richter starts at 10 holes; add 10 more so the row is far wider than 400px.
+    const add = screen.getByRole("button", { name: /Add hole/ });
+    for (let i = 0; i < 10; i++) fireEvent.click(add);
+    await setViewport(400); // relayout after the DOM grew
+
+    const grid = document.querySelector(".tuning-editor-grid") as HTMLElement;
+    expect(getComputedStyle(grid).overflowX).toBe("auto");
+    expect(grid.scrollWidth).toBeGreaterThan(grid.clientWidth);
   });
 });

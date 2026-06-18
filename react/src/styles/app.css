@@ -159,6 +159,106 @@ select:focus-visible {
   margin-bottom: 1rem;
 }
 
+/* ---- tuning editor ---- */
+.tuning-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+.tuning-row .tuning {
+  margin-bottom: 0;
+}
+
+.edit-tuning-toggle,
+.tuning-editor button {
+  background: var(--panel-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.4rem 0.7rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+.edit-tuning-toggle:hover,
+.tuning-editor button:hover {
+  border-color: var(--accent);
+}
+.edit-tuning-toggle:focus-visible,
+.tuning-editor button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+.tuning-editor button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.tuning-editor {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+.tuning-editor-hint {
+  margin: 0 0 0.75rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+/* Two rows of selects with a leading row-label column; scrolls horizontally
+   when a custom tuning has more holes than fit. */
+.tuning-editor-grid {
+  overflow-x: auto;
+}
+.te-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.4rem;
+}
+.te-rowlabel {
+  flex: 0 0 3rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+.te-row select {
+  flex: 0 0 auto;
+  width: 4.5rem;
+  padding: 0.3rem 0.35rem;
+  font-size: 0.85rem;
+}
+.te-head {
+  margin-bottom: 0.2rem;
+}
+.te-holenum {
+  flex: 0 0 auto;
+  width: 4.5rem;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.tuning-editor-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+.te-holes {
+  display: flex;
+  gap: 0.4rem;
+}
+.te-labelpos {
+  max-width: 9rem;
+}
+.te-reset {
+  margin-left: auto;
+}
+
 .calc-grid {
   display: grid;
   grid-template-columns: 1fr; /* stacked by default; 3-across above 600px */

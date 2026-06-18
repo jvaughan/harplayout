@@ -40,7 +40,7 @@ export default function App() {
       </h2>
 
       <div className="share-row">
-        <ShareButton harp={harp} />
+        <ShareButton config={store.shareConfig} />
       </div>
 
       <div className="harp-and-options">
