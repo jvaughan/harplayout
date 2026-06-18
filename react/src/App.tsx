@@ -4,6 +4,7 @@ import { Legend } from "./components/Legend";
 import { ShareButton } from "./components/ShareButton";
 import { ThemeToggle } from "./components/ThemeToggle";
 import { ViewOptions } from "./components/ViewOptions";
+import { customTuningLabel } from "./music/tunings";
 import { useHarpState } from "./state/useHarpState";
 import { useTheme } from "./state/useTheme";
 
@@ -17,6 +18,11 @@ export default function App() {
   const store = useHarpState();
   const { harp, view, toggle } = store;
   const { theme, toggle: toggleTheme } = useTheme();
+
+  const tuningLabel =
+    harp.tuning === store.customName
+      ? customTuningLabel(harp.tuning)
+      : harp.tuning;
 
   return (
     <div className="app">
@@ -36,11 +42,11 @@ export default function App() {
         {ordinal(harp.position)} position harp in the key of{" "}
         <strong>{harp.harpKey}</strong> for a song in{" "}
         <strong>{harp.songKey}</strong>
-        <span className="summary-tuning"> · {harp.tuning} tuning</span>
+        <span className="summary-tuning"> · {tuningLabel} tuning</span>
       </h2>
 
       <div className="share-row">
-        <ShareButton harp={harp} />
+        <ShareButton config={store.shareConfig} />
       </div>
 
       <div className="harp-and-options">

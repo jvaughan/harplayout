@@ -38,7 +38,7 @@ export function intervalToNum(s: Interval): string {
 }
 
 // The 12 intervals in chromatic order — the canonical label set.
-const INTERVALS: Interval[] = [
+export const VALID_INTERVALS: Interval[] = [
   "1",
   "b2",
   "2",
@@ -52,6 +52,14 @@ const INTERVALS: Interval[] = [
   "b7",
   "7",
 ];
+
+// Internal alias kept for the existing chromatic-ring/lookup code below.
+const INTERVALS = VALID_INTERVALS;
+
+// Runtime guard for untrusted strings (e.g. parsed from a share link).
+export function isInterval(x: string): x is Interval {
+  return (VALID_INTERVALS as string[]).includes(x);
+}
 
 // num_to_interval: "2.5" -> "b3", "5" -> "5". Inverse of intervalToNum, as a
 // lookup so it returns a strictly-typed Interval (every input comes from the

@@ -24,7 +24,7 @@ import {
   type Note,
   type NoteType,
 } from "./note";
-import { getTuning, labelPosition } from "./tunings";
+import { getTuning, labelPosition, type Tuning } from "./tunings";
 
 export type { Key, Position };
 
@@ -33,6 +33,10 @@ type Plate = "blow" | "draw";
 
 export interface HarpInput {
   tuning: string;
+  // When set, the natural notes come from this definition instead of the named
+  // registry entry (used for user-edited "Custom" tunings). `tuning` is then
+  // just the display label.
+  tuningDef?: Tuning;
   harpKey: Key;
   position: Position;
   songKey: Key;
@@ -77,6 +81,7 @@ function noteType(
 
 class HarpBuilder {
   tuning: string;
+  tuningDef: Tuning;
   harpKey: Key;
   position: Position;
   songKey: Key;
@@ -88,11 +93,17 @@ class HarpBuilder {
 
   constructor(input: HarpInput) {
     this.tuning = input.tuning;
+    // A supplied definition overrides the named registry entry.
+    this.tuningDef = input.tuningDef ?? getTuning(input.tuning);
     this.harpKey = input.harpKey;
     this.position = input.position;
     this.songKey = input.songKey;
     this.calculate = input.calculate;
-    this.labelPos = labelPosition(input.tuning);
+    // With a supplied definition, never fall back to a name lookup (the name may
+    // be a placeholder like "Custom"); default an absent label position to 1.
+    this.labelPos = input.tuningDef
+      ? (input.tuningDef.labelPosition ?? 1)
+      : labelPosition(input.tuning);
   }
 
   build(): HarpLayout {
@@ -134,8 +145,7 @@ class HarpBuilder {
   }
 
   private plateIntervals(plate: Plate): Interval[] {
-    const t = getTuning(this.tuning);
-    return plate === "blow" ? t.blow : t.draw;
+    return plate === "blow" ? this.tuningDef.blow : this.tuningDef.draw;
   }
 
   private getNote(plate: Plate, reed: number, bendstep: number): Note | undefined {

@@ -153,6 +153,116 @@ describe("harp table", () => {
   });
 });
 
+describe("tuning editor", () => {
+  const openEditor = () =>
+    fireEvent.click(screen.getByRole("button", { name: "Edit tuning" }));
+
+  it("interval options are labelled with the note in the current harp key", () => {
+    render(<App />); // default C harp
+    openEditor();
+    const blow1 = screen.getByLabelText("blow hole 1") as HTMLSelectElement;
+    const labels = [...blow1.options].map((o) => o.textContent);
+    expect(labels).toContain("1 — C");
+    expect(labels).toContain("3 — E");
+  });
+
+  it("editing a natural note switches the tuning to Custom", () => {
+    render(<App />);
+    openEditor();
+    fireEvent.change(screen.getByLabelText("blow hole 1"), {
+      target: { value: "b3" },
+    });
+    const summary = document.querySelector(".summary")!.textContent ?? "";
+    expect(summary).toContain("Custom");
+  });
+
+  it("adds and removes holes, keeping the harp in sync", () => {
+    render(<App />);
+    openEditor();
+    expect(table().querySelectorAll(".holenum").length).toBe(10);
+    fireEvent.click(screen.getByRole("button", { name: /Add hole/ }));
+    expect(table().querySelectorAll(".holenum").length).toBe(11);
+    fireEvent.click(screen.getByRole("button", { name: /Remove hole/ }));
+    fireEvent.click(screen.getByRole("button", { name: /Remove hole/ }));
+    expect(table().querySelectorAll(".holenum").length).toBe(9);
+  });
+
+  it("names a custom tuning, showing the name in the summary and dropdown", () => {
+    render(<App />);
+    openEditor();
+    fireEvent.change(screen.getByLabelText("Name"), {
+      target: { value: "My Tuning" },
+    });
+    // Display surfaces flag a user-named custom tuning with " (custom)".
+    expect(document.querySelector(".summary")!.textContent).toContain(
+      "My Tuning (custom)",
+    );
+    // The dropdown option's value stays the raw name; its label gets the suffix.
+    const select = screen.getByLabelText("Tuning") as HTMLSelectElement;
+    expect(select.value).toBe("My Tuning");
+    const opt = [...select.options].find((o) => o.value === "My Tuning")!;
+    expect(opt.textContent).toContain("My Tuning (custom)");
+  });
+
+  it("rejects a name that clashes with a registry tuning", () => {
+    render(<App />);
+    openEditor();
+    fireEvent.change(screen.getByLabelText("Name"), {
+      target: { value: "Country" },
+    });
+    expect(screen.getByRole("alert").textContent).toMatch(/already a tuning/i);
+    // The clashing name is not committed.
+    expect(document.querySelector(".summary")!.textContent).not.toContain(
+      "Country",
+    );
+  });
+
+  it("keeps a named custom tuning in the dropdown after switching away", () => {
+    render(<App />);
+    openEditor();
+    fireEvent.change(screen.getByLabelText("Name"), {
+      target: { value: "My Tuning" },
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Done editing" }));
+
+    const select = screen.getByLabelText("Tuning") as HTMLSelectElement;
+    // Switch to a registry tuning...
+    fireEvent.change(select, { target: { value: "Country" } });
+    expect(document.querySelector(".summary")!.textContent).toContain("Country");
+    // ...the custom tuning is still selectable...
+    expect([...select.options].map((o) => o.value)).toContain("My Tuning");
+    // ...and selecting it restores the custom layout.
+    fireEvent.change(select, { target: { value: "My Tuning" } });
+    expect(document.querySelector(".summary")!.textContent).toContain(
+      "My Tuning",
+    );
+  });
+
+  it("discard removes the custom tuning from the dropdown", () => {
+    render(<App />);
+    openEditor();
+    fireEvent.change(screen.getByLabelText("Name"), {
+      target: { value: "My Tuning" },
+    });
+    fireEvent.click(screen.getByRole("button", { name: /Discard/ }));
+
+    const select = screen.getByLabelText("Tuning") as HTMLSelectElement;
+    expect([...select.options].map((o) => o.value)).not.toContain("My Tuning");
+    expect(document.querySelector(".summary")!.textContent).toContain("Richter");
+  });
+
+  it("reset returns to the base registry tuning", () => {
+    render(<App />);
+    openEditor();
+    fireEvent.change(screen.getByLabelText("draw hole 2"), {
+      target: { value: "b7" },
+    });
+    expect(document.querySelector(".summary")!.textContent).toContain("Custom");
+    fireEvent.click(screen.getByRole("button", { name: /reset to Richter/i }));
+    expect(document.querySelector(".summary")!.textContent).toContain("Richter");
+  });
+});
+
 describe("share button", () => {
   const writeText = vi.fn().mockResolvedValue(undefined);
 
@@ -181,6 +291,33 @@ describe("share button", () => {
     expect(url).toContain("hk=C");
     expect(url).toContain("sk=G");
     expect(url).toContain("pos=2");
+  });
+
+  it("encodes the custom natural notes (cb/cd) after editing", async () => {
+    render(<App />);
+    fireEvent.click(screen.getByRole("button", { name: "Edit tuning" }));
+    fireEvent.change(screen.getByLabelText("blow hole 1"), {
+      target: { value: "b3" },
+    });
+
+    fireEvent.click(screen.getByRole("button", { name: /Share this layout/ }));
+    await screen.findByRole("button", { name: /Copied/ });
+
+    const url = writeText.mock.calls[0][0] as string;
+    expect(url).toContain("t=Custom");
+    expect(url).toContain("cb=");
+    expect(url).toContain("cd=");
+  });
+
+  it("restores a custom tuning from share params on load", () => {
+    window.history.pushState(
+      {},
+      "",
+      "/?t=Custom&hk=C&sk=C&pos=1&cb=1,3,5,1,3,5&cd=2,5,7,2,4,6",
+    );
+    render(<App />);
+    expect(document.querySelector(".summary")!.textContent).toContain("Custom");
+    expect(table().querySelectorAll(".holenum").length).toBe(6);
   });
 
   it("restores the layout from share params in the URL on load", () => {
