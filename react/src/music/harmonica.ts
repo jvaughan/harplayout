@@ -12,13 +12,13 @@ import {
 } from "./circleOfFifths";
 import {
   categoryFromInterval,
+  mapIntervalToChromIdx,
   noteFromKeyInterval,
 } from "./musicLogic";
 import {
   addSemis,
   intervalEq,
   intervalGt,
-  intervalLt,
   subSemis,
   type IntervalBearer,
   type Note,
@@ -148,47 +148,66 @@ class HarpBuilder {
     for (const plate of PLATES) {
       let reed = 0;
       for (const interval of this.plateIntervals(plate)) {
-        this.setNote(plate, ++reed, 0, interval);
+        this.setNote(plate, ++reed, 0, interval, "natural");
       }
     }
   }
 
-  private addBends() {
-    for (const plate of PLATES) {
-      const opp = oppPlate(plate);
-      const holes = this.grid[plate].length;
-      for (let hole = 1; hole <= holes; hole++) {
-        const natural = this.getNote(plate, hole, 0)!;
-        const oppNatural = this.getNote(opp, hole, 0)!;
+  // On a real harp each hole has a higher- and lower-pitched reed: only the
+  // higher reed can be bent (down toward the lower), and only the lower reed can
+  // be overbent (up past the higher). Our notes are pitch classes with no
+  // octave, so the two reeds' true order is ambiguous once they're far apart;
+  // by convention we then assume the DRAW reed is the higher one.
+  private higherPlate(hole: number): Plate {
+    const blow = this.getNote("blow", hole, 0)!;
+    const draw = this.getNote("draw", hole, 0)!;
+    // Semitones from the blow reed up to the draw reed, within one octave.
+    const gap =
+      (mapIntervalToChromIdx(draw.firstPosInterval) -
+        mapIntervalToChromIdx(blow.firstPosInterval) +
+        12) %
+      12;
+    // gap 1..7  -> draw up to a fifth above blow (tritone included) -> draw higher
+    // gap 8..11 -> draw a major third or less below blow            -> blow higher
+    // gap 0     -> unison; order is irrelevant (no bends/overbends)
+    return gap >= 8 ? "blow" : "draw";
+  }
 
-        // Add bent notes, each one semitone closer to the opposing natural,
-        // stopping one semitone away.
-        let closest: IntervalBearer = natural;
-        let bendstep = 0;
-        while (true) {
-          closest = subSemis(closest, 1);
-          if (!intervalGt(closest, oppNatural)) break;
-          closest = this.setNote(plate, hole, ++bendstep, closest.firstPosInterval);
-        }
+  private addBends() {
+    const holes = this.grid.blow.length;
+    for (let hole = 1; hole <= holes; hole++) {
+      // Only the higher reed of the hole can be bent (down toward the lower).
+      const plate = this.higherPlate(hole);
+      const oppNatural = this.getNote(oppPlate(plate), hole, 0)!;
+
+      // Add bent notes, each one semitone closer to the opposing natural,
+      // stopping one semitone away.
+      let closest: IntervalBearer = this.getNote(plate, hole, 0)!;
+      let bendstep = 0;
+      while (true) {
+        closest = subSemis(closest, 1);
+        if (!intervalGt(closest, oppNatural)) break;
+        closest = this.setNote(plate, hole, ++bendstep, closest.firstPosInterval, "bend");
       }
     }
   }
 
   private addOverbends() {
-    for (const plate of PLATES) {
-      const opp = oppPlate(plate);
-      const holes = this.grid[plate].length;
-      for (let hole = 1; hole <= holes; hole++) {
-        const natural = this.getNote(plate, hole, 0)!;
-        const oppNatural = this.getNote(opp, hole, 0)!;
+    const holes = this.grid.blow.length;
+    for (let hole = 1; hole <= holes; hole++) {
+      // Only the lower reed of the hole can be overbent (up past the higher).
+      const plate = oppPlate(this.higherPlate(hole));
+      const natural = this.getNote(plate, hole, 0)!;
+      const oppNatural = this.getNote(oppPlate(plate), hole, 0)!;
 
-        if (!intervalLt(natural, oppNatural)) continue; // can't overbend
+      if (intervalEq(natural, oppNatural)) continue; // unison: nothing to overbend
 
-        // Overbend is one semitone above the opposing reed's natural note.
-        const overbend = addSemis(oppNatural, 1);
-        const unnecessaryOb = this.holeHasNote(hole + 1, overbend);
-        this.setNote(plate, hole, 1, overbend.firstPosInterval, { unnecessaryOb });
-      }
+      // Overbend is one semitone above the opposing reed's natural note.
+      const overbend = addSemis(oppNatural, 1);
+      const unnecessaryOb = this.holeHasNote(hole + 1, overbend);
+      this.setNote(plate, hole, 1, overbend.firstPosInterval, "overbend", {
+        unnecessaryOb,
+      });
     }
   }
 
@@ -208,6 +227,7 @@ class HarpBuilder {
     reed: number,
     bendstep: number,
     firstPosInterval: Interval,
+    role: "natural" | "bend" | "overbend",
     attrs?: { unnecessaryOb?: boolean },
   ): Note {
     const positionInterval = intervalFromPosition(firstPosInterval, this.position);
@@ -222,18 +242,19 @@ class HarpBuilder {
       type: "natural",
     };
 
-    if (bendstep === 0) {
+    // The caller knows whether this is a natural, a bend, or an overbend; we use
+    // that directly rather than re-deriving it from a note-vs-natural comparison,
+    // which is wrap-prone for notes far from their natural (pitch classes have no
+    // octave).
+    if (role === "natural") {
       note.type = noteType(plate, "natural");
       note.description = `${reed} hole ${plate} - natural`;
+    } else if (role === "bend") {
+      note.type = noteType(plate, "bend");
+      note.description = `${reed} hole ${plate} - bend step ${bendstep}`;
     } else {
-      const natural = this.getNote(plate, reed, 0)!;
-      if (intervalLt(note, natural)) {
-        note.type = noteType(plate, "bend");
-        note.description = `${reed} hole ${plate} - bend step ${bendstep}`;
-      } else {
-        note.type = noteType(plate, "overbend", attrs?.unnecessaryOb);
-        note.description = `${reed} hole - over${plate}`;
-      }
+      note.type = noteType(plate, "overbend", attrs?.unnecessaryOb);
+      note.description = `${reed} hole - over${plate}`;
     }
 
     if (!this.grid[plate][reed - 1]) this.grid[plate][reed - 1] = [];
