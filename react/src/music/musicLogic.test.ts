@@ -60,6 +60,23 @@ describe("noteFromKeyInterval", () => {
     expect(noteFromKeyInterval("G", "3")).toBe("B");
     expect(noteFromKeyInterval("G", "b3")).toBe("Bb");
   });
+
+  // The tritone is spelled as an augmented 4th (sharp/natural), never a flat.
+  it("spells the tritone sharp, not flat", () => {
+    expect(noteFromKeyInterval("C", "b5")).toBe("F#");
+    expect(noteFromKeyInterval("G", "b5")).toBe("C#");
+    expect(noteFromKeyInterval("D", "b5")).toBe("G#");
+    expect(noteFromKeyInterval("A", "b5")).toBe("D#");
+    expect(noteFromKeyInterval("E", "b5")).toBe("A#");
+    // Flat-side keys keep a natural (never a double/awkward accidental).
+    expect(noteFromKeyInterval("F", "b5")).toBe("B");
+    expect(noteFromKeyInterval("Bb", "b5")).toBe("E");
+  });
+
+  // E major's third is G#, not the enharmonic Ab the old hand table used.
+  it("spells E's major third as G#", () => {
+    expect(noteFromKeyInterval("E", "3")).toBe("G#");
+  });
 });
 
 describe("circle of fifths", () => {

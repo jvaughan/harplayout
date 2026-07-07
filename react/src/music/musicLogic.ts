@@ -1,26 +1,11 @@
 // Faithful port of HarpLayout::MusicLogic (MusicLogic.pm).
 
+import { simplify, transpose } from "@tonaljs/note";
 import { co5Intervals, type Interval, type Key } from "./circleOfFifths";
 
 const BOUNDARY = 7;
 
 export type IntervalCategory = "chord" | "blue" | "passing" | "danger";
-
-// key -> 12-semitone chromatic scale (MusicLogic.pm:16-27).
-const SCALE_NOTES: Record<Key, string[]> = {
-  C: ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"],
-  Db: ["Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B", "C"],
-  D: ["D", "Eb", "E", "F", "F#", "G", "Ab", "A", "Bb", "B", "C", "C#"],
-  Eb: ["Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B", "C", "Db", "D"],
-  E: ["E", "F", "F#", "G", "Ab", "A", "Bb", "B", "C", "C#", "D", "D#"],
-  F: ["F", "Gb", "G", "Ab", "A", "Bb", "B", "C", "Db", "D", "Eb", "E"],
-  "F#": ["F#", "G", "G#", "A", "A#", "B", "C", "C#", "D", "D#", "E", "E#"],
-  G: ["G", "Ab", "A", "Bb", "B", "C", "Db", "D", "Eb", "E", "F", "F#"],
-  Ab: ["Ab", "A", "Bb", "B", "C", "Db", "D", "Eb", "E", "F", "Gb", "G"],
-  A: ["A", "Bb", "B", "C", "C#", "D", "Eb", "E", "F", "F#", "G", "G#"],
-  Bb: ["Bb", "B", "C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A"],
-  B: ["B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#"],
-};
 
 // The 12 harmonica keys in the order the Perl app lists them.
 export function allKeys(): Key[] {
@@ -90,6 +75,38 @@ const INT_TO_CHROM: Record<Interval, number> = {
 export function mapIntervalToChromIdx(interval: Interval): number {
   return INT_TO_CHROM[interval];
 }
+
+// Each interval label as a tonal interval token. The tritone (b5) is spelled as an
+// augmented 4th so it simplifies to a sharp/natural (F#, C#, G#, D#, A#, or a natural)
+// rather than a flat — matching the convention players expect on a layout chart.
+const INTERVAL_TO_TONAL: Record<Interval, string> = {
+  "1": "1P",
+  b2: "2m",
+  "2": "2M",
+  b3: "3m",
+  "3": "3M",
+  "4": "4P",
+  b5: "4A",
+  "5": "5P",
+  b6: "6m",
+  "6": "6M",
+  b7: "7m",
+  "7": "7M",
+};
+
+// key -> 12-semitone chromatic scale (formerly a hand-maintained table; now computed
+// from tonal). Cell `chromIdx` holds the spelling for the interval whose chromatic
+// index is `chromIdx`. `simplify` collapses double accidentals (Ebb/Fb/Cb...) to
+// the plain letter the old table used. Kept in sync with the Perl %scale_notes table.
+const SCALE_NOTES: Record<Key, string[]> = Object.fromEntries(
+  allKeys().map((key) => {
+    const row: string[] = [];
+    for (const iv of VALID_INTERVALS) {
+      row[INT_TO_CHROM[iv]] = simplify(transpose(key, INTERVAL_TO_TONAL[iv]));
+    }
+    return [key, row];
+  }),
+) as Record<Key, string[]>;
 
 export function noteFromKeyInterval(key: Key, interval: Interval): string {
   return SCALE_NOTES[key][mapIntervalToChromIdx(interval)];
