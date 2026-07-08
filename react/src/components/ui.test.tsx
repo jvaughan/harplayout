@@ -1,9 +1,10 @@
 // @vitest-environment jsdom
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
-import { fireEvent, render, screen, within } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/preact";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import App from "../App";
+import { setValue } from "../test/interact";
 
 // Extract the body of a CSS rule (the text between { and }) for a selector.
 function cssRule(selector: string): string {
@@ -146,9 +147,7 @@ describe("harp table", () => {
 
   it("re-renders with 12 holes when a 12-hole tuning is selected", () => {
     render(<App />);
-    fireEvent.change(screen.getByLabelText("Tuning"), {
-      target: { value: "Solo (12 hole)" },
-    });
+    setValue(screen.getByLabelText("Tuning"), "Solo (12 hole)");
     expect(table().querySelectorAll(".holenum").length).toBe(12);
   });
 });
@@ -169,9 +168,7 @@ describe("tuning editor", () => {
   it("editing a natural note switches the tuning to Custom", () => {
     render(<App />);
     openEditor();
-    fireEvent.change(screen.getByLabelText("blow hole 1"), {
-      target: { value: "b3" },
-    });
+    setValue(screen.getByLabelText("blow hole 1"), "b3");
     const summary = document.querySelector(".summary")!.textContent ?? "";
     expect(summary).toContain("Custom");
   });
@@ -190,9 +187,7 @@ describe("tuning editor", () => {
   it("names a custom tuning, showing the name in the summary and dropdown", () => {
     render(<App />);
     openEditor();
-    fireEvent.change(screen.getByLabelText("Name"), {
-      target: { value: "My Tuning" },
-    });
+    setValue(screen.getByLabelText("Name"), "My Tuning");
     // Display surfaces flag a user-named custom tuning with " (custom)".
     expect(document.querySelector(".summary")!.textContent).toContain(
       "My Tuning (custom)",
@@ -207,9 +202,7 @@ describe("tuning editor", () => {
   it("rejects a name that clashes with a registry tuning", () => {
     render(<App />);
     openEditor();
-    fireEvent.change(screen.getByLabelText("Name"), {
-      target: { value: "Country" },
-    });
+    setValue(screen.getByLabelText("Name"), "Country");
     expect(screen.getByRole("alert").textContent).toMatch(/already a tuning/i);
     // The clashing name is not committed.
     expect(document.querySelector(".summary")!.textContent).not.toContain(
@@ -220,19 +213,17 @@ describe("tuning editor", () => {
   it("keeps a named custom tuning in the dropdown after switching away", () => {
     render(<App />);
     openEditor();
-    fireEvent.change(screen.getByLabelText("Name"), {
-      target: { value: "My Tuning" },
-    });
+    setValue(screen.getByLabelText("Name"), "My Tuning");
     fireEvent.click(screen.getByRole("button", { name: "Done editing" }));
 
     const select = screen.getByLabelText("Tuning") as HTMLSelectElement;
     // Switch to a registry tuning...
-    fireEvent.change(select, { target: { value: "Country" } });
+    setValue(select, "Country");
     expect(document.querySelector(".summary")!.textContent).toContain("Country");
     // ...the custom tuning is still selectable...
     expect([...select.options].map((o) => o.value)).toContain("My Tuning");
     // ...and selecting it restores the custom layout.
-    fireEvent.change(select, { target: { value: "My Tuning" } });
+    setValue(select, "My Tuning");
     expect(document.querySelector(".summary")!.textContent).toContain(
       "My Tuning",
     );
@@ -241,9 +232,7 @@ describe("tuning editor", () => {
   it("discard removes the custom tuning from the dropdown", () => {
     render(<App />);
     openEditor();
-    fireEvent.change(screen.getByLabelText("Name"), {
-      target: { value: "My Tuning" },
-    });
+    setValue(screen.getByLabelText("Name"), "My Tuning");
     fireEvent.click(screen.getByRole("button", { name: /Discard/ }));
 
     const select = screen.getByLabelText("Tuning") as HTMLSelectElement;
@@ -254,9 +243,7 @@ describe("tuning editor", () => {
   it("reset returns to the base registry tuning", () => {
     render(<App />);
     openEditor();
-    fireEvent.change(screen.getByLabelText("draw hole 2"), {
-      target: { value: "b7" },
-    });
+    setValue(screen.getByLabelText("draw hole 2"), "b7");
     expect(document.querySelector(".summary")!.textContent).toContain("Custom");
     fireEvent.click(screen.getByRole("button", { name: /reset to Richter/i }));
     expect(document.querySelector(".summary")!.textContent).toContain("Richter");
@@ -277,9 +264,7 @@ describe("share button", () => {
   it("copies a link encoding the current layout and confirms", async () => {
     render(<App />);
     // C harp, 2nd position -> song key G.
-    fireEvent.change(within(card("Get song key")).getByLabelText("Position"), {
-      target: { value: "2" },
-    });
+    setValue(within(card("Get song key")).getByLabelText("Position"), "2");
 
     fireEvent.click(screen.getByRole("button", { name: /Share this layout/ }));
 
@@ -296,9 +281,7 @@ describe("share button", () => {
   it("encodes the custom natural notes (cb/cd) after editing", async () => {
     render(<App />);
     fireEvent.click(screen.getByRole("button", { name: "Edit tuning" }));
-    fireEvent.change(screen.getByLabelText("blow hole 1"), {
-      target: { value: "b3" },
-    });
+    setValue(screen.getByLabelText("blow hole 1"), "b3");
 
     fireEvent.click(screen.getByRole("button", { name: /Share this layout/ }));
     await screen.findByRole("button", { name: /Copied/ });
@@ -348,9 +331,7 @@ describe("calculators", () => {
     render(<App />);
     const songCard = within(card("Get song key"));
     // C harp, 2nd position -> song key G.
-    fireEvent.change(songCard.getByLabelText("Position"), {
-      target: { value: "2" },
-    });
+    setValue(songCard.getByLabelText("Position"), "2");
     expect(result("Get song key")).toBe("G");
     const summary = document.querySelector(".summary")!.textContent ?? "";
     expect(summary).toContain("song in");
@@ -360,12 +341,8 @@ describe("calculators", () => {
   it("computes the harp key from song key + position", () => {
     render(<App />);
     const harpCard = within(card("Get harp key"));
-    fireEvent.change(harpCard.getByLabelText("Song key"), {
-      target: { value: "G" },
-    });
-    fireEvent.change(harpCard.getByLabelText("Position"), {
-      target: { value: "2" },
-    });
+    setValue(harpCard.getByLabelText("Song key"), "G");
+    setValue(harpCard.getByLabelText("Position"), "2");
     // 2nd position, song G -> C harp.
     expect(result("Get harp key")).toBe("C");
   });
@@ -373,20 +350,14 @@ describe("calculators", () => {
   it("computes the position from harp key + song key", () => {
     render(<App />);
     const posCard = within(card("Get position"));
-    fireEvent.change(posCard.getByLabelText("Harp key"), {
-      target: { value: "C" },
-    });
-    fireEvent.change(posCard.getByLabelText("Song key"), {
-      target: { value: "G" },
-    });
+    setValue(posCard.getByLabelText("Harp key"), "C");
+    setValue(posCard.getByLabelText("Song key"), "G");
     expect(result("Get position")).toBe("2");
   });
 
   it("shows the selected tuning in the summary", () => {
     render(<App />);
-    fireEvent.change(screen.getByLabelText("Tuning"), {
-      target: { value: "Paddy Richter" },
-    });
+    setValue(screen.getByLabelText("Tuning"), "Paddy Richter");
     expect(document.querySelector(".summary")!.textContent).toContain(
       "Paddy Richter",
     );
@@ -397,9 +368,7 @@ describe("calculators", () => {
     // Richter (major): bare keys. C harp, 1st position -> song key C.
     expect(result("Get song key")).toBe("C");
 
-    fireEvent.change(screen.getByLabelText("Tuning"), {
-      target: { value: "Natural Minor (labelled in 1st pos)" },
-    });
+    setValue(screen.getByLabelText("Tuning"), "Natural Minor (labelled in 1st pos)");
 
     // Same C harp, now labelled minor -> Cm in every calculator and the summary.
     expect(result("Get song key")).toBe("Cm");
