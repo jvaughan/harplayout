@@ -1,12 +1,16 @@
 // Port of HarpLayout::Harmonica::Tuning (Tuning.pm), including the working-tree
 // "Will Wilde Minor" entry. label_position defaults to 1.
 
-import { type Interval, type Position } from "./circleOfFifths";
+import { type Interval, type Key, type Position } from "./circleOfFifths";
+
+export type Tonality = "major" | "minor";
 
 export interface Tuning {
   blow: Interval[];
   draw: Interval[];
   labelPosition?: Position;
+  // Conventional tonality of the tuning; absent means major.
+  tonality?: Tonality;
 }
 
 export const TUNINGS: Record<string, Tuning> = {
@@ -40,6 +44,7 @@ export const TUNINGS: Record<string, Tuning> = {
   "L.O Harmonic Minor": {
     blow: ["1", "b3", "5", "1", "b3", "5", "1", "b3", "5", "1"],
     draw: ["2", "5", "7", "2", "4", "b6", "7", "2", "4", "b6"],
+    tonality: "minor",
   },
 
   "L.O Melody Maker (labelled in 2nd pos)": {
@@ -52,12 +57,14 @@ export const TUNINGS: Record<string, Tuning> = {
     blow: ["1", "b3", "5", "1", "b3", "5", "1", "3", "5", "1"],
     draw: ["2", "5", "b7", "2", "4", "6", "b7", "2", "4", "6"],
     labelPosition: 2,
+    tonality: "minor",
   },
 
   "Natural Minor (labelled in 1st pos)": {
     blow: ["1", "b3", "5", "1", "b3", "5", "1", "3", "5", "1"],
     draw: ["2", "5", "b7", "2", "4", "6", "b7", "2", "4", "6"],
     labelPosition: 1,
+    tonality: "minor",
   },
 
   "Paddy Richter": {
@@ -119,6 +126,7 @@ export const TUNINGS: Record<string, Tuning> = {
     blow: ["1", "3", "5", "1", "3", "5", "1", "3", "5", "1"],
     draw: ["2", "5", "b7", "2", "4", "6", "b7", "2", "4", "6"],
     labelPosition: 2,
+    tonality: "minor",
   },
 
   "Seydel Melodic Maker": {
@@ -151,6 +159,7 @@ export const TUNINGS: Record<string, Tuning> = {
     blow: ["1", "b3", "5", "1", "b3", "b3", "5", "1", "b3", "6"],
     draw: ["2", "5", "b7", "2", "4", "5", "b7", "2", "5", "1"],
     labelPosition: 2,
+    tonality: "minor",
   },
 };
 
@@ -170,6 +179,22 @@ export function getTuning(name: string): Tuning {
 
 export function labelPosition(name: string): Position {
   return getTuning(name).labelPosition ?? 1;
+}
+
+export function tonality(name: string): Tonality {
+  return getTuning(name).tonality ?? "major";
+}
+
+// Format a key for display: minor tunings suffix the key with "m" (e.g. "Cm").
+// The underlying Key value is never suffixed — this is display only.
+export function keyLabel(key: Key, tonality: Tonality): string {
+  return tonality === "minor" ? `${key}m` : key;
+}
+
+// Spelled-out variant for prose (e.g. the summary heading): "C minor" reads better
+// than "Cm" in a sentence. Major keys need no qualifier.
+export function keyLabelLong(key: Key, tonality: Tonality): string {
+  return tonality === "minor" ? `${key} minor` : key;
 }
 
 // True if `name` collides with a built-in tuning (case-insensitive, trimmed).

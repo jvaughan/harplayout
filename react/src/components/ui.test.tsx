@@ -391,4 +391,29 @@ describe("calculators", () => {
       "Paddy Richter",
     );
   });
+
+  it("suffixes harp and song keys with 'm' for a minor tuning", () => {
+    render(<App />);
+    // Richter (major): bare keys. C harp, 1st position -> song key C.
+    expect(result("Get song key")).toBe("C");
+
+    fireEvent.change(screen.getByLabelText("Tuning"), {
+      target: { value: "Natural Minor (labelled in 1st pos)" },
+    });
+
+    // Same C harp, now labelled minor -> Cm in every calculator and the summary.
+    expect(result("Get song key")).toBe("Cm");
+    expect(result("Get harp key")).toBe("Cm");
+    // The summary spells the tonality out for readability.
+    const summary = document.querySelector(".summary")!.textContent ?? "";
+    expect(summary).toContain("key of C minor");
+    expect(summary).toContain("song in C minor");
+
+    // Dropdown option labels carry the suffix; the option value stays the bare Key.
+    const harpSelect = within(card("Get song key")).getByLabelText(
+      "Harp key",
+    ) as HTMLSelectElement;
+    const gOption = [...harpSelect.options].find((o) => o.value === "G")!;
+    expect(gOption.textContent).toBe("Gm");
+  });
 });

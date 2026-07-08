@@ -1,7 +1,12 @@
 import { useState } from "react";
 import type { Key, Position } from "../music/harmonica";
 import { allKeys } from "../music/musicLogic";
-import { availableTunings, customTuningLabel } from "../music/tunings";
+import {
+  availableTunings,
+  customTuningLabel,
+  keyLabel,
+  type Tonality,
+} from "../music/tunings";
 import type { UseHarpState } from "../state/useHarpState";
 import { TuningEditor } from "./TuningEditor";
 
@@ -13,19 +18,22 @@ function KeySelect({
   value,
   onChange,
   label,
+  tonality,
 }: {
   value: Key;
   onChange: (v: Key) => void;
   label: string;
+  tonality: Tonality;
 }) {
   return (
     <label className="field">
       <span>{label}</span>
-      {/* DOM-boundary cast: options are exactly KEYS (= allKeys()), all valid. */}
+      {/* DOM-boundary cast: options are exactly KEYS (= allKeys()), all valid.
+          The option value stays the bare Key; only its label gets the "m" suffix. */}
       <select value={value} onChange={(e) => onChange(e.target.value as Key)}>
         {KEYS.map((k) => (
           <option key={k} value={k}>
-            {k}
+            {keyLabel(k, tonality)}
           </option>
         ))}
       </select>
@@ -108,9 +116,10 @@ export function CalculatorBar({ store }: { store: UseHarpState }) {
             label="Harp key"
             value={harp.harpKey}
             onChange={songCalc.harpKey}
+            tonality={harp.tonality}
           />
           <PositionSelect value={harp.position} onChange={songCalc.position} />
-          <Result label="Song key" value={harp.songKey} />
+          <Result label="Song key" value={keyLabel(harp.songKey, harp.tonality)} />
         </div>
 
         <div className="calc-card">
@@ -119,9 +128,10 @@ export function CalculatorBar({ store }: { store: UseHarpState }) {
             label="Song key"
             value={harp.songKey}
             onChange={harpCalc.songKey}
+            tonality={harp.tonality}
           />
           <PositionSelect value={harp.position} onChange={harpCalc.position} />
-          <Result label="Harp key" value={harp.harpKey} />
+          <Result label="Harp key" value={keyLabel(harp.harpKey, harp.tonality)} />
         </div>
 
         <div className="calc-card">
@@ -130,11 +140,13 @@ export function CalculatorBar({ store }: { store: UseHarpState }) {
             label="Harp key"
             value={harp.harpKey}
             onChange={posCalc.harpKey}
+            tonality={harp.tonality}
           />
           <KeySelect
             label="Song key"
             value={harp.songKey}
             onChange={posCalc.songKey}
+            tonality={harp.tonality}
           />
           <Result label="Position" value={harp.position} />
         </div>

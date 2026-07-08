@@ -24,7 +24,7 @@ import {
   type Note,
   type NoteType,
 } from "./note";
-import { getTuning, labelPosition, type Tuning } from "./tunings";
+import { getTuning, labelPosition, type Tonality, type Tuning } from "./tunings";
 
 export type { Key, Position };
 
@@ -49,6 +49,7 @@ export interface HarpLayout {
   songKey: Key;
   position: Position;
   labelPosition: Position;
+  tonality: Tonality;
   numHoles: number;
   // Display rows, each padded to numHoles (null = empty cell).
   // blowRows are top-to-bottom (highest bend at top, natural at bottom).
@@ -304,6 +305,7 @@ class HarpBuilder {
       songKey: this.songKey,
       position: this.position,
       labelPosition: this.labelPos,
+      tonality: this.tuningDef.tonality ?? "major",
       numHoles,
       blowRows: [...blowTable].reverse(), // blowNotes: reversed
       drawRows: drawTable, // drawNotes: as-is

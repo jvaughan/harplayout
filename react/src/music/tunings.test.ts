@@ -3,6 +3,9 @@ import {
   availableTunings,
   customTuningLabel,
   isRegistryTuningName,
+  keyLabel,
+  keyLabelLong,
+  tonality,
   TUNINGS,
 } from "./tunings";
 
@@ -43,6 +46,43 @@ describe("isRegistryTuningName", () => {
   it("does not match novel names", () => {
     expect(isRegistryTuningName("My Tuning")).toBe(false);
     expect(isRegistryTuningName("Custom")).toBe(false);
+  });
+});
+
+describe("tonality", () => {
+  const MINOR = [
+    "L.O Harmonic Minor",
+    "L.O Natural Minor (labelled in 2nd pos)",
+    "Natural Minor (labelled in 1st pos)",
+    "Seydel Dorian (labelled in 2nd pos)",
+    "Will Wilde Minor (labelled in 2nd position)",
+  ];
+
+  it("reports minor for exactly the minor tunings, major otherwise", () => {
+    for (const name of Object.keys(TUNINGS)) {
+      expect(tonality(name)).toBe(MINOR.includes(name) ? "minor" : "major");
+    }
+  });
+
+  it("defaults an unspecified tuning to major", () => {
+    expect(tonality("Richter")).toBe("major");
+  });
+});
+
+describe("keyLabel", () => {
+  it("suffixes minor keys with 'm' and leaves major keys bare", () => {
+    expect(keyLabel("C", "minor")).toBe("Cm");
+    expect(keyLabel("F#", "minor")).toBe("F#m");
+    expect(keyLabel("C", "major")).toBe("C");
+    expect(keyLabel("F#", "major")).toBe("F#");
+  });
+});
+
+describe("keyLabelLong", () => {
+  it("spells out minor for prose and leaves major keys bare", () => {
+    expect(keyLabelLong("C", "minor")).toBe("C minor");
+    expect(keyLabelLong("F#", "minor")).toBe("F# minor");
+    expect(keyLabelLong("C", "major")).toBe("C");
   });
 });
 

@@ -4,7 +4,7 @@ import { Legend } from "./components/Legend";
 import { ShareButton } from "./components/ShareButton";
 import { ThemeToggle } from "./components/ThemeToggle";
 import { ViewOptions } from "./components/ViewOptions";
-import { customTuningLabel } from "./music/tunings";
+import { customTuningLabel, keyLabelLong } from "./music/tunings";
 import { useHarpState } from "./state/useHarpState";
 import { useTheme } from "./state/useTheme";
 
@@ -40,8 +40,8 @@ export default function App() {
 
       <h2 className="summary">
         {ordinal(harp.position)} position harp in the key of{" "}
-        <strong>{harp.harpKey}</strong> for a song in{" "}
-        <strong>{harp.songKey}</strong>
+        <strong>{keyLabelLong(harp.harpKey, harp.tonality)}</strong> for a song
+        in <strong>{keyLabelLong(harp.songKey, harp.tonality)}</strong>
         <span className="summary-tuning"> · {tuningLabel} tuning</span>
       </h2>
 

@@ -4,6 +4,7 @@ import { noteFromKeyInterval, VALID_INTERVALS } from "../music/musicLogic";
 import {
   getTuning,
   isRegistryTuningName,
+  keyLabel,
   TUNINGS,
   type Tuning,
 } from "../music/tunings";
@@ -106,7 +107,8 @@ export function TuningEditor({ store }: { store: UseHarpState }) {
     <div className="tuning-editor">
       <p className="tuning-editor-hint">
         Edit the natural notes (first-position intervals). Notes shown for the
-        current harp key <strong>{harp.harpKey}</strong>. Bends and overbends
+        current harp key <strong>{keyLabel(harp.harpKey, harp.tonality)}</strong>.
+        Bends and overbends
         recalculate automatically.
       </p>
 
