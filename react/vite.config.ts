@@ -70,6 +70,24 @@ function securityHeaders(): Plugin {
 
 // https://vite.dev/config/
 export default defineConfig({
+  // Alias React onto Preact's compat layer. The app's source is unchanged (it still
+  // imports from "react"/"react-dom"); only what those specifiers resolve to at
+  // bundle/test time changes, cutting the runtime from react-dom (~68 KB gzip) to
+  // preact/compat (~16 KB gzip). Order matters — more specific subpaths must precede
+  // the bare "react"/"react-dom" entries (first match wins). @types/react still backs
+  // tsc, and `react`/`react-dom` stay installed (devDependencies) purely for those
+  // types and the JSX transform.
+  resolve: {
+    alias: {
+      "react/jsx-runtime": "preact/jsx-runtime",
+      "react/jsx-dev-runtime": "preact/jsx-runtime",
+      "react-dom/client": "preact/compat/client",
+      "react-dom/server": "preact/compat/server",
+      "react-dom/test-utils": "preact/test-utils",
+      "react-dom": "preact/compat",
+      react: "preact/compat",
+    },
+  },
   plugins: [
     react(),
     VitePWA({

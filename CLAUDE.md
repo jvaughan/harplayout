@@ -167,6 +167,17 @@ A faithful 1:1 port of the Perl modules; keep the two in sync when changing logi
 
 Subtleties that must match Perl exactly: the 12-element chromatic ring built from the circle-of-fifths interval keys; the windowed `intervalGt` comparison (`BOUNDARY = 7`); and Perl's negative-array-index wrap in interval subtraction (handled explicitly in `musicLogic.ts`).
 
+`musicLogic.ts` carries a **static `SCALE_NOTES` table** (key → 12-semitone spelled chromatic scale) instead of computing it from `@tonaljs/note` at runtime. The table is a build-time artifact of tonal's `simplify(transpose(...))`; regenerate it with `node scripts/gen_scale_notes.mjs` (paste the output into `SCALE_NOTES`) — tonal is a **devDependency**, not shipped. The tritone (`b5`, chromIdx 6) is deliberately spelled as an augmented 4th (sharp/natural, not flat) to match layout-chart convention.
+
+### React vs Preact (bundle size)
+
+The app is authored against React (types via `@types/react`, JSX via `@vitejs/plugin-react`) but **bundled and tested against Preact** through a `resolve.alias` in `vite.config.ts` (`react`/`react-dom`/subpaths → `preact/compat`). This is the single biggest bundle lever — the main chunk is ~47 KB (16 KB gzip) vs ~218 KB (68 KB gzip) on react-dom. Source code is unchanged; it still imports from `"react"`/`"react-dom"`. `react`/`react-dom` stay installed as **devDependencies** purely for tsc types and the JSX transform; `preact` is the only runtime `dependency`.
+
+Testing gotchas this introduces (both already handled — don't reintroduce them):
+
+- Tests use **`@testing-library/preact`**, not `.../react`. Vitest externalizes node_modules, so the `.../react` variant loads the *real* react-dom (bypassing the Vite alias) and reconciles Preact vnodes → "element from an older version of React" errors.
+- **Never use `fireEvent.change` on a `<select>`.** `@testing-library/preact` rewrites `change`→`input` via a flaky compat probe, and preact/compat keeps `<select>` on the native `change` event (only `<input>`/`<textarea>` move to `input`), so the event silently misses. Use the `setValue(el, value)` helper in [react/src/test/interact.ts](react/src/test/interact.ts), which dispatches native `input`+`change` inside `act()` and drives every control type deterministically.
+
 ### UI (`react/src/components/`, `react/src/state/`)
 
 - `useHarpState.ts` holds form state and derives the grid with `useMemo`. The six view toggles (bends / overbends / unnecessary OBs / note names / intervals / interval categories) are **pure render-time filters** — they never recompute the grid, mirroring the original app's client-side show/hide behavior.

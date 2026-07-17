@@ -5,10 +5,10 @@
 // fragile — the ones plain text-matching (ui.test.tsx) can't verify.
 //
 // Run just this suite with: `vitest --project browser`.
-import { cleanup, render } from "@testing-library/react";
+import { cleanup, render } from "@testing-library/preact";
 import { page } from "vitest/browser";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { fireEvent, screen } from "@testing-library/react";
+import { fireEvent, screen } from "@testing-library/preact";
 import App from "../App";
 import "../styles/app.css";
 
