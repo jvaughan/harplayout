@@ -36,7 +36,7 @@
     "eslint": "^10.8.1",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.4",
-    "jsdom": "^29.1.1",
+    "jsdom": "^30.0.1",
     "playwright": "^1.62.1",
     "preact-render-to-string": "^6.7.0",
     "react": "^19.2.8",
