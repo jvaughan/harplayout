@@ -46,7 +46,7 @@
     "vite": "^8.2.1",
     "vite-plugin-pwa": "^1.3.0",
     "vitest": "^4.1.11",
-    "wrangler": "^4.124.0"
+    "wrangler": "^4.131.0"
   },
   "overrides": {
     "undici": "^7.29.0"
